@@ -1,2 +1,2 @@
-# MinCompSpin_BasisSearch128
+# MinCompSpin BasisSearch 128
 coded on 128 bits
