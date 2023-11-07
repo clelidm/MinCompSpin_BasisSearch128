@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>  // for std::reverse()
 
 /******************************************************************************/
 /***************************   Constant variables   ***************************/

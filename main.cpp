@@ -82,7 +82,7 @@ void int_to_digits(__int128_t bool_nb, unsigned int r);
 
 int main(int argc, char *argv[])
 {
-    unsigned int k_max = 3;
+    unsigned int k_max = 2;
 
 	/**********************     READ ARGUMENTS    *********************************/
 
@@ -211,6 +211,10 @@ int main(int argc, char *argv[])
     cout << 5 << ": \t" << (uint64_t) UpdateOp_R0(BestBasis_R0, 5) << endl;
     cout << 4 << ": \t" << (uint64_t) UpdateOp_R0(BestBasis_R0, 4) << endl;
 */
+    end = chrono::system_clock::now();  
+    elapsed = end - start;
+    cout << endl << "Elapsed time (in s): " << elapsed.count() << endl << endl;  
+
     return 0;
 }
 
