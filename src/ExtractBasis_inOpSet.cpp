@@ -331,7 +331,7 @@ vector<Operator128> BestBasis_inOpSet(set<Operator128> OpSet, unsigned int n, St
   MatrixF2 Mat = OpSet_to_MatrixF2(OpSet, m, n);
 
   cout << "Total number of Operators to analyse = " << OpSet.size() << endl << endl;
-  cout << "-->> Search for the Best Basis among/by step of 'm' = " << Mat.m << " most biased operators:" << endl;
+  cout << "-->> Search for the Best Basis by step of 'm' = " << Mat.m << " most biased operators:" << endl;
 
   cout << "\t Nit = " << 0 << ": \t";
   list<unsigned int> list_lead = RREF_F2(Mat.M, Mat.n, Mat.m);

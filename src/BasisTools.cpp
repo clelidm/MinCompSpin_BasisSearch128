@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <map>
 #include <list>
 #include <vector>
@@ -105,7 +106,7 @@ void PrintTerm_OpBasis(vector<Operator128> Basis, unsigned int n, unsigned int N
   double p1 = 1, LogLi = 0, LogL = 0, Nd = (double) N;
 
   cout << "-->> Print Basis Operators: \t Total number of operators = " << Basis.size() << endl << endl;  
-  cout << "## 1:i \t 2:bin \t 3:bias \t 4:N[Op_i=1] \t 5:p[Op_i=1] \t 6:LogL[Op_i] \t 7:Op_index " << endl << "## " << endl; 
+  cout << "## 1:i \t 2:bin \t\t 3:bias\t 4:N[Op_i=1] \t 5:p[Op_i=1] \t 6:<Op> \t 7:LogL[Op_i] \t 8:Op_index " << endl << "## " << endl; 
 
   for (auto& Op : Basis)
   {
@@ -113,7 +114,9 @@ void PrintTerm_OpBasis(vector<Operator128> Basis, unsigned int n, unsigned int N
     LogLi = (p1!=0 && p1!=1)? p1*log(p1)+(1-p1)*log(1-p1) : 0;
     LogL += LogLi;
 
-    cout << i << "\t" << int_to_bstring(Op.bin, n) << "\t" << Op.bias << "\t" << Op.k1  << "\t" << p1 << "\t" << LogLi << "\t Indices = "; //<< endl;
+    cout << fixed;
+    cout << i << "\t" << int_to_bstring(Op.bin, n) << "\t" << setprecision(5) << Op.bias << " \t" << Op.k1  << "\t";
+    cout << setprecision(6) << p1 << " \t" << 1-2*p1 << " \t" << LogLi << "\t Indices = "; //<< endl;
     int_to_digits(Op.bin, n);
     i++;
   }

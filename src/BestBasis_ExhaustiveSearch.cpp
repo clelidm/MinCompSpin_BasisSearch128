@@ -42,7 +42,8 @@ set<Operator128> All_Op_LBk1 (vector<pair<__int128_t, unsigned int>> Nvect, unsi
   Operator128 Op;
   double Nd = (double) N;
 
-  cout << "-->> Compute and rank all Operators:" << endl;
+  cout << "-->> Compute ALL the (2^n-1) Operators" << endl;
+  cout << "     Rank the operators with bias larger than lower bound (fixed by the least informative first order operator):" << endl;
 
   unsigned int Op_bin_max =  (one128 << n) - 1;
 
@@ -67,14 +68,15 @@ vector<Operator128> BestBasis_ExhaustiveSearch(vector<pair<__int128_t, unsigned 
   cout << endl << "************************  EXHAUSTIVE SEARCH FOR THE BEST BASIS:  **************************";
   cout << endl << "*******************************************************************************************" << endl;
 
-  cout << "-->> Compute all Operators, with a smallest accepted biased fixed by the least informative first order operator:" << endl;
+//  cout << "-->> Compute all Operators, with a smallest accepted biased fixed by the least informative first order operator:" << endl;
+  cout << endl;
   set<Operator128> OpSet = All_Op_LBk1 (Nvect, n, N, bool_print);
 
 // Time:
   auto end = chrono::system_clock::now();  chrono::duration<double> elapsed = end - start;
   cout << "\t Elapsed time (in s): " << elapsed.count() << endl << endl; 
 
-  cout << "-->> Search for the Best Basis:" << endl;
+  cout << "-->> Search for the Best Basis:\t\t"; // << endl;
 
   Struct_LowerBound LB; // Lower Bound Info
   LB.Bias = 0;

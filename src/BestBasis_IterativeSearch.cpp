@@ -72,11 +72,11 @@ void SaveFile_Basis(vector<Operator128> Basis, unsigned int n, fstream &file)
 /***************     Search in a Given Representation  Tools  *****************/
 /******************************************************************************/
 
-vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, unsigned int R_it, bool bool_print = false, unsigned int m_max=1000)
+vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max = 2, bool bool_print = false, unsigned int R_it = 0, unsigned int m_max=1000)
 {
   k_max = (k_max<2)?2:k_max;  // k_max must be at least 2;
 
-  cout << endl << "*******************  FIND THE SMALLEST BIAS OF THE CURRENT BASIS:  ************************";
+  cout << endl << "*****************  FIND THE SMALLEST BIAS OF THE CURRENT BASIS (k = 1):  ******************";
   cout << endl << "*******************************************************************************************" << endl;
 
   // Compute the bias of the basis elements, and find the least biased one:
@@ -126,7 +126,8 @@ vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, 
       PrintFile_OpSet(OpSet, n, filename_k + "_CutSmallBias");
   }
 
-  cout << endl << "*****************************  DONE: SEARCH IN GIVEN REPRESENTATION  ****************************" << endl;
+  cout << endl << "*************************  SEARCH IN GIVEN REPRESENTATION: DONE  **************************"; 
+  cout << endl << "*******************************************************************************************" << endl;
 
   return BestBasis;
 }
@@ -171,7 +172,7 @@ vector<Operator128> UpdateBasis_inR0(vector<Operator128> BestBasis_R0_old, vecto
 /******************************************************************************/
 vector<pair<__int128_t, unsigned int>> build_Kvect(vector<pair<__int128_t, unsigned int>> Nvect, list<__int128_t> Basis);
 
-vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, bool bool_print = false, unsigned int m_max=1000)
+vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max = 2, bool bool_print = false, unsigned int m_max=1000)
 {
     k_max = (k_max<2)?2:k_max;  // k_max must be at least 2;
 
@@ -181,7 +182,7 @@ vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>>
 
     unsigned int R_it = 0;   // Initial Representation --> R0
 
-    vector<Operator128> BestBasis_R0 = BestBasisSearch_FixedRepresentation(Nvect, n, N, k_max, R_it, bool_print, m_max);
+    vector<Operator128> BestBasis_R0 = BestBasisSearch_FixedRepresentation(Nvect, n, N, k_max, bool_print, R_it, m_max);
 
 //Save Basis:
     string Basis_filename = OUTPUT_directory + "All_Bases_inRi.dat";
@@ -228,7 +229,7 @@ vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>>
         R_it += 1;   // New basis
 
         BestBasis_Ri.clear();
-        BestBasis_Ri = BestBasisSearch_FixedRepresentation(Kvect, n, N, k_max, R_it, bool_print, m_max);
+        BestBasis_Ri = BestBasisSearch_FixedRepresentation(Kvect, n, N, k_max, bool_print, R_it, m_max);
 
         PrintTerm_OpBasis(BestBasis_Ri, n, N);  
         SaveFile_Basis(BestBasis_Ri, n, Basis_file);
