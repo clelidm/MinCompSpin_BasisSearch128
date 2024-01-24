@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
 
     // chrono variables:
 	auto start = chrono::system_clock::now(); 
-	auto end = chrono::system_clock::now(); 
+	auto end = chrono::system_clock::now();
     chrono::duration<double> elapsed = end - start; 
 
     //Variables:
@@ -181,6 +181,7 @@ int main(int argc, char *argv[])
     cout << endl << "*******************************************************************************************" << endl;
 
     PrintTerm_OpBasis(BestBasis, n, N);  
+    PrintFile_OpBasis(BestBasis, n, N, "Final_Basis");  
     //Is_Basis(BestBasis_k2, n);   // this function can check if a set of Operators is in independent set
 
     Histo_BasisOpOrder(BestBasis);
