@@ -1,4 +1,4 @@
-//g++ -std=c++11 main.cpp ReadDataFile.cpp Tool_BitOperations.cpp BestBasis_Init_SetOp.cpp
+//g++ -std=c++11 -O3 src/*.cpp includes/main.cpp -o BestBasis.out
 
 #include <iostream>
 #include <sstream>
@@ -12,7 +12,7 @@
 #include <ratio> // for chrono
 #include <chrono> // for chrono
 
-#include "data.h"
+#include "../src/data.h"
 
 using namespace std;
 
@@ -20,11 +20,12 @@ using namespace std;
 /**************************    PARAMETERS    ************************/
 /********************************************************************/
 // number of binary (spin) variables:
-unsigned int n = 50;
+unsigned int n = 9;
 
-// INPUT DATA FILES (optional):  
-// the input datafile can also be specified directly in the main() function, as an argument of the function "read_datafile()":
-std::string input_datafile = "INPUT/Big5-IPC1_VS3_Ne5.dat"; //Big5PT.sorted_Ne5";  //"INPUT/Big5PT.sorted";  //"INPUT/SCOTUS_n9_N895_Data.dat"; //
+// INPUT DATA FILES (optional):  must be in the INPUT folder
+string input_datafile = "INPUT/Shapes_n9_Dataset_N1e5.dat"; 
+
+unsigned int k_max = 3; // default value
 
 /******************************************************************************/
 /**************************     READ FILE    **********************************/
@@ -49,69 +50,40 @@ map<unsigned int, unsigned int> Histo_BasisOpOrder(vector<Operator128> Basis);
 vector<Operator128> BestBasis_ExhaustiveSearch(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, bool bool_print = false);
 
 // Fixed Representation up to order `k_max``:
-vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, unsigned int B_it, bool bool_print = false, unsigned int m_max=1000);
+vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max = 2, bool bool_print = false, unsigned int B_it = 0, unsigned int m_max=1000);
 
 // Changing representation up to order `k_max``:
-vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, bool bool_print = false, unsigned int m_max=1000);
+vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max=2, bool bool_print = false, unsigned int m_max=1000);
+
+
+/******************************************************************************/
+/************************ User Interface with Flags ***************************/
+/******************************************************************************/
+
+int Read_argument(int argc, char *argv[], string *input_datafile, unsigned int *n, unsigned int *k_max);
 
 /******************************************************************************/
 /************************** MAIN **********************************************/
 /******************************************************************************/
 
-const unsigned int one = 1;
-
-__int128_t UpdateOp_R0(vector<__int128_t> BestBasis_R0, __int128_t Opbin_Ri)
-{
-  __int128_t Op_R0 = 0;
-
-  unsigned int i = 0;
-  while(Opbin_Ri)
-  {
-    if(Opbin_Ri & one) 
-        {   Op_R0 ^= (BestBasis_R0[i]); }
-    Opbin_Ri >>= 1;
-    i++;
-  }
-
-  return Op_R0;
-}
-
-std::string int_to_bstring(__int128_t bool_nb, unsigned int r);
-
-void int_to_digits(__int128_t bool_nb, unsigned int r);
-
 int main(int argc, char *argv[])
 {
-    unsigned int k_max = 2;
-
-	/**********************     READ ARGUMENTS    *********************************/
-
+/**********************     READ ARGUMENTS    *********************************/
     // argv[0] contains the name of the datafile, from the current folder (i.e. from the folder containing "data.h");
     // argv[1] contains the number of variables to read;
-    if (argc == 3)
-    {
-      	string input_datafile_buffer = argv[1];
-        string n_string_buffer = argv[2];
+    // argv[2] contains flag
+    // argv[3] contains kmax
 
-        input_datafile = "INPUT/" + input_datafile_buffer;
-        //n_string_buffer = argv[2];
-        n = stoul(n_string_buffer);
-    }
-    else if (argc == 4)
-    {
-        string input_datafile_buffer = argv[1];
-        string n_string_buffer = argv[2];
+/**********************     CREATE FLAG    ************************************/
+// By default:  flag_search = 1 (for the example)
+    // 1 = Exhaustive search
+    // 2 = Fixed basis search with given choice of k_max
+    // 3 = Varying basis search with given choice of k_max
 
-        input_datafile = "INPUT/" + input_datafile_buffer;
-        //n_string_buffer = argv[2];
-        n = stoul(n_string_buffer);
-        k_max=stoul(argv[3]);
-    }
-    else if (argc != 1)
-    {
-        cout << "The number of arguments must be either 0, 2, or 3" << endl;
-        return 0;
-    }
+    int flag_search = Read_argument(argc, argv, &input_datafile, &n, &k_max);
+
+
+/**********************   CREATE OUTPUT DIRECTORY    ***************************/
 
     cout << "--->> Create the \"OUTPUT\" Folder: (if needed) ";
     system(("mkdir -p " + OUTPUT_directory).c_str());
@@ -121,6 +93,9 @@ int main(int argc, char *argv[])
 	auto start = chrono::system_clock::now(); 
 	auto end = chrono::system_clock::now(); 
     chrono::duration<double> elapsed = end - start; 
+
+    //Variables:
+    bool bool_print = false;
 
     cout << endl << "*******************************************************************************************";
     cout << endl << "***********************************  READ THE DATA:  **************************************";
@@ -132,45 +107,74 @@ int main(int argc, char *argv[])
 
 	if (N == 0) { return 0; } // Terminate program if the file can't be found or is empty
 
-/*
-    cout << endl << "*******************************************************************************************";
-    cout << endl << "*******************************************************************************************";
-    cout << endl << "***************************  SEARCH IN THE ORIGINAL BASIS:  *******************************";
-    cout << endl << "*******************************************************************************************";
-    cout << endl << "*******************************************************************************************" << endl;
 
-    bool bool_print = false;
-    unsigned int k_max = 2;  // largest order of operators to take into account in each representation
-    unsigned int B_it = 0;   // initial basis
+    vector<Operator128> BestBasis;
 
-    vector<Operator128> BestBasis = BestBasisSearch_FixedRepresentation(Nvect, n, N, k_max, B_it, bool_print);
-*/
-/*
-    cout << endl << "*******************************************************************************************";
-    cout << endl << "*******************************************************************************************";
-    cout << endl << "**********************************  EXHAUSTIVE SEARCH:  ***********************************";
-    cout << endl << "*******************************************************************************************";
-    cout << endl << "*******************************************************************************************" << endl;
+    if (flag_search == 1)
+    {
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "**********************************  EXHAUSTIVE SEARCH:  ***********************************";
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "*******************************************************************************************" << endl;
 
-    cout << "The Exhaustive Search is not recommended for dataset with more than n~20 variables." << endl << endl;
+        cout << endl << "Information: " << endl;
+        cout << "  > The following program search for the Best Basis among all the (2^n-1) possible operators." << endl;
 
-    bool bool_print = false;
-    vector<Operator128> BestBasis = BestBasis_ExhaustiveSearch(Nvect, n, N, bool_print);
-    //PrintTerm_OpBasis(BestBasis, n, N);  
-*/
+        cout << endl << "Important: " << endl;
+        cout << "  > The Exhaustive Search is not recommended for dataset with more than n~20 variables." << endl << endl;
 
-    cout << endl << "*******************************************************************************************";
-    cout << endl << "*******************************************************************************************";
-    cout << endl << "**********************  SEARCH IN DIFFERENT REPRESENTATIONS:  *****************************";
-    cout << endl << "********************  ! Stops when the found basis is Identity !  **************************";
-    cout << endl << "*******************************************************************************************";
-    cout << endl << "*******************************************************************************************" << endl;
+        bool_print = false;
 
-    bool bool_print = false;
-    unsigned int m_max = 50000;
+        BestBasis = BestBasis_ExhaustiveSearch(Nvect, n, N, bool_print);
+    }
 
-    vector<Operator128> BestBasis = BestBasisSearch_Final(Nvect, n, N, k_max, bool_print, m_max);
-    //PrintTerm_OpBasis(BestBasis, n, N); 
+    else if (flag_search == 2)
+    {
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "******************************  SEARCH UP TO ORDER K  *************************************";
+        cout << endl << "****************************  IN FIXED REPRESENTATION:  ***********************************";
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "*******************************************************************************************" << endl;
+
+        bool_print = false;
+        // By default, k_max = 3;  // largest order of operators to take into account in each representation
+
+        cout << "Search for the best basis among all operators up to order kmax = " << k_max << "." << endl << endl;
+
+        BestBasis = BestBasisSearch_FixedRepresentation(Nvect, n, N, k_max, bool_print);
+    }
+
+    else if (flag_search == 3)
+    {
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "******************************  SEARCH UP TO ORDER K  *************************************";
+        cout << endl << "************************   IN SUCCCESSIVE REPRESENTATIONS  ********************************";
+        cout << endl << "********************  ! Stops when the found basis is Identity !  *************************";
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "*******************************************************************************************" << endl;
+
+        bool_print = false;
+        unsigned int m_max = 50000;
+        // By default, k_max = 3;  // largest order of operators to take into account in each representation
+
+        cout << "Search for the best basis among all operators up to order kmax = " << k_max << "." << endl << endl;
+
+        cout << "The data is then transformed in the representation given by the best basis." << endl;
+        cout << "The search for the best basis up to order kmax is re-iterated in this new representation." << endl;
+        cout << "The process is repeated until the basis doesn't change anymore" << endl;
+        cout << "(i.e. the basis found in the current representation is identity)." << endl;
+
+        BestBasis = BestBasisSearch_Final(Nvect, n, N, k_max, bool_print, m_max); 
+    }
+
+    if (BestBasis.size() == 0)  // Terminate program if the Basis is empty
+    {
+        cout << "ERROR: No basis were found. Check the argument provided." << endl;
+        return 0; 
+    }
 
     cout << endl << "*******************************************************************************************";
     cout << endl << "***********************  PRINT TERMINAL/FILE FINAL OPERATOR SET:  *************************";
@@ -182,35 +186,6 @@ int main(int argc, char *argv[])
     Histo_BasisOpOrder(BestBasis);
 
 
-/*
-    cout << "--> Compute and rank all the observables of order 1 (fields).. " << endl; 
-
-    __int128_t one_i = 1;
-    for (int i=0; i<n; i++) // All Fields:
-    { 
-        //Op = Value_Op(un_i, Nvect, Nd);
-        //OpSet.insert(Op);
-        //if (Op.bias < (*lowest_bias)) { (*lowest_bias) = Op.bias; }
-        cout <<  int_to_bstring(one_i, n) << "\t";
-        int_to_digits(one_i, n); 
-        one_i = one_i << 1;
-    }
-*/
-/*
-    vector<__int128_t> BestBasis_R0;
-
-    BestBasis_R0.push_back(1);
-    BestBasis_R0.push_back(2);
-    BestBasis_R0.push_back(7);
-
-    for(auto& Opbin:BestBasis_R0) { cout << ((uint64_t) Opbin) << endl;}
-
-    cout << endl;
-
-    cout << 3 << ": \t" << (uint64_t) UpdateOp_R0(BestBasis_R0, 3) << endl;
-    cout << 5 << ": \t" << (uint64_t) UpdateOp_R0(BestBasis_R0, 5) << endl;
-    cout << 4 << ": \t" << (uint64_t) UpdateOp_R0(BestBasis_R0, 4) << endl;
-*/
     end = chrono::system_clock::now();  
     elapsed = end - start;
     cout << endl << "Elapsed time (in s): " << elapsed.count() << endl << endl;  
