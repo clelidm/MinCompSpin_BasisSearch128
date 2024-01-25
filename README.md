@@ -51,7 +51,7 @@ In the following commands, replace `[datafilename]` by the datafile name, `[n]` 
 | Run  | Command | Comment |
 | --- | --- | --- |
 | Help | `./BestBasis.out -h` | |
-| Example 1 | `./BestBasis.out`| |
+| Example 1 | `./BestBasis.out`| Will run Example 1 (Shape dataset)<br> See "Examples" section below|
 | Search best basis | `./BestBasis.out [datafilename] [n]` | Choose automatically<br>the most appropriate algorithm |
 | Exhaustive search (*) | `./BestBasis.out [datafilename] [n] --exhaustive`| |
 | Search among all operators<br> up to order kmax | `./BestBasis.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional,<br> by default kmax = 3 |
@@ -67,7 +67,7 @@ Run the following commands in your terminal, from the main folder (folder contai
 
  - **To compile:** `make`
 
- - **To Execute:** `make run` . This will use the datafile and variables that are specified in the makefile.
+ - **To Execute:** `make run` . This will use the datafile and number of variables that are specified in the makefile.
 
 To change datafile: open the makefile and replace the values of the two following variables at the very top of the file (an example is provided):
 >  - `datafile`: name of your datafile; this file must be placed in the folder `INPUT`
@@ -101,8 +101,9 @@ where you must replace `datafilename` by the name of your datafile and `n` by yo
 All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file. The most useful functions are described in the section "General information" above. 
 
 In the `INPUT` folder, we provided two examples:
+  - **Example 1:** The binary dataset `Shapes_n9_Dataset_N1e5.dat` is one of the datasets used as an example in Ref.[1]. This is an artificial dataset generated from three states described in Figure 5.
   - the binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[3] and used as an example in Ref.[1]. 
-  - the binary dataset `Big5-IPC1_VS3_Ne5.dat`: this is a binarized version of the first `100 000` samples of the Big 5 dataset [4], which has `50` variables. See paper [1] for comments on the Best Basis obtained for this dataset.
+  - **Example 2:** the binary dataset `Big5-IPC1_VS3_Ne5.dat`: this is a binarized version of the first `100 000` samples of the Big 5 dataset [4], which has `50` variables. See paper [1] for comments on the Best Basis obtained for this dataset.
 
 Each of these two datasets can be the one run as an example by commenting/uncommenting the correct datafile choice at the beginning of the `makefile`.
 
