@@ -24,13 +24,13 @@ Note: we advise doing such a search only for small systems (up to ~15 variables)
 ```c++
 BestBasisSearch_FixedRepresentation(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, unsigned int B_it, bool bool_print = false)
 ```
-If you take the largest order to be equal to the number of variables (`kmax = n`), then this function will perform an exhaustive search for the best basis among all possible operators.
+If you take the largest order to be equal to the number of variables (i.e., `kmax = n`), then this function will perform an exhaustive search for the best basis among all possible operators (exactly as the algorithm 1 just above).
 
- 3) **Search in varying representations:** This is the recommended approach when the number of variables exceeds $n\simeq 15$ - $20$. A priori, this heuristic approach is able to explore possible basis interactions of any high order.
+ 3) **Search in varying representations:** This function performs the search procedure described in Ref.[1]. The program first searches for the best basis up to order `k_max`; the data is then successively transformed in the representation given by the previously found best basis, and the program searches for the new best basis in this representation. The algorithm stops when the new basis found is the identity (i.e. the basis has not changed).
 ```c++
 vector<Operator64> BestBasisSearch_Final(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, bool bool_print = false)
 ```
-This function performs the search procedure described in Ref.[1]. The program first searches for the best basis up to order `k_max`; the data is then successively transformed in the representation given by the previously found best basis, and the program searches for the new best basis in this representation. The algorithm stops when the new basis found is the identity (i.e. the basis has not changed).
+This is the recommended approach when the number of variables exceeds $n\simeq 15$ - $20$. A priori, this heuristic approach is able to explore possible basis interactions of arbitrary order.
 
 ## Requirements
 
@@ -54,8 +54,8 @@ In the following commands, replace `[datafilename]` by the datafile name, `[n]` 
 | Example 1 | `./BestBasis.out`| Will run Example 1 (Shape dataset)<br> See "Examples" section below|
 | Search best basis | `./BestBasis.out [datafilename] [n]` | Choose automatically<br>the most appropriate algorithm |
 | Exhaustive search (*) | `./BestBasis.out [datafilename] [n] --exhaustive`| |
-| Search among all operators<br> up to order kmax | `./BestBasis.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional,<br> by default kmax = 3 |
-| Search among all operators<br> up to order kmax<br> in varying representations (**) | `./BestBasis.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional,<br> by default kmax = 3 |
+| Search among all operators<br> up to order kmax | `./BestBasis.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
+| Search among all operators<br> up to order kmax<br> in varying representations (**) | `./BestBasis.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
 
 (*) This program implements the exhaustive search algorithm described in Ref.[1].
 
@@ -63,32 +63,29 @@ In the following commands, replace `[datafilename]` by the datafile name, `[n]` 
  
 ## Usage with Makefile:
 
-Run the following commands in your terminal, from the main folder (folder containing the `makefile` document):
+Run the following commands in your terminal, from the root folder (which contains the `makefile` document):
 
  - **To compile:** `make`
 
- - **To Execute:** `make run` . This will use the datafile and number of variables that are specified in the makefile.
+ - **To Execute:**
+   The datafile must be placed in the `INPUT` folder.
+   Information about your dataset must then be specified at the beginning of the makefile, i.e. the name of the datafile `datafile`, the number of variables `n`, and the value of the highest order of operators to consider `kmax` (if needed).
 
-To change datafile: open the makefile and replace the values of the two following variables at the very top of the file (an example is provided):
->  - `datafile`: name of your datafile; this file must be placed in the folder `INPUT`
->  - `n`: number of variables in your file; maximum possible value `n = 128`.
+   Open the makefile and replace the values of the following variables at the very top of the file (an example is provided):
+    * `datafile`: name of your datafile; this file must be placed in the folder `INPUT`
+    * `n`: number of variables in your file; largest possible value is `n = 128`.
+    * [Optional] `kmax`: the highest order of operators to consider (if needed); we advise to take it equal to 3 or 4 (by default `kmax = 3`).
 
-You can also execute the code by running in your terminal the command (from the main folder):
-```bash
-./BestBasis.out  datafilename  n
-```
-
-where you must replace `datafilename` by the name of your datafile and `n` by your number of variables.
-
+You can then execute the code by running in your terminal one of the following commands (from the root folder):
 
 | Run  | Command | Comment |
 | --- | --- | --- |
 | Help | `make help` | |
-| Example 1 | `make example`| |
+| Example 1 | `make example`| Will run Example 1 (Shape dataset)<br> See "Examples" section below |
 | Search best basis | `make run` | Choose automatically<br>the most appropriate algorithm |
 | Exhaustive search (*) | `make run-exhaustive`| |
-| Search among all operators<br> up to order kmax | `make run-fix-k` | specifying kmax is optional,<br> by default kmax = 3 |
-| Search among all operators<br> up to order kmax<br> in varying representations (**) | `make run-var-k` | specifying kmax is optional,<br> by default kmax = 3 |
+| Search among all operators<br> up to order kmax | `make run-fix-k` | specifying kmax is optional,<br> by default `kmax = 3` |
+| Search among all operators<br> up to order kmax<br> in varying representations (**) | `make run-var-k` | specifying kmax is optional,<br> by default `kmax = 3` |
 
 (*) This program implements the exhaustive search algorithm described in Ref.[1].
 
