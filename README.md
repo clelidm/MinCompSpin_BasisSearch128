@@ -2,7 +2,7 @@
 
 # Search for the Best Independent Minimally Complex Models (MCM)
 
-This program searches for the **Best Basis representation for a chosen binary dataset**, while taking into account possible **high-order patterns of the data**. It was developed for the paper [*Statistical Inference of Minimally Complex Models*](https://arxiv.org/abs/2008.00520) [1]. More details on the general algorithm can be found in the paper.
+This program searches for the **Best Basis representation for a chosen binary dataset**, while taking into account all possible **high-order patterns of the data**. It was developed for the paper [*Statistical Inference of Minimally Complex Models*](https://arxiv.org/abs/2008.00520) [1]. More details on the general algorithm can be found in the paper.
 
 The program can be used for datasets with up to $n=128$ random variables.
 
