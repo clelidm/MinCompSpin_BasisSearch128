@@ -10,7 +10,7 @@ The program can be used for datasets with up to $n=128$ random variables.
 
 ## General information
 
-The Best basis for a binary data with `n` variables is the one for which the independent model formed by `n` field operators has the largest log-likelihood (and therefore the largest log-evidence, as all independent models with the same number of operators are equivalent -- see Ref[1]).
+**Best Basis:** The Best basis of a binary data with `n` variables is the one for which the independent model formed by `n` field operators has the largest log-likelihood (and therefore the largest log-evidence, as all independent models with the same number of operators are equivalent -- see Ref[1]).
 
 There are three main functions that you can use to **search for the best basis** from the `main.cpp`:
 
