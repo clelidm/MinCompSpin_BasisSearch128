@@ -14,7 +14,7 @@ The Best basis for a binary data with `n` variables is the one for which the ind
 
 There are three main functions that you can use to **search for the best basis** from the `main.cpp`:
 
- 1) **Exhaustive Search:** This function will compute all $2^n-1$ operators and will search for the best basis among them with a Greedy approach (i.e. rank them from the most to least biased and extract the set of `n` most biased independent operators starting from the most biased one):
+ 1) **Exhaustive Search:** This function will compute all $2^n-1$ operators and will search for the best basis among them with a Greedy approach (i.e. rank them from the most to least biased and extract the set of the `n` most biased independent operators starting from the most biased one):
 ```c++
 vector<Operator64> BestBasis_ExhaustiveSearch(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, bool bool_print = false)
 ```
