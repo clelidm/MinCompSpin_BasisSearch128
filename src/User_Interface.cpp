@@ -3,19 +3,6 @@
 
 using namespace std;
 
-/********************************************************************/
-/**************************    PARAMETERS    ************************/
-/********************************************************************/
-/*
-// number of binary (spin) variables:
-unsigned int n = 9;
-
-// INPUT DATA FILES (optional):  must be in the INPUT folder
-std::string input_datafile = "INPUT/Shapes_n9_Dataset_N1e5.dat"; 
-
-unsigned int k_max = 3; // default value
-*/
-
 /******************************************************************************/
 /**************************  HELP MESSAGE  ************************************/
 /******************************************************************************/
@@ -101,7 +88,7 @@ void HELP_message()
 
 
 /******************************************************************************/
-/************************** MAIN **********************************************/
+/************************** Read Arguments ************************************/
 /******************************************************************************/
 
 int Read_argument(int argc, char *argv[], string *input_datafile, unsigned int *n, unsigned int *k_max)
@@ -125,7 +112,7 @@ int Read_argument(int argc, char *argv[], string *input_datafile, unsigned int *
         HELP_message();
         return 0;        
     }
-    else if (argc > 5 || argc == 2)
+    else if (argc > 5)
     {
         cout << endl << "ERROR: The number of arguments is not correct." << endl;
         HELP_message();
@@ -172,7 +159,7 @@ int Read_argument(int argc, char *argv[], string *input_datafile, unsigned int *
             }
             else 
             {
-                cout << "ERROR: The arguments are not correct." << endl << endl;
+                cout << endl << "ERROR: The arguments are not correct." << endl;
                 HELP_message();
                 return 0; 
             }
