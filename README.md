@@ -1,10 +1,6 @@
 # MinCompSpin BasisSearch 128
-coded on 128 bits
 
-g++ -std=c++11 -O3 src/*.cpp includes/main.cpp -o BestBasis.out
-
-# Search for the Best Basis Representation of a Binary Dataset with up to n=64 variables
-# or: Best Independent Minimally Complex Models (MCM)
+# Search for the Best Independent Minimally Complex Models (MCM)
 
 This program searches for the **Best Basis representation for a chosen binary dataset**, while taking into account possible **high-order patterns of the data**. It was develop for the paper [*Statistical Inference of Minimally Complex Models*](https://arxiv.org/abs/2008.00520) [1]. More details on the general algorithm can be found in the paper.
 
@@ -37,6 +33,25 @@ This function performs the search procedure described in Ref.[1]. The program fi
 ## Requirements
 
 The code uses the C++11 version of C++.
+
+## Usage without Makefile:
+
+ - **To compile:**
+   
+```bash
+g++ -std=c++11 -O3 src/*.cpp includes/main.cpp -o BestBasis.out
+```
+ - **To Execute:**
+
+In the following commands, replace `[datafilename]` by the datafile name, and `[n]` by the number of variables.
+
+|   | Run Command | Comment |
+| --- | --- | --- |
+| Help | `./BestBasis.out -h` | |
+| Run Example 1 | `./BestBasis.out`| |
+| Run Exhaustive search | `./BestBasis.out [datafilename] [n] --exhaustive`| |
+| Run search among all operators<br> up to order kmax | `./BestBasis.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional, by default kmax = 4 |
+| Run search among all operators<br> up to order kmax in varying representations (*) | `./BestBasis.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional, by default kmax = 4 |
 
 ## Usage with Makefile:
 
