@@ -46,14 +46,18 @@ g++ -std=c++11 -O3 src/*.cpp includes/main.cpp -o BestBasis.out
 The datafile must be placed in the `INPUT` folder.
 In the following commands, replace `[datafilename]` by the datafile name, `[n]` by the number of variables, and `[kmax]` by the value of the highest order of operators to consider (when needed).
 
-|   | Run Command | Comment |
+| Run  | Command | Comment |
 | --- | --- | --- |
 | Help | `./BestBasis.out -h` | |
-| Run Example 1 | `./BestBasis.out`| |
-| Run Exhaustive search | `./BestBasis.out [datafilename] [n] --exhaustive`| |
-| Run search among all operators<br> up to order kmax | `./BestBasis.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional,<br> by default kmax = 4 |
-| Run search among all operators<br> up to order kmax<br> in varying representations (*) | `./BestBasis.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional,<br> by default kmax = 4 |
+| Example 1 | `./BestBasis.out`| |
+| Search best basis | `./BestBasis.out [datafilename] [n]` | Choose automatically<br>the most appropriate algorithm |
+| Exhaustive search (*) | `./BestBasis.out [datafilename] [n] --exhaustive`| |
+| Search among all operators<br> up to order kmax | `./BestBasis.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional,<br> by default kmax = 4 |
+| Search among all operators<br> up to order kmax<br> in varying representations (**) | `./BestBasis.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional,<br> by default kmax = 4 |
 
+(*) This program implements the exhaustive search algorithm described in Ref.[1].
+(**) This program implements the heuristic algorithm described in Ref.[1].
+ 
 ## Usage with Makefile:
 
 Run the following commands in your terminal, from the main folder (folder containing the `makefile` document):
