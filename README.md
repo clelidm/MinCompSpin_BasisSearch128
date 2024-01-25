@@ -50,8 +50,8 @@ In the following commands, replace `[datafilename]` by the datafile name, and `[
 | Help | `./BestBasis.out -h` | |
 | Run Example 1 | `./BestBasis.out`| |
 | Run Exhaustive search | `./BestBasis.out [datafilename] [n] --exhaustive`| |
-| Run search among all operators<br> up to order kmax | `./BestBasis.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional, by default kmax = 4 |
-| Run search among all operators<br> up to order kmax in varying representations (*) | `./BestBasis.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional, by default kmax = 4 |
+| Run search among all operators<br> up to order kmax | `./BestBasis.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional,<br> by default kmax = 4 |
+| Run search among all operators<br> up to order kmax<br> in varying representations (*) | `./BestBasis.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional,<br> by default kmax = 4 |
 
 ## Usage with Makefile:
 
