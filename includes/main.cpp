@@ -82,6 +82,7 @@ int main(int argc, char *argv[])
 
     int flag_search = Read_argument(argc, argv, &input_datafile, &n, &k_max);
 
+    if (flag_search == 0) {   return 0;   }   // error flag --> quit
 
 /**********************   CREATE OUTPUT DIRECTORY    ***************************/
 
