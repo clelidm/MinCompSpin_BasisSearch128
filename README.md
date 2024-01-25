@@ -43,7 +43,8 @@ g++ -std=c++11 -O3 src/*.cpp includes/main.cpp -o BestBasis.out
 ```
  - **To Execute:**
 
-In the following commands, replace `[datafilename]` by the datafile name, and `[n]` by the number of variables.
+The datafile must be placed in the `INPUT` folder.
+In the following commands, replace `[datafilename]` by the datafile name, `[n]` by the number of variables, and `[kmax]` by the value of the highest order of operators to consider (when needed).
 
 |   | Run Command | Comment |
 | --- | --- | --- |
