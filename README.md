@@ -15,22 +15,22 @@ The Best basis for a binary data with `n` variables is the one for which the ind
 There are three main functions that you can use to **search for the best basis** from the `main.cpp`:
 
  1) **Exhaustive Search:** This function will compute all $2^n-1$ operators and will search for the best basis among them with a Greedy approach (i.e. rank them from the most to least biased and extract the set of the `n` most biased independent operators starting from the most biased one):
-```c++
-vector<Operator64> BestBasis_ExhaustiveSearch(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, bool bool_print = false)
-```
-Note: we advise doing such a search only for small systems (up to ~15 variables).
+    ```c++
+    vector<Operator64> BestBasis_ExhaustiveSearch(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, bool bool_print = false)
+    ```
+    Note: we advise doing such a search only for small systems (up to ~15 variables).
 
  2) **Search in a fixed representation up to order `kmax`:** This function searches for the best Basis among all operators up to order `kmax` in a given representation (which is the representation used when storing the data in `Nvect` -- by default, this is the original representation of the data):
-```c++
-BestBasisSearch_FixedRepresentation(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, unsigned int B_it, bool bool_print = false)
-```
-If you take the largest order to be equal to the number of variables (i.e., `kmax = n`), then this function will perform an exhaustive search for the best basis among all possible operators (exactly as the algorithm 1 just above).
+    ```c++
+    BestBasisSearch_FixedRepresentation(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, unsigned int B_it, bool bool_print = false)
+    ```
+    If you take the largest order to be equal to the number of variables (i.e., `kmax = n`), then this function will perform an exhaustive search for the best basis among all possible operators (exactly as the algorithm 1 just above).
 
  3) **Search in varying representations:** This function performs the search procedure described in Ref.[1]. The program first searches for the best basis up to order `k_max`; the data is then successively transformed in the representation given by the previously found best basis, and the program searches for the new best basis in this representation. The algorithm stops when the new basis found is the identity (i.e. the basis has not changed).
-```c++
-vector<Operator64> BestBasisSearch_Final(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, bool bool_print = false)
-```
-This is the recommended approach when the number of variables exceeds $n\simeq 15$ - $20$. A priori, this heuristic approach is able to explore possible basis interactions of arbitrary order.
+    ```c++
+    vector<Operator64> BestBasisSearch_Final(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, bool bool_print = false)
+    ```
+    This is the recommended approach when the number of variables exceeds $n\simeq 15$ - $20$. A priori, this heuristic approach is able to explore possible basis interactions of arbitrary order.
 
 ## Requirements
 
@@ -39,10 +39,9 @@ The code uses the C++11 version of C++.
 ## Usage without Makefile:
 
  - **To compile:**
-   
-```bash
-g++ -std=c++11 -O3 src/*.cpp includes/main.cpp -o BestBasis.out
-```
+   ```bash
+   g++ -std=c++11 -O3 src/*.cpp includes/main.cpp -o BestBasis.out
+   ```
  - **To Execute:** The datafile must be placed in the `INPUT` folder.
    
    In the following commands, replace `[datafilename]` by the datafile name, `[n]` by the number of variables, and `[kmax]` by the value of the highest order of operators to consider (when needed).
