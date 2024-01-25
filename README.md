@@ -32,6 +32,8 @@ There are three main functions that you can use to **search for the best basis**
     ```
     This is the recommended approach when the number of variables exceeds $n\simeq 15$ - $20$. A priori, this heuristic approach is able to explore possible basis interactions of arbitrary order.
 
+All the functions that can be called from `int main()` are declared at the beginning of the `includes/main.cpp` file. The most useful functions are described just above. You can use these functions without modifying the code in `main.cpp` with direct calls from your terminal using the commands described in the following sections.
+
 ## Requirements
 
 The code uses the C++11 version of C++.
@@ -92,8 +94,6 @@ Run the following commands in your terminal, from the root folder (which contain
  - **To clean:** `make clean` (to use only once you're done using the code)
 
 ## Examples
-
-All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file. The most useful functions are described in the section "General information" above. 
 
 In the `INPUT` folder, we provided two examples:
   - **Example 1:** The binary dataset `Shapes_n9_Dataset_N1e5.dat` is one of the datasets used as an example in Ref.[1]. This is an artificial dataset generated from three states described in Figure 5.
