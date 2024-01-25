@@ -43,23 +43,22 @@ The code uses the C++11 version of C++.
 ```bash
 g++ -std=c++11 -O3 src/*.cpp includes/main.cpp -o BestBasis.out
 ```
- - **To Execute:**
+ - **To Execute:** The datafile must be placed in the `INPUT` folder.
+   
+   In the following commands, replace `[datafilename]` by the datafile name, `[n]` by the number of variables, and `[kmax]` by the value of the highest order of operators to consider (when needed).
+   
+   | Run  | Command | Comment |
+   | --- | --- | --- |
+   | Help | `./BestBasis.out -h` | |
+   | Example 1 | `./BestBasis.out`| Will run Example 1 (Shape dataset)<br> See "Examples" section below|
+   | Search best basis | `./BestBasis.out [datafilename] [n]` | Choose automatically<br>the most appropriate algorithm |
+   | Exhaustive search (*) | `./BestBasis.out [datafilename] [n] --exhaustive`| |
+   | Search among all operators<br> up to order kmax | `./BestBasis.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
+   | Search among all operators<br> up to order kmax<br> in varying representations (**) | `./BestBasis.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
 
-The datafile must be placed in the `INPUT` folder.
-In the following commands, replace `[datafilename]` by the datafile name, `[n]` by the number of variables, and `[kmax]` by the value of the highest order of operators to consider (when needed).
+   (*) This program implements the exhaustive search algorithm described in Ref.[1].
 
-| Run  | Command | Comment |
-| --- | --- | --- |
-| Help | `./BestBasis.out -h` | |
-| Example 1 | `./BestBasis.out`| Will run Example 1 (Shape dataset)<br> See "Examples" section below|
-| Search best basis | `./BestBasis.out [datafilename] [n]` | Choose automatically<br>the most appropriate algorithm |
-| Exhaustive search (*) | `./BestBasis.out [datafilename] [n] --exhaustive`| |
-| Search among all operators<br> up to order kmax | `./BestBasis.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
-| Search among all operators<br> up to order kmax<br> in varying representations (**) | `./BestBasis.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
-
-(*) This program implements the exhaustive search algorithm described in Ref.[1].
-
-(**) This program implements the heuristic algorithm described in Ref.[1].
+   (**) This program implements the heuristic algorithm described in Ref.[1].
  
 ## Usage with Makefile:
 
@@ -75,21 +74,21 @@ Run the following commands in your terminal, from the root folder (which contain
     * `datafile`: name of your datafile; this file must be placed in the folder `INPUT`
     * `n`: number of variables in your file; largest possible value is `n = 128`.
     * [Optional] `kmax`: the highest order of operators to consider (if needed); we advise to take it equal to 3 or 4 (by default `kmax = 3`).
+   
+   You can then execute the code by running in your terminal one of the following commands (from the root folder):
 
-You can then execute the code by running in your terminal one of the following commands (from the root folder):
+   | Run  | Command | Comment |
+   | --- | --- | --- |
+   | Help | `make help` | |
+   | Example 1 | `make example`| Will run Example 1 (Shape dataset)<br> See "Examples" section below |
+   | Search best basis | `make run` | Choose automatically<br>the most appropriate algorithm |
+   | Exhaustive search (*) | `make run-exhaustive`| |
+   | Search among all operators<br> up to order kmax | `make run-fix-k` | specifying kmax is optional,<br> by default `kmax = 3` |
+   | Search among all operators<br> up to order kmax<br> in varying representations (**) | `make run-var-k` | specifying kmax is optional,<br> by default `kmax = 3` |
 
-| Run  | Command | Comment |
-| --- | --- | --- |
-| Help | `make help` | |
-| Example 1 | `make example`| Will run Example 1 (Shape dataset)<br> See "Examples" section below |
-| Search best basis | `make run` | Choose automatically<br>the most appropriate algorithm |
-| Exhaustive search (*) | `make run-exhaustive`| |
-| Search among all operators<br> up to order kmax | `make run-fix-k` | specifying kmax is optional,<br> by default `kmax = 3` |
-| Search among all operators<br> up to order kmax<br> in varying representations (**) | `make run-var-k` | specifying kmax is optional,<br> by default `kmax = 3` |
+   (*) This program implements the exhaustive search algorithm described in Ref.[1].
 
-(*) This program implements the exhaustive search algorithm described in Ref.[1].
-
-(**) This program implements the heuristic algorithm described in Ref.[1].
+   (**) This program implements the heuristic algorithm described in Ref.[1].
 
  - **To clean:** `make clean` (to use only once you're done using the code)
 
