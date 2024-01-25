@@ -50,7 +50,7 @@ The code uses the C++11 version of C++.
    | --- | --- | --- |
    | Help | `./BestBasis.out -h` | |
    | Example 1 | `./BestBasis.out`| Will run Example 1 (Shape dataset)<br> See "Examples" section below|
-   | Search best basis | `./BestBasis.out [datafilename] [n]` | Choose automatically<br>the most appropriate algorithm |
+   | Search best basis | `./BestBasis.out [datafilename] [n]` | Choose automatically<br>the most appropriate algorithm<br> If used, `kmax = 3`by default |
    | Exhaustive search (*) | `./BestBasis.out [datafilename] [n] --exhaustive`| |
    | Search among all operators<br> up to order kmax | `./BestBasis.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
    | Search among all operators<br> up to order kmax<br> in varying representations (**) | `./BestBasis.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
@@ -80,7 +80,7 @@ Run the following commands in your terminal, from the root folder (which contain
    | --- | --- | --- |
    | Help | `make help` | |
    | Example 1 | `make example`| Will run Example 1 (Shape dataset)<br> See "Examples" section below |
-   | Search best basis | `make run` | Choose automatically<br>the most appropriate algorithm |
+   | Search best basis | `make run` | Choose automatically<br>the most appropriate algorithm<br> If used, `kmax = 3`by default |
    | Exhaustive search (*) | `make run-exhaustive`| |
    | Search among all operators<br> up to order kmax | `make run-fix-k` | specifying kmax is optional,<br> by default `kmax = 3` |
    | Search among all operators<br> up to order kmax<br> in varying representations (**) | `make run-var-k` | specifying kmax is optional,<br> by default `kmax = 3` |
