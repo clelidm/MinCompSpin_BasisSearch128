@@ -5,14 +5,16 @@
 ####     then the program will automatically use the filename and number of variables specifed in 'main.cpp'   #########
 ########################################################################################################################
 
-#### EXAMPLE: Big 5 dataset:
-#datafilename := Big5-IPC1_VS3_Ne5.dat  # datafile name ### IMPORTANT: this file must be in the 'INPUT' folder
-#n := 50		# number of binary variables in the datafile 
-k := 4
+### IMPORTANT: the datafile must be in the 'INPUT' folder
 
-#### EXAMPLE 2: Shapes:
-datafilename := Shapes_n9_Dataset_N1e5.dat  
-n := 9		
+#### EXAMPLE 1: Shapes:
+datafilename := Shapes_n9_Dataset_N1e5.dat
+n := 9		# number of binary variables in the datafile 
+
+#### EXAMPLE 2: Big 5:   NOTE: this dataset is different from the one used in the paper
+#datafilename := MNIST11.sorted
+#n := 121
+k := 4	
 
 
 ########################################################################################################################
@@ -73,14 +75,17 @@ BestBasis_ExhaustiveSearch.o: BestBasis_ExhaustiveSearch.cpp src/data.h
 ####################################################      RUN     ######################################################
 ########################################################################################################################
 
-example:
-	time ./BestBasis.out
-
 help:
 	./BestBasis.out -h
 
+example:
+	time ./BestBasis.out
+
 run:
 	./BestBasis.out $(datafilename) $n
+
+run-exhaustive:
+	./BestBasis.out $(datafilename) $n --exhaustive
 
 run-fix-k:
 	time ./BestBasis.out $(datafilename) $n --fix-k $k
