@@ -72,7 +72,7 @@ Run the following commands in your terminal, from the root folder (which contain
    Open the makefile and replace the values of the following variables at the very top of the file (an example is provided):
     * `datafile`: name of your datafile; this file must be placed in the folder `INPUT`
     * `n`: number of variables in your file; largest possible value is `n = 128`.
-    * [Optional] `kmax`: the highest order of operators to consider (if needed); we advise to take it equal to 3 or 4 (by default `kmax = 3`).
+    * [if needed] `kmax`: the highest order of operators to consider (if needed); we advise to take it equal to 3 or 4.
    
    You can then execute the code by running in your terminal one of the following commands (from the root folder):
 
@@ -81,9 +81,9 @@ Run the following commands in your terminal, from the root folder (which contain
    | Help | `make help` | |
    | Example 1 | `make example`| Will run Example 1 (Shape dataset)<br> See "Examples" section below |
    | Search best basis | `make run` | Choose automatically<br>the most appropriate algorithm<br> If used, `kmax = 3`by default |
-   | Exhaustive search (*) | `make run-exhaustive`| |
-   | Search among all operators<br> up to order kmax | `make run-fix-k` | specifying kmax is optional,<br> by default `kmax = 3` |
-   | Search among all operators<br> up to order kmax<br> in varying representations (**) | `make run-var-k` | specifying kmax is optional,<br> by default `kmax = 3` |
+   | Exhaustive search (*) | `make run-exhaustive`| `kmax` is not used|
+   | Search among all operators<br> up to order kmax | `make run-fix-k` | must specify choice of `kmax` |
+   | Search among all operators<br> up to order kmax<br> in varying representations (**) | `make run-var-k` | must specify choice of `kmax` |
 
    (*) This program implements the exhaustive search algorithm described in Ref.[1].
 
