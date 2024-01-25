@@ -2,23 +2,25 @@
 
 # Search for the Best Independent Minimally Complex Models (MCM)
 
-This program searches for the **Best Basis representation for a chosen binary dataset**, while taking into account possible **high-order patterns of the data**. It was develop for the paper [*Statistical Inference of Minimally Complex Models*](https://arxiv.org/abs/2008.00520) [1]. More details on the general algorithm can be found in the paper.
+This program searches for the **Best Basis representation for a chosen binary dataset**, while taking into account possible **high-order patterns of the data**. It was developed for the paper [*Statistical Inference of Minimally Complex Models*](https://arxiv.org/abs/2008.00520) [1]. More details on the general algorithm can be found in the paper.
+
+The program can be used for datasets with up to $n=128$ random variables.
 
 [1]  C. de Mulatier, P. P. Mazza, M. Marsili, *Statistical Inference of Minimally Complex Models*, [arXiv:2008.00520](https://arxiv.org/abs/2008.00520)
 
 ## General information
 
-The Best basis for a binary data with `n` variables is the one for which the independent model formed by `n` field operators has the largest log-likelihood (and therefore the largest log-evidence, as all independent model with the same number of operators are equivalent -- see Ref[1]).
+The Best basis for a binary data with `n` variables is the one for which the independent model formed by `n` field operators has the largest log-likelihood (and therefore the largest log-evidence, as all independent models with the same number of operators are equivalent -- see Ref[1]).
 
 There are three main functions that you can use to **search for the best basis** from the `main.cpp`:
 
- 1) **Exhaustive Search:** This function will compute all $2^n-1$ operators and will search for the best basis among them with a Greedy approach (i.e. rank them from the most to least biased and extract the set of `n` most bias independent operators starting from the most biased one):
+ 1) **Exhaustive Search:** This function will compute all $2^n-1$ operators and will search for the best basis among them with a Greedy approach (i.e. rank them from the most to least biased and extract the set of `n` most biased independent operators starting from the most biased one):
 ```c++
 vector<Operator64> BestBasis_ExhaustiveSearch(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, bool bool_print = false)
 ```
-Note: we advise doing such search only for small systems (up to ~15 variables).
+Note: we advise doing such a search only for small systems (up to ~15 variables).
 
- 2) **Search in a fixed representation up to order `kmax`:** This function searches for the best Basis among all operators up to order `kmax` in the a given representation (which is the representation used when storing the data in `Nvect` -- by default, this is the original representation of the data):
+ 2) **Search in a fixed representation up to order `kmax`:** This function searches for the best Basis among all operators up to order `kmax` in a given representation (which is the representation used when storing the data in `Nvect` -- by default, this is the original representation of the data):
 ```c++
 BestBasisSearch_FixedRepresentation(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, unsigned int B_it, bool bool_print = false)
 ```
@@ -28,7 +30,7 @@ If you take the largest order to be equal to the number of variables (`kmax = n`
 ```c++
 vector<Operator64> BestBasisSearch_Final(vector<pair<uint64_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max, bool bool_print = false)
 ```
-This function performs the search procedure described in Ref.[1]. The program first searches for the best basis up to order `k_max`; the data is then successively transformed in the representation given by the previously found best basis, and the program search for the new best basis in this representation. The algorithm stops when the new basis found is the identity (i.e. the basis has not changed).
+This function performs the search procedure described in Ref.[1]. The program first searches for the best basis up to order `k_max`; the data is then successively transformed in the representation given by the previously found best basis, and the program searches for the new best basis in this representation. The algorithm stops when the new basis found is the identity (i.e. the basis has not changed).
 
 ## Requirements
 
@@ -99,7 +101,7 @@ where you must replace `datafilename` by the name of your datafile and `n` by yo
 All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file. The most useful functions are described in the section "General information" above. 
 
 In the `INPUT` folder, we provided two examples:
-  - the binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme court analysed in Ref.[3] and used as an example in Ref.[1]. 
+  - the binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[3] and used as an example in Ref.[1]. 
   - the binary dataset `Big5-IPC1_VS3_Ne5.dat`: this is a binarized version of the first `100 000` samples of the Big 5 dataset [4], which has `50` variables. See paper [1] for comments on the Best Basis obtained for this dataset.
 
 Each of these two datasets can be the one run as an example by commenting/uncommenting the correct datafile choice at the beginning of the `makefile`.
