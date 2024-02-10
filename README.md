@@ -97,15 +97,15 @@ Run the following commands in your terminal, from the root folder (which contain
 
 In the `INPUT` folder, we provided two examples:
   - **Example 1:** The binary dataset `Shapes_n9_Dataset_N1e5.dat` is one of the datasets used as an example in Ref.[1]. This is an artificial dataset generated from only three states and described in Ref.[1] (see Figure 5).
-  - **Example 2:** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [4] used as an example in Ref. [1]. The dataset has `50` variables. See Ref.[1] for results and comments on the Best Basis obtained for this dataset.
+  - **Example 2:** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [3] used as an example in Ref. [1]. The dataset has `50` variables. See Ref.[1] for results and comments on the Best Basis obtained for this dataset.
 Important: this dataset is given in a zip file, which must be decompressed first before being used.
-  - **Example 3:** the binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[3] and used as an example in Ref.[1]. 
+  - **Example 3:** the binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[4] and used as an example in Ref.[1]. 
 
 Each of these two datasets can be the one run as an example by commenting/uncommenting the correct datafile choice at the beginning of the `makefile`.
 
-[3] E.D. Lee, C.P. Broedersz, W. Bialek, Statistical Mechanics of the US Supreme Court. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
+[3] Raw data from [Open-Source Psychometrics Project](https://openpsychometrics.org/_rawdata/) in the line indicated as "Answers to the IPIP Big Five Factor Markers"; [here](https://openpsychometrics.org/_rawdata/IPIP-FFM-data-8Nov2018.zip) is a direct link to the same zipfile.
 
-[4] Raw data from [Open-Source Psychometrics Project](https://openpsychometrics.org/_rawdata/) in the line indicated as "Answers to the IPIP Big Five Factor Markers"; [here](https://openpsychometrics.org/_rawdata/IPIP-FFM-data-8Nov2018.zip) is a direct link to the same zipfile.
+[4] E.D. Lee, C.P. Broedersz, W. Bialek, Statistical Mechanics of the US Supreme Court. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
 
 
 ## License
