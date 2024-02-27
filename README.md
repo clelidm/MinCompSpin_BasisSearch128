@@ -95,7 +95,7 @@ Run the following commands in your terminal, from the root folder (which contain
 
 ## Examples
 
-In the `INPUT` folder, we provided following examples:
+In the `INPUT` folder, we provided the following examples:
   - **Example 1:** The binary dataset `Shapes_n9_Dataset_N1e5.dat` is one of the datasets used as an example in Ref.[1]. This is an artificial dataset generated from only three states and described in Ref.[1] (see Figure 5).
   - **Example 2:** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [3] used as an example in Ref. [1]. The dataset has `50` variables. See Ref.[1] for results and comments on the Best Basis obtained for this dataset.
 Important: this dataset is given in a zip file, which must be decompressed first before being used.
