@@ -377,5 +377,138 @@ vector<Operator128> BestBasis_inOpSet(set<Operator128> OpSet, unsigned int n, St
 
 
 
+/**************************************************************************************************************************************************/
+/**************************************************************************************************************************************************/
+/************************************************************    INVERT BASIS:    *****************************************************************/
+/**************************************************************************************************************************************************/
+/**************************************************************************************************************************************************/
+
+/********************************************************************/
+/**********************   Matrice REF:    ***************************/
+/*********   return LEAD positions for basis selection   ************/
+/********************************************************************/
+// The matrix M is put in Reduced Row Echelon Form:
+// And
+// Returns a list of the column index where there is a lead position ==>> set of independent operators starting from the left
+
+bool** RREF_F2_invert(bool** M, int n)    // (i_lead, j_lead) = positions of the lead
+{
+  cout << "Initial matrix:  " << endl;
+  print_matrice(M, n, n);
+  cout << endl;
+
+  // Create a Identity Matrix:
+  bool** M_id = (bool**) malloc(n*sizeof(bool*));  // n rows --> 1rst index
+  for (int i=0; i<n; i++)  // n columns --> 2nd index
+  {   
+    M_id[i] = (bool*) malloc(n * sizeof(bool));  
+    for (int j=0; j<n; j++)  // n columns --> 2nd index
+    {
+      M_id[i][j] = 0;
+    } 
+    M_id[i][i] = 1;
+  }
+
+//  cout << "Identity matrix:  " << endl;
+//  print_matrice(M_id, n, n);
+
+  // Reduction:
+  int j_lead = 0;
+  int rank=0;    //rank = final number of leads
+  bool test_stop=false;
+
+  list<unsigned int> lead_positions;  // list of the column indices in which there is a lead position
+
+  int i=0;
+
+  for (int i_lead = 0; i_lead < n  &&  j_lead < n; i_lead++)   // 
+  {
+    //cout << "j_lead = " << j_lead << endl;
+    i = i_lead;
+
+    //search for the 1rst non-zero element in the column
+    while (! M[i][j_lead])  // while M[i][j_lead] = 0
+    {
+        //cout << "test: " << M[i][j_lead] << endl;
+      i++;
+      if (i == n)   //all elements are 0  --> no lead in this column, 1.go to the next column and 2.restart
+      {
+        //Record No Lead positions:
+        //no_lead_positions.push_back(j_lead);
+        j_lead++;   //1. go to the next column
+        if (j_lead >= n)  
+        { //cout << "break j_lead = " << j_lead << endl; 
+          test_stop=true; break; 
+        }  // reduction finished
+        i = i_lead; //2. re-start the search for non-zero element from new (i_lead, j_lead)
+      }
+    }
+    if(test_stop)   {  break;  }
+    //cout << "real j_lead =" << j_lead << endl;
+    //has found a non-zero element --->  1. increase rank; and 2. swap row i and row i_lead
+    rank++; 
+    if (i != i_lead)
+    { 
+      //cout << "i_lead = " << i_lead << " and i = " << i << ": swap rows:" << endl;
+      swap_row(M, i_lead, i, n, n); 
+      swap_row(M_id, i_lead, i, n, n); 
+      //print_matrice(M_id, n, n);
+      //cout << endl;
+    }
+
+    //put to zero every element with i !=i_lead //under the lead (starting from i = i_lead + 1)
+    for (i=0; i < n; i++)
+    {
+      if (M[i][j_lead] && i!=i_lead)  //L_i <---- L_i XOR L_i_lead
+      { 
+        add_row(M, i_lead, i, n, n); 
+        add_row(M_id, i_lead, i, n, n); 
+
+        //cout << "Add row: i_lead = " << i_lead << " and i = " << i << " into i" << endl;
+        //print_matrice(M_id, n, n);
+        //cout << endl;
+      }
+    }
+
+    // Record lead position:
+    lead_positions.push_back(j_lead);  //cout << i << " ";
+
+    //go to the next column
+    j_lead++;
+  }
+
+  //for (i=j_lead; i<m; i++)
+  //  {
+  //    no_lead_positions.push_back(i);  //cout << i << " ";
+  //  }
+
+  if(lead_positions.size() == n)
+  {
+    cout << "Rank = n = " << n << "\t: this is a basis." << endl;
+  }
+  else 
+  {
+    cout << "Rank = " << lead_positions.size() << " different from n = " << n << "\t: this is not a basis." << endl;
+  }    
+
+  cout << "Inverted Matrice:" << endl;
+  print_matrice(M_id, n, n);
+
+  cout << "\t Final rank = " << rank << endl; 
+  return M_id;
+}
+
+/*
+void print_matrice(bool** M, int n, int m)
+{
+  for (int i=0; i<n; i++)
+    { 
+      for (int j=0; j<m; j++)  {  cout << M[i][j]; }
+        cout << endl;
+    }
+}
+*/
+
+
 
 

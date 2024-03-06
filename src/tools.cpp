@@ -10,6 +10,21 @@ const uint32_t one32 = 1;  // we only need the first bit here -->> will be used 
 //const unsigned int n_max = 128;  // for bitset
 
 /******************************************************************************/
+/*****************   Remove the extension of a filename   *********************/
+/******************************************************************************/
+std::string filename_remove_extension(std::string filename)
+{
+    std::string new_filename;
+
+    for(char& c:filename)  
+    { 
+        if (c == '.') { break; }
+        new_filename.push_back(c);
+    } 
+    return new_filename;
+}
+
+/******************************************************************************/
 /*******************   Convert Integer to Binary string   *********************/
 /******************************************************************************/
 std::string int_to_bstring(__int128_t bool_nb, unsigned int r)

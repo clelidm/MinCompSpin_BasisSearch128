@@ -13,6 +13,7 @@ using namespace std;
 /******************************************************************************/
 /***************************   Constant variables   ***************************/
 /******************************************************************************/
+#include "data.h"
 const __int128_t one128 = 1;
 
 unsigned int bitset_count(__int128_t bool_nb);
@@ -21,68 +22,6 @@ unsigned int bitset_count(__int128_t bool_nb);
 /**************************     READ FILE    **********************************/
 /******************************************************************************/
 /**************    READ DATA and STORE them in Nset    ************************/
-/*
-vector<pair<uint64_t, unsigned int>> read_datafile64_vect_bis(string datafilename, unsigned int *N, unsigned int r)    // O(N)  where N = data set size
-{
-  auto start = chrono::system_clock::now();
-
-  cout << endl << "--->> Read the datafile: \"" << datafilename << "\", \t Build Nset..." << endl;
-  cout << "\t Number of variables to read: n = " << r << endl;
-
-  string line, line2;     char c = '1';
-  uint64_t state = 0, Op;
-  (*N) = 0;            // N = dataset sizes
-
-// ***** The data is stored in Nset as an histogram:  ********************************
-  map<uint64_t, unsigned int> Nset; // Nset[mu] = #of time state mu appears in the data set
-
-  ifstream myfile (datafilename.c_str());
-  if (myfile.is_open())
-  {
-    while ( getline (myfile,line))
-    {
-      line2 = line.substr (0,r);          //take the r first characters of line
-      Op = one64 << (r - 1);
-      state = 0;
-      for (auto &elem: line2)     //convert string line2 into a binary integer
-      {
-        if (elem == c) { state += Op; }
-        Op = Op >> 1;
-      }
-      Nset[state] += 1;
-      //cout << line << endl;   //cout << state << " :  " << int_to_bstring(state, r) << endl;
-      (*N)++;
-    }
-    myfile.close();
-  }
-  else cout << endl << "--->> Unable to open file: Check datafilename and location." << endl << endl;
-
-  if ((*N) == 0) 
-    { 
-    cout << endl << "--->> Failure to read the file, or file is empty:  Terminate." << endl << endl;
-    }
-  else
-    {
-    cout << endl << "--->> File has been read successfully:" << endl;
-    cout << "\t Data size, N = " << (*N) << endl;
-    cout << "\t Number of different states, Nset.size() = " << Nset.size() << endl << endl;
-    }
-
-  vector<pair<uint64_t, unsigned int>> Nvect(Nset.size());
-  int i=0;
-  for (auto& my_pair : Nset)
-  {
-    Nvect[i]=my_pair;
-    i++;
-  }
-
-  auto end = chrono::system_clock::now();  
-  chrono::duration<double>  elapsed = end - start;
-  cout << endl << "Elapsed time (in s): " << elapsed.count() << endl << endl; 
-
-  return Nvect;
-}
-*/
 
 vector<pair<__int128_t, unsigned int>> read_datafile128_vect(string datafilename, unsigned int *N, unsigned int r)    // O(N)  where N = data set size
 {
@@ -177,6 +116,10 @@ vector<pair<__int128_t, unsigned int>> read_datafile128_vect(string datafilename
 // Given a choice of a basis (defined by the m-basis list) --> returns the new m-state (i.e. state in the new m-basis)
 // Rem: must have m <= n 
 
+// Basis operators are ordered from Right to Left,
+// i.e., the first basis operator Phi_0 corresponds to the lowest bit (rightmost bit)
+// the last basis operator Phi_{n-1} corresponds to the n-th highest bit
+
 // mu = old state
 // final_mu = new state
 
@@ -240,36 +183,74 @@ vector<pair<__int128_t, unsigned int>> build_Kvect(vector<pair<__int128_t, unsig
     return Kvect;
 }
 
-/*
-vector<pair<__int128_t, unsigned int>> build_Kset(vector<pair<__int128_t, unsigned int>> Nset, list<__int128_t> Basis)
-// sig_m = sig in the new basis and cut on the m first spins 
-// Kset[sig_m] = #of time state mu_m appears in the data set
+/******************************************************************************/
+/*********************   TRANSFORM DATASET to a NEW BASIS    ******************/
+/******************************************************************************/
+string filename_remove_extension(string filename);
+string int_to_bstring(__int128_t bool_nb, unsigned int n);
+
+void convert_datafile_to_NewBasis(string input_dir, string datafilename, unsigned int r, vector<Operator128> BestBasis_vect)    // O(N)  where N = data set size
 {
-    map<__int128_t, unsigned int > Kset_map;
-    __int128_t sig_m;    // transformed state and to the m first spins
+  auto start = chrono::system_clock::now();
 
-// ***** Build Kset: *************************************************************************************
-    cout << endl << "--->> Build Kset..." << endl;
+  list<__int128_t> Basis_li;
+  for(auto& Op:BestBasis_vect)  { Basis_li.push_back(Op.bin);  }  // extract the integer representation of the basis operators:
 
-    for (auto const& it : Nset)
+  cout << endl << "--->> Read the datafile: \"" << (input_dir + datafilename) << "\"" << endl;
+  cout << "\t Number of variables to read: n = " << r << endl;
+
+  string New_datafilename = OUTPUT_directory + filename_remove_extension(datafilename) + "_inBestBasis.dat";
+  fstream file_newdata(New_datafilename, ios::out);
+
+  cout << endl << "--->> Transform to new basis...";
+  cout << endl << "\t Write the new dataset in the file: \"" << New_datafilename << "\"" << endl;
+
+  string line, line2;     char c = '1';
+  __int128_t state = 0, state_new = 0, Op;
+  unsigned int N = 0;            // N = dataset sizes
+
+// ***** Read the original data and convert in new basis:  ********************************
+
+  ifstream file_data ((input_dir + datafilename).c_str());
+  if (file_data.is_open())
+  {
+    while (getline (file_data,line))
     {
-        sig_m = transform_mu_basis((it).first, Basis); // transform the initial state s=(it).first into the new basis
-        Kset_map[sig_m] += ((it).second); // ks = (it).second = number of time state s appear in the dataset
+      line2 = line.substr (0,r);          //take the r first characters of line
+      Op = one128 << (r - 1);
+      state = 0;
+      for (auto &elem: line2)     //convert string line2 into a binary integer
+      {
+        if (elem == c) { state += Op; }
+        Op = Op >> 1;
+      }
+      state_new = transform_mu_basis(state, Basis_li);
+      file_newdata << int_to_bstring(state_new, r) << endl;
+      //int_to_digits_file(state_new, r, file_newdata);
+      N++;
     }
-    cout << endl;
+    file_data.close();
+    file_newdata.close();
+  }
+  else cout << endl << "--->> Unable to open file: Check datafilename and location." << endl << endl;
 
-// ***** Convert map to a vector:  for faster reading later on ********************************************
-    vector<pair<__int128_t, unsigned int>> Kset(Kset_map.size());
-
-    int i=0;
-    for (auto& my_pair : Kset_map)
+  if (N == 0) 
+    { 
+    cout << endl << "--->> Failure to read the file, or file is empty:  Terminate." << endl << endl;
+    }
+  else
     {
-        Kset[i]=my_pair;
-        i++;
+    cout << endl << "--->> File has been converted to the new basis successfully:" << endl;
+    cout << "\t Data size, N = " << N << endl << endl;
+
+    cout << "Operators are ordered from Right to Left: i.e. " << endl; 
+    cout << " \t - the first basis operator corresponds to the rightmost bit (lowest bit)" << endl;
+    cout << " \t - the n-th basis operator corresponds to the leftmost bit (highest bit) " << endl;
     }
 
-    return Kset;
-}*/
-
+  auto end = chrono::system_clock::now();  
+  chrono::duration<double>  elapsed = end - start;
+  cout << endl << "Elapsed time (in s): " << elapsed.count() << "\t for converting data" << endl << endl;  
+}
 
 

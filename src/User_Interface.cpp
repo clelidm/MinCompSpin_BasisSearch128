@@ -26,9 +26,9 @@ void HELP_message()
     cout << endl << "*******************************************************************************************" << endl << endl;
 
     cout << "This will run the example:" << endl << endl;
-    cout << "\tRun: "; // << endl;
+    cout << "\tRun: "; 
     cout << "   >> ./BestBasis.out" << endl << endl;
-    cout << "\tOR: "; //' << endl;
+    cout << "\tOR: "; 
     cout << "    >> make run" << endl;    
  
     cout << endl << "***************************************  OPTION 1  ****************************************";
@@ -123,7 +123,7 @@ int Read_argument(int argc, char *argv[], string *input_datafile, unsigned int *
         string input_datafile_buffer = argv[1];
         string n_string_buffer = argv[2];
 
-        (*input_datafile) = "INPUT/" + input_datafile_buffer;
+        (*input_datafile) = input_datafile_buffer;
         (*n) = stoul(n_string_buffer);
 
         if (argc == 3)

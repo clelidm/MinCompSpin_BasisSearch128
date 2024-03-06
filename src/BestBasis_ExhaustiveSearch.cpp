@@ -84,7 +84,7 @@ vector<Operator128> BestBasis_ExhaustiveSearch(vector<pair<__int128_t, unsigned 
 
 // Time:
   end = chrono::system_clock::now();  elapsed = end - start;
-  cout << "\t Total elapsed time (in s): " << elapsed.count() << endl << endl; 
+  cout << "Total elapsed time (in s): " << elapsed.count() << "\t for Exhaustive Search" << endl << endl; 
 
   return BestBasis;
 }
