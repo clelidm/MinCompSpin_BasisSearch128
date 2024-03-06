@@ -23,7 +23,8 @@ using namespace std;
 unsigned int n = 9;
 
 // INPUT DATA FILES (optional):  must be in the INPUT folder
-string input_datafile = "INPUT/Shapes_n9_Dataset_N1e5.dat"; 
+string input_directory = "INPUT/";
+string input_datafile = "Shapes_n9_Dataset_N1e5.dat"; 
 
 unsigned int k_max = 3; // default value
 
@@ -37,6 +38,7 @@ vector<pair<__int128_t, unsigned int>> read_datafile128_vect(string datafilename
 /**************************     Basis  Tools  *********************************/
 /******************************************************************************/
 bool Is_Basis(vector<Operator128> Basis, unsigned int n);
+vector<Operator128> Invert_Basis(vector<Operator128> Basis, unsigned int n);
 
 void PrintTerm_OpBasis(vector<Operator128> OpVect_Basis, unsigned int n, unsigned int N);
 void PrintFile_OpBasis(vector<Operator128> OpVect_Basis, unsigned int n, unsigned int N, string filename);
@@ -55,6 +57,10 @@ vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, 
 // Changing representation up to order `k_max``:
 vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max=2, bool bool_print = false, unsigned int m_max=1000);
 
+/******************************************************************************/
+/*******************     CONVERT DATA TO BEST BASIS    ************************/
+/******************************************************************************/
+void convert_datafile_to_NewBasis(string input_dir, string input_datafilename, unsigned int r, vector<Operator128> Basis);
 
 /******************************************************************************/
 /************************ User Interface with Flags ***************************/
@@ -66,25 +72,77 @@ int Read_argument(int argc, char *argv[], string *input_datafile, unsigned int *
 /************************** MAIN **********************************************/
 /******************************************************************************/
 
+//std::string filename_remove_extension(std::string filename);
+/*
+__int128_t one128 = 1;
+
+vector<Operator128> Basis_choice()
+{
+    list<string> Basis_li_str;
+
+//    unsigned int r = 3;
+//    Basis_li_str.push_back("100");
+//    Basis_li_str.push_back("110");
+//    Basis_li_str.push_back("001");
+
+    unsigned int r = 9;
+    Basis_li_str.push_back("000100100");
+    Basis_li_str.push_back("000001010");
+    Basis_li_str.push_back("000000011");  
+    Basis_li_str.push_back("100010000");
+    Basis_li_str.push_back("100000100");
+    Basis_li_str.push_back("101000000");
+    Basis_li_str.push_back("010000010");
+    Basis_li_str.push_back("001000001");
+    Basis_li_str.push_back("000000100");
+
+    vector<Operator128> Basis;
+    Operator128 Op;
+    Op.r = r;
+    Op.k1 = 0;
+
+    __int128_t Op_bin = 1, state = 0;  char c = '1';
+
+
+    for (auto& Op_str : Basis_li_str) 
+    {
+        Op_bin = one128 << (r - 1);
+        state = 0;
+        for (auto &elem: Op_str)     //convert string line2 into a binary integer
+        {
+            if (elem == c) { state += Op_bin; }
+            Op_bin = Op_bin >> 1;
+        }
+
+        Op.bin = state;
+        Basis.push_back(Op);
+    }
+
+    return Basis;
+}
+*/
+
+
 int main(int argc, char *argv[])
 {
-/**********************     READ ARGUMENTS    *********************************/
+// **********************     READ ARGUMENTS    ********************************* //
     // argv[0] contains the name of the datafile, from the current folder (i.e. from the folder containing "data.h");
     // argv[1] contains the number of variables to read;
     // argv[2] contains flag
     // argv[3] contains kmax
 
-/**********************     CREATE FLAG    ************************************/
+// **********************     CREATE FLAG    ************************************ //
 // By default:  flag_search = 1 (for the example)
     // 1 = Exhaustive search
     // 2 = Fixed basis search with given choice of k_max
     // 3 = Varying basis search with given choice of k_max
 
+
     int flag_search = Read_argument(argc, argv, &input_datafile, &n, &k_max);
 
     if (flag_search == 0) {   return 0;   }   // error flag --> quit
 
-/**********************   CREATE OUTPUT DIRECTORY    ***************************/
+// **********************   CREATE OUTPUT DIRECTORY    *************************** //
 
     cout << "--->> Create the \"OUTPUT\" Folder: (if needed) ";
     system(("mkdir -p " + OUTPUT_directory).c_str());
@@ -104,7 +162,7 @@ int main(int argc, char *argv[])
 
 	unsigned int N=0;  // will contain the number of datapoints in the dataset
 
-    vector<pair<__int128_t, unsigned int>> Nvect = read_datafile128_vect(input_datafile, &N, n); 
+    vector<pair<__int128_t, unsigned int>> Nvect = read_datafile128_vect(input_directory + input_datafile, &N, n); 
 
 	if (N == 0) { return 0; } // Terminate program if the file can't be found or is empty
 
@@ -187,14 +245,37 @@ int main(int argc, char *argv[])
 
     Histo_BasisOpOrder(BestBasis);
 
+    cout << endl << "*******************************************************************************************";
+    cout << endl << "*********************************  PRINT NEW DATAFILE:  ***********************************";
+    cout << endl << "**************************  ORIGINAL DATA WRITTEN IN NEW BASIS  ***************************";
+    cout << endl << "*******************************************************************************************" << endl;
+
+    convert_datafile_to_NewBasis(input_directory, input_datafile, n, BestBasis);
+/*
+    cout << endl << "*******************************************************************************************";
+    cout << endl << "*************************  PRINT INVERSE BASIS TRANSFORMATION:  ***************************";
+    cout << endl << "*******************************************************************************************" << endl;
+
+//    unsigned int r = 9;
+//    vector<Operator128> Basis = Basis_choice();
+//    PrintTerm_OpBasis(Basis, r, 1);
+//    Is_Basis(Basis, r);  
+
+    vector<Operator128> Basis_invert = Invert_Basis(BestBasis, n);
+    PrintTerm_OpBasis(Basis_invert, n, 1);
+*/
+
+    cout << endl << "*******************************************************************************************";
+    cout << endl << "*********************************   TOTAL ELAPSED TIME:  **********************************";
+    cout << endl << "*******************************************************************************************" << endl;
 
     end = chrono::system_clock::now();  
     elapsed = end - start;
     cout << endl << "Elapsed time (in s): " << elapsed.count() << endl << endl;  
 
+
     return 0;
 }
-
 
 
 
