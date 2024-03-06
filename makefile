@@ -14,7 +14,7 @@ n := 9		# number of binary variables in the datafile
 #### EXAMPLE 2: Big 5:   NOTE: this dataset is different from the one used in the paper
 #datafilename := MNIST11.sorted
 #n := 121
-k := 4	
+k := 3	
 
 
 ########################################################################################################################
@@ -37,10 +37,10 @@ CXXFLAGS = -std=c++11 -O3  #-Wall  #Extra flags to give to the C++ compiler
 DIR_Basis = src
 
 ### Files:
-objects = tools.o ReadDataFile.o User_Interface.o
+objects = tools.o User_Interface.o
 OBJS := $(objects:%=$(DIR_Basis)/%)
 
-objectsWdataH = Init_OpSet.o ExtractBasis_inOpSet.o BasisTools.o BestBasis_IterativeSearch.o BestBasis_ExhaustiveSearch.o
+objectsWdataH = Init_OpSet.o ExtractBasis_inOpSet.o BasisTools.o BestBasis_IterativeSearch.o BestBasis_ExhaustiveSearch.o ReadDataFile.o
 OBJS_Wdata := $(objectsWdataH:%=$(DIR_Basis)/%)
 
 ### Compilation -- Implicite rule:
@@ -55,6 +55,9 @@ BestBasis.out: $(OBJS) $(OBJS_Wdata) includes/main.o
 
 main.o: main.cpp src/data.h
 	g++ $(CXXFLAGS) -c includes/main.cpp -o includes/main.o
+
+ReadDataFile.o: ReadDataFile.cpp src/data.h
+	g++ $(CXXFLAGS) -c ReadDataFile.cpp -o ReadDataFile.o
 
 Init_OpSet.o: Init_OpSet.cpp src/data.h
 	g++ $(CXXFLAGS) -c Init_OpSet.cpp -o Init_OpSet.o
@@ -82,10 +85,10 @@ example:
 	time ./BestBasis.out
 
 run:
-	./BestBasis.out $(datafilename) $n
+	time ./BestBasis.out $(datafilename) $n
 
 run-exhaustive:
-	./BestBasis.out $(datafilename) $n --exhaustive
+	time ./BestBasis.out $(datafilename) $n --exhaustive
 
 run-fix-k:
 	time ./BestBasis.out $(datafilename) $n --fix-k $k
