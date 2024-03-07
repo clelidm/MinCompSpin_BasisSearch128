@@ -111,7 +111,7 @@ Run the following commands in your terminal, from the root folder (which contain
     - `-fix-kmaxX`: using the search in fixed representation up to order `kmax=X` (where `X` is replaced by the appropriate number);
     - `-var-kmaxX`: using the search in varying representations up to order `kmax=X` (where `X` is replaced by the appropriate number).
 
- - **Additional outputs:** The two searches in fixed and varying representations have additional outputs that will be automatically placed in a separate folder (within the `OUTPUT` folder).
+ - **Additional outputs:** The two searches in fixed and varying representations have additional outputs that will be automatically placed in a separate folder (within the `OUTPUT` folder). These files record the successive sets of operators and bases found during each procedure (in fixed or varying representation: the prefix `Ri_` indicates in which iteration `i` of the representation the operators are printed).
  
  - **Interpreting the printed Basis:**  How to read the output Basis? and where to find it?
    
