@@ -43,6 +43,9 @@ vector<Operator128> Invert_Basis(vector<Operator128> Basis, unsigned int n);
 void PrintTerm_OpBasis(vector<Operator128> OpVect_Basis, unsigned int n, unsigned int N);
 void PrintFile_OpBasis(vector<Operator128> OpVect_Basis, unsigned int n, unsigned int N, string filename);
 
+void PrintTerm_OpBasis_Short(vector<Operator128> Basis, unsigned int n, unsigned int N);
+void PrintFile_OpBasis_Short(vector<Operator128> Basis, unsigned int n, unsigned int N, string filename);
+
 map<unsigned int, unsigned int> Histo_BasisOpOrder(vector<Operator128> Basis);
 
 /******************************************************************************/
@@ -52,10 +55,10 @@ map<unsigned int, unsigned int> Histo_BasisOpOrder(vector<Operator128> Basis);
 vector<Operator128> BestBasis_ExhaustiveSearch(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, bool bool_print = false);
 
 // Fixed Representation up to order `k_max``:
-vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max = 2, bool bool_print = false, unsigned int B_it = 0, unsigned int m_max=1000);
+vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max = 2, string OUTPUT_Data_folder = "", bool bool_print = false, unsigned int B_it = 0, unsigned int m_max=1000);
 
 // Changing representation up to order `k_max``:
-vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max=2, bool bool_print = false, unsigned int m_max=1000);
+vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max=2, string OUTPUT_Data_folder = "", bool bool_print = false, unsigned int m_max=1000);
 
 /******************************************************************************/
 /*******************     CONVERT DATA TO BEST BASIS    ************************/
@@ -68,11 +71,12 @@ void convert_datafile_to_NewBasis(string input_dir, string input_datafilename, u
 
 int Read_argument(int argc, char *argv[], string *input_datafile, unsigned int *n, unsigned int *k_max);
 
+string filename_remove_extension(string filename);
+
 /******************************************************************************/
 /************************** MAIN **********************************************/
 /******************************************************************************/
 
-//std::string filename_remove_extension(std::string filename);
 /*
 __int128_t one128 = 1;
 
@@ -94,7 +98,7 @@ vector<Operator128> Basis_choice()
     Basis_li_str.push_back("101000000");
     Basis_li_str.push_back("010000010");
     Basis_li_str.push_back("001000001");
-    Basis_li_str.push_back("000000100");
+    //Basis_li_str.push_back("000000100");
 
     vector<Operator128> Basis;
     Operator128 Op;
@@ -119,8 +123,8 @@ vector<Operator128> Basis_choice()
     }
 
     return Basis;
-}
-*/
+}*/
+
 
 
 int main(int argc, char *argv[])
@@ -142,10 +146,13 @@ int main(int argc, char *argv[])
 
     if (flag_search == 0) {   return 0;   }   // error flag --> quit
 
-// **********************   CREATE OUTPUT DIRECTORY    *************************** //
+// **********************   CREATE OUTPUT DIRECTORIES    *************************** //
 
     cout << "--->> Create the \"OUTPUT\" Folder: (if needed) ";
     system(("mkdir -p " + OUTPUT_directory).c_str());
+
+    string prefix_datafilename = filename_remove_extension(input_datafile); // For output specific to the Dataset
+
     cout << endl;
 
     // chrono variables:
@@ -185,6 +192,7 @@ int main(int argc, char *argv[])
 
         bool_print = false;
 
+        prefix_datafilename += "-exh"; // For output specific to the Dataset
         BestBasis = BestBasis_ExhaustiveSearch(Nvect, n, N, bool_print);
     }
 
@@ -200,9 +208,17 @@ int main(int argc, char *argv[])
         bool_print = false;
         // By default, k_max = 3;  // largest order of operators to take into account in each representation
 
+        prefix_datafilename += ("-fix-kmax" + to_string(k_max));  // For output specific to the Dataset
+        system(("mkdir -p " + OUTPUT_directory + prefix_datafilename + "/").c_str());
+
         cout << "Search for the best basis among all operators up to order kmax = " << k_max << "." << endl << endl;
 
-        BestBasis = BestBasisSearch_FixedRepresentation(Nvect, n, N, k_max, bool_print);
+        start = chrono::system_clock::now(); 
+        BestBasis = BestBasisSearch_FixedRepresentation(Nvect, n, N, k_max, prefix_datafilename, bool_print);
+        
+        end = chrono::system_clock::now();
+        elapsed = end - start; 
+        cout << endl << "Elapsed time (in s): " << elapsed.count() << "\tfor Basis Search in fixed representation." << endl << endl; 
     }
 
     else if (flag_search == 3)
@@ -219,6 +235,9 @@ int main(int argc, char *argv[])
         unsigned int m_max = 50000;
         // By default, k_max = 3;  // largest order of operators to take into account in each representation
 
+        prefix_datafilename += ("-var-kmax" + to_string(k_max));  // For output specific to the Dataset
+        system(("mkdir -p " + OUTPUT_directory + prefix_datafilename + "/").c_str());
+
         cout << "Search for the best basis among all operators up to order kmax = " << k_max << "." << endl << endl;
 
         cout << "The data is then transformed in the representation given by the best basis." << endl;
@@ -226,7 +245,12 @@ int main(int argc, char *argv[])
         cout << "The process is repeated until the basis doesn't change anymore" << endl;
         cout << "(i.e. the basis found in the current representation is identity)." << endl;
 
-        BestBasis = BestBasisSearch_Final(Nvect, n, N, k_max, bool_print, m_max); 
+        start = chrono::system_clock::now(); 
+        BestBasis = BestBasisSearch_Final(Nvect, n, N, k_max, prefix_datafilename, bool_print, m_max); 
+
+        end = chrono::system_clock::now();
+        elapsed = end - start; 
+        cout << endl << "Elapsed time (in s): " << elapsed.count() << "\tfor Basis Search in varying representation." << endl << endl; 
     }
 
     if (BestBasis.size() == 0)  // Terminate program if the Basis is empty
@@ -240,7 +264,7 @@ int main(int argc, char *argv[])
     cout << endl << "*******************************************************************************************" << endl;
 
     PrintTerm_OpBasis(BestBasis, n, N);  
-    PrintFile_OpBasis(BestBasis, n, N, "Final_Basis");  
+    PrintFile_OpBasis(BestBasis, n, N, prefix_datafilename + "_BestBasis");  
     //Is_Basis(BestBasis_k2, n);   // this function can check if a set of Operators is in independent set
 
     Histo_BasisOpOrder(BestBasis);
@@ -250,8 +274,8 @@ int main(int argc, char *argv[])
     cout << endl << "**************************  ORIGINAL DATA WRITTEN IN NEW BASIS  ***************************";
     cout << endl << "*******************************************************************************************" << endl;
 
-    convert_datafile_to_NewBasis(input_directory, input_datafile, n, BestBasis);
-/*
+    convert_datafile_to_NewBasis(input_directory + input_datafile, OUTPUT_directory + prefix_datafilename, n, BestBasis);
+
     cout << endl << "*******************************************************************************************";
     cout << endl << "*************************  PRINT INVERSE BASIS TRANSFORMATION:  ***************************";
     cout << endl << "*******************************************************************************************" << endl;
@@ -261,9 +285,18 @@ int main(int argc, char *argv[])
 //    PrintTerm_OpBasis(Basis, r, 1);
 //    Is_Basis(Basis, r);  
 
-    vector<Operator128> Basis_invert = Invert_Basis(BestBasis, n);
-    PrintTerm_OpBasis(Basis_invert, n, 1);
-*/
+    vector<Operator128> Basis_invert = Invert_Basis(BestBasis, n); 
+
+    if (Basis_invert.size() == 0)  // No inverse given
+    {
+        cout << "Inverse transformation is not available." << endl;
+    }
+    else
+    {
+        cout << "**** Inverse Basis Transformation: ****" << endl << endl;
+        PrintTerm_OpBasis_Short(Basis_invert, n, 1);
+        PrintFile_OpBasis_Short(Basis_invert, n, N, prefix_datafilename + "_BestBasis_inverse"); 
+    }
 
     cout << endl << "*******************************************************************************************";
     cout << endl << "*********************************   TOTAL ELAPSED TIME:  **********************************";
