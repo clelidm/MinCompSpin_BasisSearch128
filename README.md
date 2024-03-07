@@ -131,7 +131,7 @@ Run the following commands in your terminal, from the root folder (which contain
      >                                                          6	010000001	 Indices = 	9	2	
      >                                                          7	100010000	 Indices = 	5	1	
      >                                                          8	100000000	 Indices = 	1	
-     >                                                          9	000000001  Indices = 	9
+     >                                                          9	000000001	 Indices = 	9
      >
      >      Here, the indices are counted from the left (s1) to the right (s9),
      >      one can read the contribution of each spin `s_i` to each basis element `sig_i`:
