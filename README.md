@@ -123,30 +123,28 @@ Run the following commands in your terminal, from the root folder (which contain
 
      >      For example, for the "Shape" dataset with 9 binary variables,
      >           
-     >      The exhaustive search finds the following basis:
-     > 
-     >                                       1	000000011	 Indices = 	9	8	
-     >                                       2	000000101	 Indices = 	9	7
-     >                                       3	000001001	 Indices = 	9	6	
-     >                                       4	000110000	 Indices = 	5	4	
-     >                                       5	001000001	 Indices = 	9	3	
-     >                                       6	010000001	 Indices = 	9	2	
-     >                                       7	100010000	 Indices = 	5	1	
-     >                                       8	100000000	 Indices = 	1	
-     >                                       9	000000001  Indices = 	9
+     >      The exhaustive search finds the following basis:    1	000000011	 Indices = 	9	8	
+     >                                                          2	000000101	 Indices = 	9	7
+     >                                                          3	000001001	 Indices = 	9	6	
+     >                                                          4	000110000	 Indices = 	5	4	
+     >                                                          5	001000001	 Indices = 	9	3	
+     >                                                          6	010000001	 Indices = 	9	2	
+     >                                                          7	100010000	 Indices = 	5	1	
+     >                                                          8	100000000	 Indices = 	1	
+     >                                                          9 000000001  Indices = 	9
      >
      >      Here, the indices are counted from the left (s1) to the right (s9),
      >      one can read the contribution of each spin `s_i` to each basis element `sig_i`:
      > 
-     >                            000000011, this corresponds to the basis operator: sig_1 = s8 s9
-     >                            000000101, this corresponds to the basis operator: sig_2 = s7 s9
-     >                            - 000001001, this corresponds to the basis operator: sig_3 = s6 s9
-     >                            - 000110000, this corresponds to the basis operator: sig_4 = s4 s5
-     >                            - 001000001, this corresponds to the basis operator: sig_5 = s3 s9
-     >                            - 010000001, this corresponds to the basis operator: sig_6 = s2 s9
-     >                            - 100010000, this corresponds to the basis operator: sig_7 = s1 s5
-     >                            - 100000000, this corresponds to the basis operator: sig_8 = s1
-     >                            - 000000001, this corresponds to the basis operator: sig_9 = s9
+     >                            000000011  corresponds to the basis operator: sig_1 = s8 s9
+     >                            000000101  corresponds to the basis operator: sig_2 = s7 s9
+     >                            000001001  corresponds to the basis operator: sig_3 = s6 s9
+     >                            000110000  corresponds to the basis operator: sig_4 = s4 s5
+     >                            001000001  corresponds to the basis operator: sig_5 = s3 s9
+     >                            010000001  corresponds to the basis operator: sig_6 = s2 s9
+     >                            100010000  corresponds to the basis operator: sig_7 = s1 s5
+     >                            100000000  corresponds to the basis operator: sig_8 = s1
+     >                            000000001  corresponds to the basis operator: sig_9 = s9
      > 
      >      This are the basis operator displayed in Fig. 5 of Ref.[1].
      >      Note that the basis elements are not organized in the same order.
@@ -158,30 +156,28 @@ Run the following commands in your terminal, from the root folder (which contain
 
      >      For example, for the "Shape" dataset with 9 binary variables,
      > 
-     >      The inverse basis transformation is given by:
-     > 
-     >                                       1	000000010 	 Indices = 	8	
-     >                                       2	000001001 	 Indices = 	9	6	
-     >                                       3	000010001 	 Indices = 	9	5	
-     >                                       4	000100110 	 Indices = 	8	7	4	
-     >                                       5	000000110 	 Indices = 	8	7	
-     >                                       6	001000001 	 Indices = 	9	3	
-     >                                       7	010000001 	 Indices = 	9	2	
-     >                                       8	100000001 	 Indices = 	9	1	
-     >                                       9	000000001 	 Indices = 	9
+     >      The inverse basis transformation is given by:    1	000000010 	 Indices = 	8	
+     >                                                       2	000001001 	 Indices = 	9	6	
+     >                                                       3	000010001 	 Indices = 	9	5	
+     >                                                       4	000100110 	 Indices = 	8	7	4	
+     >                                                       5	000000110 	 Indices = 	8	7	
+     >                                                       6	001000001 	 Indices = 	9	3	
+     >                                                       7	010000001 	 Indices = 	9	2	
+     >                                                       8	100000001 	 Indices = 	9	1	
+     >                                                       9	000000001 	 Indices = 	9
      > 
      >      Here again, the indices are counted from the left (sig_1) to the right (sig_9),
      >      one can read the contribution of each spin `sig_i` to each basis element `si`:
      > 
-     >                            000000010, this corresponds to the basis operator: s1 = sig_8
-     >                            000001001, this corresponds to the basis operator: s2 = sig_6 sig_9
-     >                            000010001, this corresponds to the basis operator: s3 = sig_5 sig_9
-     >                            000100110, this corresponds to the basis operator: s4 = sig_4 sig_7 sig_8
-     >                            000000110, this corresponds to the basis operator: s5 = sig_7 sig_8
-     >                            001000001, this corresponds to the basis operator: s6 = sig_3 sig_9
-     >                            010000001, this corresponds to the basis operator: s7 = sig_2 sig_9
-     >                            100000001, this corresponds to the basis operator: s8 = sig_1 sig_9
-     >                            000000001, this corresponds to the basis operator: s9 = sig_9
+     >                            000000010  corresponds to the basis operator: s1 = sig_8
+     >                            000001001  corresponds to the basis operator: s2 = sig_6 sig_9
+     >                            000010001  corresponds to the basis operator: s3 = sig_5 sig_9
+     >                            000100110  corresponds to the basis operator: s4 = sig_4 sig_7 sig_8
+     >                            000000110  corresponds to the basis operator: s5 = sig_7 sig_8
+     >                            001000001  corresponds to the basis operator: s6 = sig_3 sig_9
+     >                            010000001  corresponds to the basis operator: s7 = sig_2 sig_9
+     >                            100000001  corresponds to the basis operator: s8 = sig_1 sig_9
+     >                            000000001  corresponds to the basis operator: s9 = sig_9
      > 
    
  - **Results for the examples:** See Ref.[1] for results and discussions on the best basis obtained for these datasets.
