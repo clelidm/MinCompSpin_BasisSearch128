@@ -93,6 +93,19 @@ Run the following commands in your terminal, from the root folder (which contain
 
  - **To clean:** `make clean` (to use only once you're done using the code)
 
+## Output files and format of the returned basis:
+
+ - **Terminal Output:** We provided, in the `OUTPUT` folder, the LOGS returned when running the`./BestBasis.out` code on the example datasets.
+
+ - **List of outputs:**
+   - **Best Basis found:**
+   - **Inverse of the Best Basis found:**
+   - **Dataset converted in the new Basis:**
+
+ - **Interpreting the printed Basis:**  How to read the output Basis? and where to find it?
+   
+ - **Results for the examples:** See Ref.[1] for results and discussions on the best basis obtained for these datasets.
+
 ## Examples
 
 In the `INPUT` folder, we provided the following examples:
