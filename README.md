@@ -111,9 +111,39 @@ Run the following commands in your terminal, from the root folder (which contain
     - `-fix-kmaxX`: using the search in fixed representation up to order `kmax=X` (where `X` is replaced by the appropriate number);
     - `-var-kmaxX`: using the search in varying representations up to order `kmax=X` (where `X` is replaced by the appropriate number).
 
- - **Additional outputs:** The two searches in fixed and varying representations have additional outputs that will be automatically placed in a separate folder (within the `OUTPUT` folder). These files record the successive sets of operators and bases found during each procedure (in fixed or varying representation: the prefix `Ri_` indicates in which iteration `i` of the representation the operators are printed).
+ - **Additional outputs:** The two searches in fixed and varying representations have additional outputs that will be automatically placed in a separate folder (within the `OUTPUT` folder). These files record the successive sets of operators and bases found during each procedure:
+    - in fixed or varying representation: the prefix `Ri_` indicates in which iteration `i` of the representation the operators are printed;
+    - at each iteration i of the representation: the extension `_kX_` indicates up to which order `X` is the current set of operators (and best basis) computed.
+
+   For the process in varying representation, the file `All_Bases_inR0.dat` contains all the successive bases found written in the original representation (i.e. in the original basis variables); the file `All_Bases_inRi.dat` contains  all the successive bases found written in the current basis representation `Ri`: this file should always end with the identity basis (which means that the algorithm has properly converged).
  
- - **Interpreting the printed Basis:**  How to read the output Basis? and where to find it?
+ - **Interpreting the printed Basis:**  How to read the output Basis?
+   The best basis found is printed as a list of binary strings, each one encoding a basis variable (i.e., a spin operator): spins with a bit equal to '1' are included in the operators, spins with a '0' don't. Variables are organized in the same order as in the original datafile, i.e. the i-th spin from the right in the operator corresponds to the i-th spin from the right in the original datafile.
+
+     >      For example, for the "Shape" dataset with 9 binary variables, the exhaustive search finds the following basis:
+     >
+     >      The following MCM has 3 parts:   1	000000011	 Indices = 	9	8	
+     >                                       2	000000101	 Indices = 	9	7
+     >                                       3	000001001	 Indices = 	9	6	
+     >                                       4	000110000	 Indices = 	5	4	
+     >                                       5	001000001	 Indices = 	9	3	
+     >                                       6	010000001	 Indices = 	9	2	
+     >                                       7	100010000	 Indices = 	5	1	
+     >                                       8	100000000	 Indices = 	1	
+     >                                       9	000000001  Indices = 	9
+     >
+     >      Here, the indices are counted from the left (s1) to the right (s9),
+     >      one can read the contribution of each spin `s_i` to each basis element `sig_i`:
+     >                            - 000000011, this corresponds to the basis operator: sig_1 = s8 s9
+     >                            - 000000101, this corresponds to the basis operator: sig_1 = s7 s9
+     >                            - 000001001, this corresponds to the basis operator: sig_1 = s6 s9
+     >                            - 000110000, this corresponds to the basis operator: sig_1 = s4 s5
+     >                            - 001000001, this corresponds to the basis operator: sig_1 = s3 s9
+     >                            - 010000001, this corresponds to the basis operator: sig_1 = s2 s9
+     >                            - 100010000, this corresponds to the basis operator: sig_1 = s1 s5
+     >                            - 100000000, this corresponds to the basis operator: sig_1 = s1
+     >                            - 000000001, this corresponds to the basis operator: sig_1 = s9
+     > 
    
  - **Results for the examples:** See Ref.[1] for results and discussions on the best basis obtained for these datasets.
 
