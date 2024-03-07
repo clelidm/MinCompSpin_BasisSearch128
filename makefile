@@ -11,10 +11,17 @@
 datafilename := Shapes_n9_Dataset_N1e5.dat
 n := 9		# number of binary variables in the datafile 
 
-#### EXAMPLE 2: Big 5:   NOTE: this dataset is different from the one used in the paper
+#### EXAMPLE 2: Big 5: 
+####    on a laptop, k=3 takes about 15min, and k=4 takes about 3h
+#datafilename := Big5PT.sorted
+#n := 50
+k := 3	
+
+#### EXAMPLE 3: MNIST data:  
+####    on a laptop, k=2 takes about 15min; k=3 takes about 3h; k=4 takes about 30h
 #datafilename := MNIST11.sorted
 #n := 121
-k := 3	
+#k := 2	
 
 
 ########################################################################################################################
