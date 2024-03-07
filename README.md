@@ -124,6 +124,7 @@ Run the following commands in your terminal, from the root folder (which contain
      >      For example, for the "Shape" dataset with 9 binary variables,
      >           
      >      The exhaustive search finds the following basis:
+     > 
      >                                       1	000000011	 Indices = 	9	8	
      >                                       2	000000101	 Indices = 	9	7
      >                                       3	000001001	 Indices = 	9	6	
@@ -136,8 +137,9 @@ Run the following commands in your terminal, from the root folder (which contain
      >
      >      Here, the indices are counted from the left (s1) to the right (s9),
      >      one can read the contribution of each spin `s_i` to each basis element `sig_i`:
-     >                            - 000000011, this corresponds to the basis operator: sig_1 = s8 s9
-     >                            - 000000101, this corresponds to the basis operator: sig_2 = s7 s9
+     > 
+     >                            000000011, this corresponds to the basis operator: sig_1 = s8 s9
+     >                            000000101, this corresponds to the basis operator: sig_2 = s7 s9
      >                            - 000001001, this corresponds to the basis operator: sig_3 = s6 s9
      >                            - 000110000, this corresponds to the basis operator: sig_4 = s4 s5
      >                            - 001000001, this corresponds to the basis operator: sig_5 = s3 s9
@@ -157,6 +159,7 @@ Run the following commands in your terminal, from the root folder (which contain
      >      For example, for the "Shape" dataset with 9 binary variables,
      > 
      >      The inverse basis transformation is given by:
+     > 
      >                                       1	000000010 	 Indices = 	8	
      >                                       2	000001001 	 Indices = 	9	6	
      >                                       3	000010001 	 Indices = 	9	5	
@@ -169,6 +172,16 @@ Run the following commands in your terminal, from the root folder (which contain
      > 
      >      Here again, the indices are counted from the left (sig_1) to the right (sig_9),
      >      one can read the contribution of each spin `sig_i` to each basis element `si`:
+     > 
+     >                            000000010, this corresponds to the basis operator: s1 = sig_8
+     >                            000001001, this corresponds to the basis operator: s2 = sig_6 sig_9
+     >                            000010001, this corresponds to the basis operator: s3 = sig_5 sig_9
+     >                            000100110, this corresponds to the basis operator: s4 = sig_4 sig_7 sig_8
+     >                            000000110, this corresponds to the basis operator: s5 = sig_7 sig_8
+     >                            001000001, this corresponds to the basis operator: s6 = sig_3 sig_9
+     >                            010000001, this corresponds to the basis operator: s7 = sig_2 sig_9
+     >                            100000001, this corresponds to the basis operator: s8 = sig_1 sig_9
+     >                            000000001, this corresponds to the basis operator: s9 = sig_9
      > 
    
  - **Results for the examples:** See Ref.[1] for results and discussions on the best basis obtained for these datasets.
