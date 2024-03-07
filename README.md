@@ -106,6 +106,13 @@ Run the following commands in your terminal, from the root folder (which contain
    
      Will be printed in the file with the name ending in `_inBestBasis.dat`;
 
+ - **Extensions:** The following extensions indicate with which codes the best basis (and other associated files) was obtained:
+    - `-exh`: using the exhaustive search;
+    - `-fix-kmaX`: using the search in fixed representation up to order `kmax=X` (where `X` is replaced by the appropriate number);
+    - `-var-kmaX`: using the search in varying representations up to order `kmax=X` (where `X` is replaced by the appropriate number).
+
+ - **Additional outputs:** The two searches in fixed and varying representations have additional outputs that will be automatically placed in a separate folder (within the `OUTPUT` folder).
+ 
  - **Interpreting the printed Basis:**  How to read the output Basis? and where to find it?
    
  - **Results for the examples:** See Ref.[1] for results and discussions on the best basis obtained for these datasets.
