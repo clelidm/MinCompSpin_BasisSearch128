@@ -189,17 +189,17 @@ vector<pair<__int128_t, unsigned int>> build_Kvect(vector<pair<__int128_t, unsig
 string filename_remove_extension(string filename);
 string int_to_bstring(__int128_t bool_nb, unsigned int n);
 
-void convert_datafile_to_NewBasis(string input_dir, string datafilename, unsigned int r, vector<Operator128> BestBasis_vect)    // O(N)  where N = data set size
+void convert_datafile_to_NewBasis(string input_datafile, string output_datafile, unsigned int r, vector<Operator128> BestBasis_vect)    // O(N)  where N = data set size
 {
   auto start = chrono::system_clock::now();
 
   list<__int128_t> Basis_li;
   for(auto& Op:BestBasis_vect)  { Basis_li.push_back(Op.bin);  }  // extract the integer representation of the basis operators:
 
-  cout << endl << "--->> Read the datafile: \"" << (input_dir + datafilename) << "\"" << endl;
+  cout << endl << "--->> Read the datafile: \"" << input_datafile << "\"" << endl;
   cout << "\t Number of variables to read: n = " << r << endl;
 
-  string New_datafilename = OUTPUT_directory + filename_remove_extension(datafilename) + "_inBestBasis.dat";
+  string New_datafilename = output_datafile + "_inBestBasis.dat";
   fstream file_newdata(New_datafilename, ios::out);
 
   cout << endl << "--->> Transform to new basis...";
@@ -211,7 +211,7 @@ void convert_datafile_to_NewBasis(string input_dir, string datafilename, unsigne
 
 // ***** Read the original data and convert in new basis:  ********************************
 
-  ifstream file_data ((input_dir + datafilename).c_str());
+  ifstream file_data ((input_datafile).c_str());
   if (file_data.is_open())
   {
     while (getline (file_data,line))

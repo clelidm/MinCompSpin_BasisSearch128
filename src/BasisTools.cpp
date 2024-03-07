@@ -134,39 +134,52 @@ vector<Operator128> MatrixF2_to_Basis(bool** M, unsigned int n)
   return Basis;
 }
 
-bool** RREF_F2_invert(bool** M, int n);
+pair<int, bool**> RREF_F2_invert(bool** M, int n);
+//bool** RREF_F2_invert(bool** M, int n); // only works for square matrices
 
-/*
-bool** Invert_Basis_M(vector<Operator128> Basis, unsigned int n)
-{
-  bool** M_Basis = Basis_to_MatrixF2(Basis, n);
-
-  // Row Reduction procedure to invert:
-  bool** M_Basis_invert = RREF_F2_invert(M_Basis, n);
-
-  return M_Basis_invert;
-}*/
+// n = number of variables
+// m = number of operators in the independent set
+// if m > n : the set cannot be independent: stop the procedure;
+// if n=m: check if rank=n, then everything is good and return the inverse basis
+// if m < n:  even if it is an independent set, it is not a basis, and may not be invertable: stop the procedure.
 
 vector<Operator128> Invert_Basis(vector<Operator128> Basis, unsigned int n)
 {
-  bool** M_Basis = Basis_to_MatrixF2(Basis, n);
+  vector<Operator128> Basis_invert;
 
-  // Row Reduction procedure to invert:
-  bool** M_invert = RREF_F2_invert(M_Basis, n);
+  if (Basis.size() == n)
+  {
+    bool** M_Basis = Basis_to_MatrixF2(Basis, n);
 
-  vector<Operator128> Basis_invert = MatrixF2_to_Basis(M_invert, n);
+    // Row Reduction procedure to invert:
+    pair<int, bool**> M_invert = RREF_F2_invert(M_Basis, n);
 
-  // Free memory:
-  for (int i=0; i<n; i++)
-  {   
-      free(M_Basis[i]);   free(M_invert[i]);   
-  } 
-  free(M_Basis);
-  free(M_invert);  
+    if(M_invert.first == n) // M_invert.first = rank
+    {
+      cout << "Rank = n = " << n << "\t: this is a basis and can be inverted." << endl << endl;
+      Basis_invert = MatrixF2_to_Basis(M_invert.second, n);
+    }
+    else 
+    {
+      cout << "The Rank = " << M_invert.first << " is smaller than the number of variables, n = " << n << "\t: this is not a basis." << endl << endl;
+      //cout << "Note that the inverse transformation provided is therefore incomplete." << endl;
+    } 
+
+    // Free memory:
+    for (int i=0; i<n; i++)
+    {   
+      free(M_Basis[i]);   free(M_invert.second[i]);   
+    } 
+    free(M_Basis);
+    free(M_invert.second);  
+  }
+  else
+  {
+    cout << "The number of operators in the basis provided, m=" << Basis.size() << ", is not equal to the number of spin variables, n=" << n << ":" << endl << endl;
+  }
 
   return Basis_invert;
 }
-
 
 /******************************************************************************/
 /****************   Print Terminal Vector Best Operators  *********************/
@@ -199,7 +212,7 @@ void PrintTerm_OpBasis(vector<Operator128> Basis, unsigned int n, unsigned int N
 
 void PrintFile_OpBasis(vector<Operator128> Basis, unsigned int n, unsigned int N, string filename)
 {
-  string OpSet_filename = OUTPUT_directory + filename + "_OpSet.dat";
+  string OpSet_filename = OUTPUT_directory + filename + ".dat";
 
   cout << "-->> Print Basis Operators in the file: \'" <<  OpSet_filename << "\'" << endl;
   fstream file_OpBasis(OpSet_filename, ios::out);
@@ -226,6 +239,51 @@ void PrintFile_OpBasis(vector<Operator128> Basis, unsigned int n, unsigned int N
   file_OpBasis << endl;
   file_OpBasis << "##  LogL / N = " << LogL << endl;  //<< setprecision (6) 
   file_OpBasis << "## -LogL / N / log(2) = " << -LogL/log(2.) << " bits per datapoints "<< endl;  //<< setprecision (6) 
+  file_OpBasis.close();
+
+  cout << endl;
+}
+
+// ****** SHORT VERSIONS:
+
+void PrintTerm_OpBasis_Short(vector<Operator128> Basis, unsigned int n, unsigned int N)
+{
+  int i = 1;
+
+  cout << "-->> Print Basis Operators: \t Total number of operators = " << Basis.size() << endl << endl;  
+  cout << "## 1:i \t 2:bin \t\t 3:Op_index " << endl << "## " << endl; 
+
+  for (auto& Op : Basis)
+  {
+    cout << fixed;
+    cout << i << "\t" << int_to_bstring(Op.bin, n);
+    cout << " \t Indices = "; 
+    int_to_digits(Op.bin, n);
+    i++;
+  }
+  cout << endl;
+}
+
+void PrintFile_OpBasis_Short(vector<Operator128> Basis, unsigned int n, unsigned int N, string filename)
+{
+  string OpSet_filename = OUTPUT_directory + filename + ".dat";
+
+  cout << "-->> Print Basis Operators in the file: \'" <<  OpSet_filename << "\'" << endl;
+  fstream file_OpBasis(OpSet_filename, ios::out);
+  
+  int i = 1;
+
+  file_OpBasis << "## Basis: Total number of operators = " << Basis.size() << endl << "## " << endl; 
+  file_OpBasis << "## 1:bin \t 2:count \t 3:Op_index " << endl << "## " << endl; 
+
+  for (auto& Op : Basis)
+  {
+    file_OpBasis << fixed;
+    file_OpBasis << int_to_bstring(Op.bin, n) << "\t" << i << " \t Indices = "; 
+    //file_OpBasis << i << "\t" << int_to_bstring(Op.bin, n) << "\t" << Op.bias << "\t" << Op.k1  << "\t" << p1 << "\t" << LogLi << "\t Indices = "; 
+    int_to_digits_file(Op.bin, n, file_OpBasis);
+    i++;
+  }
   file_OpBasis.close();
 
   cout << endl;

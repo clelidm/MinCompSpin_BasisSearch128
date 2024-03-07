@@ -72,9 +72,11 @@ void SaveFile_Basis(vector<Operator128> Basis, unsigned int n, fstream &file)
 /***************     Search in a Given Representation  Tools  *****************/
 /******************************************************************************/
 
-vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max = 2, bool bool_print = false, unsigned int R_it = 0, unsigned int m_max=1000)
+vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max = 2, string OUTPUT_Data_folder = "", bool bool_print = false, unsigned int R_it = 0, unsigned int m_max=1000)
 {
   k_max = (k_max<2)?2:k_max;  // k_max must be at least 2;
+
+  string out_folder = OUTPUT_Data_folder + "/";
 
   cout << endl << "*****************  FIND THE SMALLEST BIAS OF THE CURRENT BASIS (k = 1):  ******************";
   cout << endl << "*******************************************************************************************" << endl;
@@ -87,7 +89,7 @@ vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, 
   set<Operator128> OpSet = All_Op_k1(Nvect, n, N, &Bias_LowerBound, bool_print);
 
   //PrintTerm_OpSet(OpSet_B0, n);
-  PrintFile_OpSet(OpSet, n, "R" + to_string(R_it) +"_k1");
+  PrintFile_OpSet(OpSet, n, out_folder + "R" + to_string(R_it) + "_k1");
 
   Struct_LowerBound LB; // Lower Bound Info
   LB.Bias = Bias_LowerBound;
@@ -103,7 +105,7 @@ vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, 
 
   for (unsigned int k = 2; k <= k_max; k++)
   {
-      filename_k = "R" + to_string(R_it) +"_k"+to_string(k);
+      filename_k = out_folder + "R" + to_string(R_it) +"_k"+to_string(k);
 
       cout << endl << "****************************  ADD ALL OPERATORS for k = " << k << "  ********************************";
       cout << endl << "*******************************************************************************************" << endl;
@@ -172,7 +174,7 @@ vector<Operator128> UpdateBasis_inR0(vector<Operator128> BestBasis_R0_old, vecto
 /******************************************************************************/
 vector<pair<__int128_t, unsigned int>> build_Kvect(vector<pair<__int128_t, unsigned int>> Nvect, list<__int128_t> Basis);
 
-vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max = 2, bool bool_print = false, unsigned int m_max=1000)
+vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>> Nvect, unsigned int n, unsigned int N, unsigned int k_max = 2, string OUTPUT_Data_folder = "", bool bool_print = false, unsigned int m_max=1000)
 {
     k_max = (k_max<2)?2:k_max;  // k_max must be at least 2;
 
@@ -182,16 +184,16 @@ vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>>
 
     unsigned int R_it = 0;   // Initial Representation --> R0
 
-    vector<Operator128> BestBasis_R0 = BestBasisSearch_FixedRepresentation(Nvect, n, N, k_max, bool_print, R_it, m_max);
+    vector<Operator128> BestBasis_R0 = BestBasisSearch_FixedRepresentation(Nvect, n, N, k_max, OUTPUT_Data_folder, bool_print, R_it, m_max);
 
 //Save Basis:
-    string Basis_filename = OUTPUT_directory + "All_Bases_inRi.dat";
+    string Basis_filename = OUTPUT_directory + OUTPUT_Data_folder + "/All_Bases_inRi.dat";
     fstream Basis_file(Basis_filename, ios::out); 
 
     Basis_file << "### File containing all the successive Basis" << endl;
     Basis_file << "### Note that Bases are given in the successive representation, and not in the original representation" << endl << endl;
 
-    string Basis_filename_R0 = OUTPUT_directory + "All_Bases_inR0.dat";
+    string Basis_filename_R0 = OUTPUT_directory + OUTPUT_Data_folder + "/All_Bases_inR0.dat";
     fstream Basis_file_R0(Basis_filename_R0, ios::out); 
 
     Basis_file_R0 << "### File containing all the successive Basis" << endl;
@@ -229,7 +231,7 @@ vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>>
         R_it += 1;   // New basis
 
         BestBasis_Ri.clear();
-        BestBasis_Ri = BestBasisSearch_FixedRepresentation(Kvect, n, N, k_max, bool_print, R_it, m_max);
+        BestBasis_Ri = BestBasisSearch_FixedRepresentation(Kvect, n, N, k_max, OUTPUT_Data_folder, bool_print, R_it, m_max);
 
         PrintTerm_OpBasis(BestBasis_Ri, n, N);  
         SaveFile_Basis(BestBasis_Ri, n, Basis_file);
@@ -248,6 +250,9 @@ vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>>
 
     cout << "-->> All successive Bases are saved in the file: \'" <<  Basis_filename << "\'" << endl;
     cout << "Note that Bases are given in the successive representation, and not in the original representation" << endl << endl;
+
+    cout << endl << "***********************  SEARCH IN VARYING REPRESENTATION: DONE  **************************"; 
+    cout << endl << "*******************************************************************************************" << endl;
 
     return BestBasis_R0;
 }
