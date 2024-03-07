@@ -179,8 +179,8 @@ Run the following commands in your terminal, from the root folder (which contain
      >                            100000001  corresponds to the basis operator: s8 = sig_1 sig_9
      >                            000000001  corresponds to the basis operator: s9 = sig_9
      > 
-     >      Replacing the expressions of the $\sig_i$ from the basis definition in the previous section into the expressions of `si` here
-     >      will give back the identity.
+     >      Replacing the expressions of the sig_i (from the basis definition in the previous section)
+     >      into the expressions of `si` (here) will give back the identity.
      > 
    
  - **Results for the examples:** See Ref.[1] for results and discussions on the best basis obtained for these datasets.
