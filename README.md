@@ -102,7 +102,9 @@ Run the following commands in your terminal, from the root folder (which contain
    - **Inverse of the Best Basis found:** This is the inverse transformation of the best basis found, i.e. the transformation that allows to go back from the new basis variables to the original basis variables.
      
      Will be printed in the terminal, as well as in the file with the name ending in `_BestBasis_inverse.dat`;
-   - **Dataset converted in the new Basis:** will be printed in the file with the name ending in `_inBestBasis.dat`;
+   - **Binary Dataset converted in the new Basis:** This is the dataset re-written in the new basis variables (given by the Best Basis). The dataset will have the same number of datapoints as the original datafile, ordered in the same order.
+   
+     Will be printed in the file with the name ending in `_inBestBasis.dat`;
 
  - **Interpreting the printed Basis:**  How to read the output Basis? and where to find it?
    
