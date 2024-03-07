@@ -1,0 +1,143 @@
+./BestBasis.out SCOTUS_n9_N895_Data.dat 9
+--->> Create the "OUTPUT" Folder: (if needed) 
+
+*******************************************************************************************
+***********************************  READ THE DATA:  **************************************
+*******************************************************************************************
+
+--->> Read the datafile: "INPUT/SCOTUS_n9_N895_Data.dat", 	 Build Nset...
+	 Number of variables to read: n = 9
+
+--->> File has been read successfully:
+	 Data size, N = 895
+	 Number of different states, Nset.size() = 128
+
+
+Elapsed time (in s): 0.001051
+
+
+*******************************************************************************************
+*******************************************************************************************
+**********************************  EXHAUSTIVE SEARCH:  ***********************************
+*******************************************************************************************
+*******************************************************************************************
+
+Information: 
+  > The following program search for the Best Basis among all the (2^n-1) possible operators.
+
+Important: 
+  > The Exhaustive Search is not recommended for dataset with more than n~20 variables.
+
+
+*******************************************************************************************
+************************  EXHAUSTIVE SEARCH FOR THE BEST BASIS:  **************************
+*******************************************************************************************
+
+--> Compute and rank all the observables of order 1 (fields).. 
+
+Smallest bias = 0.0497207, 	 for the operator = 000000001		9	
+ Largest bias = 0.22514, 	 for the operator = 000000100		7	
+
+Taking the 'small bias' as a bound is LESS restrictive than the 3*sigma bound = 0.0501395
+
+Elapsed time (in s): 5.7e-05
+
+Estimated times (in s) for larger values of 'k':
+	 k = 2: 	0.000228 s 	3.8e-06 min
+	 k = 3: 	0.000532 s 	8.86667e-06 min
+	 k = 4: 	0.000798 s 	1.33e-05 min
+	 k = 5: 	0.000798 s 	1.33e-05 min
+
+-->> Compute ALL the (2^n-1) Operators
+     Rank the operators with bias larger than lower bound (fixed by the least informative first order operator):
+	 Elapsed time (in s): 0.000878
+
+-->> Search for the Best Basis:		Total number of Operators to analyse = 365
+
+-->> Search for the Best Basis by step of 'm' = 365 most biased operators:
+	 Nit = 0: 		 Final rank = 9
+
+-->> The Final Basis found has 9 independent operators:
+	 --> this is equal to the number 'n' of variables: i.e., this is a Basis for the n-dimensional system
+	 --> Smallest Bias among the basis components = 0.22514
+
+Total elapsed time (in s): 0.001233	 for Exhaustive Search
+
+
+*******************************************************************************************
+***********************  PRINT TERMINAL/FILE FINAL OPERATOR SET:  *************************
+*******************************************************************************************
+-->> Print Basis Operators: 	 Total number of operators = 9
+
+## 1:i 	 2:bin 		 3:bias	 4:N[Op_i=1] 	 5:p[Op_i=1] 	 6:<Op> 	 7:LogL[Op_i] 	 8:Op_index 
+## 
+1	000100100	0.43073 	62	0.069274 	0.861453 	-0.251756 	 Indices = 	7	4	
+2	000001010	0.40168 	88	0.098324 	0.803352 	-0.321385 	 Indices = 	8	6	
+3	000000011	0.37709 	110	0.122905 	0.754190 	-0.372673 	 Indices = 	9	8	
+4	100010000	0.37598 	111	0.124022 	0.751955 	-0.374863 	 Indices = 	5	1	
+5	100000100	0.36927 	117	0.130726 	0.738547 	-0.387765 	 Indices = 	7	1	
+6	101000000	0.35251 	132	0.147486 	0.705028 	-0.418323 	 Indices = 	3	1	
+7	010000010	0.33687 	146	0.163128 	0.673743 	-0.444821 	 Indices = 	8	2	
+8	001000001	0.28436 	193	0.215642 	0.568715 	-0.521337 	 Indices = 	9	3	
+9	000000100	0.22514 	649	0.725140 	-0.450279 	-0.588033 	 Indices = 	7	
+
+##  LogL / N = -3.680958
+## -LogL / N / log(2) = 5.310500 bits per datapoints 
+
+-->> Print Basis Operators in the file: 'OUTPUT/SCOTUS_n9_N895_Data-exh_Final_Basis.dat'
+
+Number of basis operators of a given order k:
+	 k = 1 :	1 operators
+	 k = 2 :	8 operators
+
+
+*******************************************************************************************
+*********************************  PRINT NEW DATAFILE:  ***********************************
+**************************  ORIGINAL DATA WRITTEN IN NEW BASIS  ***************************
+*******************************************************************************************
+
+--->> Read the datafile: "INPUT/SCOTUS_n9_N895_Data.dat"
+	 Number of variables to read: n = 9
+
+--->> Transform to new basis...
+	 Write the new dataset in the file: "OUTPUT/SCOTUS_n9_N895_Data-exh_inBestBasis.dat"
+
+--->> File has been converted to the new basis successfully:
+	 Data size, N = 895
+
+Operators are ordered from Right to Left: i.e. 
+ 	 - the first basis operator corresponds to the rightmost bit (lowest bit)
+ 	 - the n-th basis operator corresponds to the leftmost bit (highest bit) 
+
+Elapsed time (in s): 0.004040	 for converting data
+
+
+*******************************************************************************************
+*************************  PRINT INVERSE BASIS TRANSFORMATION:  ***************************
+*******************************************************************************************
+Rank = n = 9	: this is a basis and can be inverted.
+
+**** Inverse Basis Transformation: ****
+
+-->> Print Basis Operators: 	 Total number of operators = 9
+
+## 1:i 	 2:bin 		 3:Op_index 
+## 
+1	000010001 	 Indices = 	9	5	
+2	001011111 	 Indices = 	9	8	7	6	5	3	
+3	000011001 	 Indices = 	9	6	5	
+4	100000001 	 Indices = 	9	1	
+5	000110001 	 Indices = 	9	5	4	
+6	011011011 	 Indices = 	9	8	6	5	3	2	
+7	000000001 	 Indices = 	9	
+8	001011011 	 Indices = 	9	8	6	5	3	
+9	000011011 	 Indices = 	9	8	6	5	
+
+-->> Print Basis Operators in the file: 'OUTPUT/SCOTUS_n9_N895_Data-exh_Final_Basis_inverse.dat'
+
+
+*******************************************************************************************
+*********************************   TOTAL ELAPSED TIME:  **********************************
+*******************************************************************************************
+
+Elapsed time (in s): 0.007697
