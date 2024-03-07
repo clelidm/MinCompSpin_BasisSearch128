@@ -1,0 +1,145 @@
+time ./BestBasis.out Shapes_n9_Dataset_N1e5.dat 9		
+--->> Create the "OUTPUT" Folder: (if needed) 
+
+*******************************************************************************************
+***********************************  READ THE DATA:  **************************************
+*******************************************************************************************
+
+--->> Read the datafile: "INPUT/Shapes_n9_Dataset_N1e5.dat", 	 Build Nset...
+	 Number of variables to read: n = 9
+
+--->> File has been read successfully:
+	 Data size, N = 100000
+	 Number of different states, Nset.size() = 3
+
+
+Elapsed time (in s): 0.011924
+
+
+*******************************************************************************************
+*******************************************************************************************
+**********************************  EXHAUSTIVE SEARCH:  ***********************************
+*******************************************************************************************
+*******************************************************************************************
+
+Information: 
+  > The following program search for the Best Basis among all the (2^n-1) possible operators.
+
+Important: 
+  > The Exhaustive Search is not recommended for dataset with more than n~20 variables.
+
+
+*******************************************************************************************
+************************  EXHAUSTIVE SEARCH FOR THE BEST BASIS:  **************************
+*******************************************************************************************
+
+--> Compute and rank all the observables of order 1 (fields).. 
+
+Smallest bias = 0.20072, 	 for the operator = 010000000		2	
+ Largest bias = 0.30124, 	 for the operator = 100000000		1	
+
+Taking the 'small bias' as a bound is MORE restrictive than the 3*sigma bound = 0.00474342
+
+Elapsed time (in s): 3.8e-05
+
+Estimated times (in s) for larger values of 'k':
+	 k = 2: 	0.000152 s 	2.53333e-06 min
+	 k = 3: 	0.000354667 s 	5.91111e-06 min
+	 k = 4: 	0.000532 s 	8.86667e-06 min
+	 k = 5: 	0.000532 s 	8.86667e-06 min
+
+-->> Compute ALL the (2^n-1) Operators
+     Rank the operators with bias larger than lower bound (fixed by the least informative first order operator):
+	 Elapsed time (in s): 0.00034
+
+-->> Search for the Best Basis:		Total number of Operators to analyse = 261
+
+-->> Search for the Best Basis by step of 'm' = 261 most biased operators:
+	 Nit = 0: 		 Final rank = 9
+
+-->> The Final Basis found has 9 independent operators:
+	 --> this is equal to the number 'n' of variables: i.e., this is a Basis for the n-dimensional system
+	 --> Smallest Bias among the basis components = 0.20072
+
+Total elapsed time (in s): 0.000575	 for Exhaustive Search
+
+
+*******************************************************************************************
+***********************  PRINT TERMINAL/FILE FINAL OPERATOR SET:  *************************
+*******************************************************************************************
+-->> Print Basis Operators: 	 Total number of operators = 9
+
+## 1:i 	 2:bin 		 3:bias	 4:N[Op_i=1] 	 5:p[Op_i=1] 	 6:<Op> 	 7:LogL[Op_i] 	 8:Op_index 
+## 
+1	000000011	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	9	8	
+2	000000101	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	9	7	
+3	000001001	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	9	6	
+4	000110000	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	5	4	
+5	001000001	0.50000 	100000	1.000000 	-1.000000 	0.000000 	 Indices = 	9	3	
+6	010000001	0.50000 	100000	1.000000 	-1.000000 	0.000000 	 Indices = 	9	2	
+7	100010000	0.50000 	100000	1.000000 	-1.000000 	0.000000 	 Indices = 	5	1	
+8	100000000	0.30124 	19876	0.198760 	0.602480 	-0.498679 	 Indices = 	1	
+9	000000001	0.20072 	29928	0.299280 	0.401440 	-0.610253 	 Indices = 	9	
+
+##  LogL / N = -1.108932
+## -LogL / N / log(2) = 1.599850 bits per datapoints 
+
+-->> Print Basis Operators in the file: 'OUTPUT/Shapes_n9_Dataset_N1e5-exh_BestBasis.dat'
+
+Number of basis operators of a given order k:
+	 k = 1 :	2 operators
+	 k = 2 :	7 operators
+
+
+*******************************************************************************************
+*********************************  PRINT NEW DATAFILE:  ***********************************
+**************************  ORIGINAL DATA WRITTEN IN NEW BASIS  ***************************
+*******************************************************************************************
+
+--->> Read the datafile: "INPUT/Shapes_n9_Dataset_N1e5.dat"
+	 Number of variables to read: n = 9
+
+--->> Transform to new basis...
+	 Write the new dataset in the file: "OUTPUT/Shapes_n9_Dataset_N1e5-exh_inBestBasis.dat"
+
+--->> File has been converted to the new basis successfully:
+	 Data size, N = 100000
+
+Operators are ordered from Right to Left: i.e. 
+ 	 - the first basis operator corresponds to the rightmost bit (lowest bit)
+ 	 - the n-th basis operator corresponds to the leftmost bit (highest bit) 
+
+Elapsed time (in s): 0.360764	 for converting data
+
+
+*******************************************************************************************
+*************************  PRINT INVERSE BASIS TRANSFORMATION:  ***************************
+*******************************************************************************************
+Rank = n = 9	: this is a basis and can be inverted.
+
+**** Inverse Basis Transformation: ****
+
+-->> Print Basis Operators: 	 Total number of operators = 9
+
+## 1:i 	 2:bin 		 3:Op_index 
+## 
+1	000000010 	 Indices = 	8	
+2	000001001 	 Indices = 	9	6	
+3	000010001 	 Indices = 	9	5	
+4	000100110 	 Indices = 	8	7	4	
+5	000000110 	 Indices = 	8	7	
+6	001000001 	 Indices = 	9	3	
+7	010000001 	 Indices = 	9	2	
+8	100000001 	 Indices = 	9	1	
+9	000000001 	 Indices = 	9	
+
+-->> Print Basis Operators in the file: 'OUTPUT/Shapes_n9_Dataset_N1e5-exh_BestBasis_inverse.dat'
+
+
+*******************************************************************************************
+*********************************   TOTAL ELAPSED TIME:  **********************************
+*******************************************************************************************
+
+Elapsed time (in s): 0.374167
+
+        0.38 real         0.24 user         0.13 sys
