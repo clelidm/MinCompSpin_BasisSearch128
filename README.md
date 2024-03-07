@@ -93,7 +93,7 @@ Run the following commands in your terminal, from the root folder (which contain
 
  - **To clean:** `make clean` (to use only once you're done using the code)
 
-## Output files and format of the returned basis:
+## Output files and format of the returned Basis:
 
  - **Terminal Output:** We provided, in the `OUTPUT` folder, the LOGS returned when running the`./BestBasis.out` code on the example datasets.
 
