@@ -98,9 +98,9 @@ Run the following commands in your terminal, from the root folder (which contain
  - **Terminal Output:** We provided, in the `OUTPUT` folder, the LOGS returned when running the`./BestBasis.out` code on the example datasets.
 
  - **List of outputs:**
-   - **Best Basis found:**
-   - **Inverse of the Best Basis found:**
-   - **Dataset converted in the new Basis:**
+   - **Best Basis found:** will be printed in the terminal, as well as in the file with the name ending in `_BestBasis.dat`;
+   - **Inverse of the Best Basis found:** will be printed in the terminal, as well as in the file with the name ending in `_BestBasis_inverse.dat`;
+   - **Dataset converted in the new Basis:** will be printed in the file with the name ending in `_inBestBasis.dat`;
 
  - **Interpreting the printed Basis:**  How to read the output Basis? and where to find it?
    
