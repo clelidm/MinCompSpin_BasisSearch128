@@ -118,11 +118,13 @@ Run the following commands in your terminal, from the root folder (which contain
    For the process in varying representation, the file `All_Bases_inR0.dat` contains all the successive bases found written in the original representation (i.e. in the original basis variables); the file `All_Bases_inRi.dat` contains  all the successive bases found written in the current basis representation `Ri`: this file should always end with the identity basis (which means that the algorithm has properly converged).
  
  - **Interpreting the printed Basis:**  How to read the output Basis?
+   
    The best basis found is printed as a list of binary strings, each one encoding a basis variable (i.e., a spin operator): spins with a bit equal to '1' are included in the operators, spins with a '0' don't. Variables are organized in the same order as in the original datafile, i.e. the i-th spin from the right in the operator corresponds to the i-th spin from the right in the original datafile.
 
-     >      For example, for the "Shape" dataset with 9 binary variables, the exhaustive search finds the following basis:
-     >
-     >      The following MCM has 3 parts:   1	000000011	 Indices = 	9	8	
+     >      For example, for the "Shape" dataset with 9 binary variables,
+     >           
+     >      The exhaustive search finds the following basis:
+     >                                       1	000000011	 Indices = 	9	8	
      >                                       2	000000101	 Indices = 	9	7
      >                                       3	000001001	 Indices = 	9	6	
      >                                       4	000110000	 Indices = 	5	4	
@@ -144,7 +146,29 @@ Run the following commands in your terminal, from the root folder (which contain
      >                            - 100000000, this corresponds to the basis operator: sig_8 = s1
      >                            - 000000001, this corresponds to the basis operator: sig_9 = s9
      > 
-     >      This are the basis operator displayed in Fig. 5 of Ref.[1]. Note that the basis elements are not organized in the same order.
+     >      This are the basis operator displayed in Fig. 5 of Ref.[1].
+     >      Note that the basis elements are not organized in the same order.
+     >
+     
+ - **Interpreting the printed INVERSE Basis:**  How to read the output inverse Basis?
+
+   The inverse basis provides the inverse transformation, to go back from the basis of `sig_i` to the basis of `si`. The way of reading the inverse basis transformation is identical to the way of reading the best basis.
+
+     >      For example, for the "Shape" dataset with 9 binary variables,
+     > 
+     >      The inverse basis transformation is given by:
+     >                                       1	000000010 	 Indices = 	8	
+     >                                       2	000001001 	 Indices = 	9	6	
+     >                                       3	000010001 	 Indices = 	9	5	
+     >                                       4	000100110 	 Indices = 	8	7	4	
+     >                                       5	000000110 	 Indices = 	8	7	
+     >                                       6	001000001 	 Indices = 	9	3	
+     >                                       7	010000001 	 Indices = 	9	2	
+     >                                       8	100000001 	 Indices = 	9	1	
+     >                                       9	000000001 	 Indices = 	9
+     > 
+     >      Here again, the indices are counted from the left (sig_1) to the right (sig_9),
+     >      one can read the contribution of each spin `sig_i` to each basis element `si`:
      > 
    
  - **Results for the examples:** See Ref.[1] for results and discussions on the best basis obtained for these datasets.
