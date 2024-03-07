@@ -135,14 +135,16 @@ Run the following commands in your terminal, from the root folder (which contain
      >      Here, the indices are counted from the left (s1) to the right (s9),
      >      one can read the contribution of each spin `s_i` to each basis element `sig_i`:
      >                            - 000000011, this corresponds to the basis operator: sig_1 = s8 s9
-     >                            - 000000101, this corresponds to the basis operator: sig_1 = s7 s9
-     >                            - 000001001, this corresponds to the basis operator: sig_1 = s6 s9
-     >                            - 000110000, this corresponds to the basis operator: sig_1 = s4 s5
-     >                            - 001000001, this corresponds to the basis operator: sig_1 = s3 s9
-     >                            - 010000001, this corresponds to the basis operator: sig_1 = s2 s9
-     >                            - 100010000, this corresponds to the basis operator: sig_1 = s1 s5
-     >                            - 100000000, this corresponds to the basis operator: sig_1 = s1
-     >                            - 000000001, this corresponds to the basis operator: sig_1 = s9
+     >                            - 000000101, this corresponds to the basis operator: sig_2 = s7 s9
+     >                            - 000001001, this corresponds to the basis operator: sig_3 = s6 s9
+     >                            - 000110000, this corresponds to the basis operator: sig_4 = s4 s5
+     >                            - 001000001, this corresponds to the basis operator: sig_5 = s3 s9
+     >                            - 010000001, this corresponds to the basis operator: sig_6 = s2 s9
+     >                            - 100010000, this corresponds to the basis operator: sig_7 = s1 s5
+     >                            - 100000000, this corresponds to the basis operator: sig_8 = s1
+     >                            - 000000001, this corresponds to the basis operator: sig_9 = s9
+     > 
+     >      This are the basis operator displayed in Fig. 5 of Ref.[1]. Note that the basis elements are not organized in the same order.
      > 
    
  - **Results for the examples:** See Ref.[1] for results and discussions on the best basis obtained for these datasets.
