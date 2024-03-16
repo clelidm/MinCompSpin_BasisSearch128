@@ -40,8 +40,8 @@ vector<Operator128> BestBasis_inOpSet(set<Operator128> OpSet, unsigned int n, St
 /******************************************************************************/
 bool Is_Basis(vector<Operator128> Basis, unsigned int n);
 
-void PrintTerm_OpBasis(vector<Operator128> OpVect_Basis, unsigned int n, unsigned int N);
-void PrintFile_OpBasis(vector<Operator128> OpVect_Basis, unsigned int n, unsigned int N, string filename);
+void PrintTerm_Basis(vector<Operator128> OpVect_Basis, unsigned int n, unsigned int N);
+void PrintFile_Basis(vector<Operator128> OpVect_Basis, unsigned int n, unsigned int N, string filename);
 
 map<unsigned int, unsigned int> Histo_BasisOpOrder(vector<Operator128> Basis);
 
@@ -121,7 +121,7 @@ vector<Operator128> BestBasisSearch_FixedRepresentation(vector<pair<__int128_t, 
       BestBasis.clear();
       BestBasis = BestBasis_inOpSet(OpSet, n, &LB, m_max); // LB will be over-written with the updated values
 
-      PrintFile_OpBasis(BestBasis, n, N, filename_k + "_BestBasis");
+      PrintFile_Basis(BestBasis, n, N, filename_k + "_BestBasis");
 
       CutSmallBias(OpSet, LB);
 
@@ -199,7 +199,7 @@ vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>>
     Basis_file_R0 << "### File containing all the successive Basis" << endl;
     Basis_file_R0 << "### The Bases are given in the original representation of the data" << endl << endl;
 
-    PrintTerm_OpBasis(BestBasis_R0, n, N);   
+    PrintTerm_Basis(BestBasis_R0, n, N);   
     SaveFile_Basis(BestBasis_R0, n, Basis_file);
     SaveFile_Basis(BestBasis_R0, n, Basis_file_R0);
 
@@ -233,7 +233,7 @@ vector<Operator128> BestBasisSearch_Final(vector<pair<__int128_t, unsigned int>>
         BestBasis_Ri.clear();
         BestBasis_Ri = BestBasisSearch_FixedRepresentation(Kvect, n, N, k_max, OUTPUT_Data_folder, bool_print, R_it, m_max);
 
-        PrintTerm_OpBasis(BestBasis_Ri, n, N);  
+        PrintTerm_Basis(BestBasis_Ri, n, N);  
         SaveFile_Basis(BestBasis_Ri, n, Basis_file);
         Histo_BasisOpOrder(BestBasis_Ri);
 

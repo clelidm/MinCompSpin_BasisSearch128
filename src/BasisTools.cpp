@@ -49,7 +49,14 @@ bool** Basis_to_MatrixF2(vector<Operator128> Basis, unsigned int n)
   {
     Op = it_Op.bin;
 
-    // filling in the column with the n-bit operator:
+    // *****  Filling in each column with a basis operator: ****************
+      // -- Last bit (rightmost) at the bottom; first bit (leftmost) at the top.
+      // -- First basis operator to the Left (i.e. placed first in the matrix) 
+      //    Last basis operator to the Right (placed last)
+      //       --> note that this is the opposite of the convention adopted in writing a state in the new basis
+      //           (there sig_1 = Rightmost bit)
+      // --> One must be careful when re-invert:Matrix to Basis !!!
+
     for (i=0; i<n; i++)
     { 
       M[(n-1-i)][j] = Op & one128;
@@ -98,7 +105,7 @@ bool Is_Basis(vector<Operator128> Basis, unsigned int n)
 }
 
 /******************************************************************************/
-/**********   INVERT A BASIS: RETURN INVERSE GAUGE TRANSFORMATION   ***********/
+/**********   INVERT a BASIS: RETURN INVERSE GAUGE TRANSFORMATION   ***********/
 /******************************************************************************/
 vector<Operator128> MatrixF2_to_Basis(bool** M, unsigned int n)
 {
@@ -107,21 +114,27 @@ vector<Operator128> MatrixF2_to_Basis(bool** M, unsigned int n)
   Op.r = n;
   Op.k1 = 0;
 
-  unsigned int i = 0; //iteration over the n row;
-  unsigned int j = 0; //iteration over the m columns;
+  int i = 0; //iteration over the n row;
+  int j = 0; //iteration over the m columns;
 
   __int128_t Op_bin = 1, state = 0;
 
   // Copy the basis operators from M to Basis:
-  for (j=0; j<n; j++) // Copying each column into an operator:
+  for (j=(n-1); j>=0; j--) // Copying each column into an operator:
+  // read operators from the right to the left!!!! 
+  // as s1 = rightmost bit = first operator of the Basis_list_invert
+  //    sn = left most bit
   { 
-    Op_bin = one128 << (n - 1);
+    Op_bin = 1; // sig_1 (for i=0) = the lowest bit // sig_n (for i=(n-1)) = the highest bit
+    //Op_bin = one128 << (n - 1);
     state = 0;
     for (i=0; i<n; i++) // Turn a column to an operator:
     {
+      // first element of the column = sig_1 (see function "Basis_to_MatrixF2") 
+            // should be placed as the Righmost bit for the user (cf. convention adopted in writing a state in the new basis: with s_1=[lowest bit] )
       if(M[i][j] == 1)  { state += Op_bin; }
       //cout << "Op_bin = " << int_to_bstring(Op_bin, n) << endl; 
-      Op_bin = Op_bin >> 1;    
+      Op_bin = Op_bin << 1;    
     } 
     //j++; // next column
 
@@ -184,12 +197,12 @@ vector<Operator128> Invert_Basis(vector<Operator128> Basis, unsigned int n)
 /******************************************************************************/
 /****************   Print Terminal Vector Best Operators  *********************/
 /******************************************************************************/
-void PrintTerm_OpBasis(vector<Operator128> Basis, unsigned int n, unsigned int N)
+void PrintTerm_Basis(vector<Operator128> Basis, unsigned int n, unsigned int N)
 {
   int i = 1;
   double p1 = 1, LogLi = 0, LogL = 0, Nd = (double) N;
 
-  cout << "-->> Print Basis Operators: \t Total number of operators = " << Basis.size() << endl << endl;  
+  cout << "-->> Print Basis Operators: \t Number of basis operators = " << Basis.size() << endl << endl;  
   cout << "## 1:i \t 2:bin \t\t 3:bias\t 4:N[Op_i=1] \t 5:p[Op_i=1] \t 6:<Op> \t 7:LogL[Op_i] \t 8:Op_index " << endl << "## " << endl; 
 
   for (auto& Op : Basis)
@@ -210,7 +223,7 @@ void PrintTerm_OpBasis(vector<Operator128> Basis, unsigned int n, unsigned int N
   cout << endl;
 }
 
-void PrintFile_OpBasis(vector<Operator128> Basis, unsigned int n, unsigned int N, string filename)
+void PrintFile_Basis(vector<Operator128> Basis, unsigned int n, unsigned int N, string filename)
 {
   string OpSet_filename = OUTPUT_directory + filename + ".dat";
 
@@ -245,12 +258,11 @@ void PrintFile_OpBasis(vector<Operator128> Basis, unsigned int n, unsigned int N
 }
 
 // ****** SHORT VERSIONS:
-
-void PrintTerm_OpBasis_Short(vector<Operator128> Basis, unsigned int n, unsigned int N)
+void PrintTerm_OpBasis_Short(vector<Operator128> Basis, unsigned int n)
 {
   int i = 1;
 
-  cout << "-->> Print Basis Operators: \t Total number of operators = " << Basis.size() << endl << endl;  
+  cout << "-->> Print Basis Operators: \t Number of basis operators = " << Basis.size() << endl << endl;  
   cout << "## 1:i \t 2:bin \t\t 3:Op_index " << endl << "## " << endl; 
 
   for (auto& Op : Basis)
@@ -288,6 +300,142 @@ void PrintFile_OpBasis_Short(vector<Operator128> Basis, unsigned int n, unsigned
 
   cout << endl;
 }
+
+// ****** FINAL BASIS VERSION:
+void PrintTerm_FinalBasis(vector<Operator128> Basis, unsigned int n, unsigned int N)
+{
+  int i = 1;
+  double p1 = 1, LogLi = 0, LogL = 0, Nd = (double) N;
+
+  cout << "-->> Print Basis Operators: \t Number of basis operators = " << Basis.size() << endl << endl;  
+  cout << "## 1:i \t 2:bin \t\t 3:bias\t 4:N[Op_i=1] \t 5:p[Op_i=1] \t 6:<Op> \t 7:LogL[Op_i] \t 8:Op_index " << endl << "## " << endl; 
+
+  for (auto& Op : Basis)
+  {
+    p1 = ((double) Op.k1) / Nd;
+    LogLi = (p1!=0 && p1!=1)? p1*log(p1)+(1-p1)*log(1-p1) : 0;
+    LogL += LogLi;
+
+    cout << fixed;
+    cout << "sig_" << setw(3) << setfill(' ') << left << i << "\t" << int_to_bstring(Op.bin, n) << "\t" << setprecision(5) << Op.bias << " \t" << Op.k1  << "\t";
+    cout << setprecision(6) << p1 << " \t" << 1-2*p1 << " \t" << LogLi << " \t Indices = "; 
+    int_to_digits(Op.bin, n);
+    i++;
+  }
+  cout << endl;
+  cout << "##  LogL / N = " << LogL << endl;  //<< setprecision (6) 
+  cout << "## -LogL / N / log(2) = " << -LogL/log(2.) << " bits per datapoints "<< endl;  //<< setprecision (6) 
+  cout << endl;
+
+  cout << "Convention for reading this basis:" << endl;
+  cout << "## \t   bits are organised in the same order as in the original dataset," << endl;
+  cout << "## \t   i.e. rightmost bit of an operator = rightmost bit in the data: labeled s_1 in the inverse basis below." << endl;
+  cout << "## \t        leftmost  bit of an operator = leftmost  bit in the data: labeled s_n in the inverse basis below." << endl;
+  cout << endl;
+}
+
+
+void PrintFile_FinalBasis(vector<Operator128> Basis, unsigned int n, unsigned int N, string filename)
+{
+  string OpSet_filename = OUTPUT_directory + filename + ".dat";
+
+  cout << "-->> Print Basis Operators in the file: \'" <<  OpSet_filename << "\'" << endl;
+  fstream file_OpBasis(OpSet_filename, ios::out);
+  
+  int i = 1;
+  double p1 = 1, LogLi = 0, LogL = 0, Nd = (double) N;
+
+  file_OpBasis << "## Basis: Total number of operators = " << Basis.size() << endl << "## " << endl; 
+  file_OpBasis << "## 1:i \t 2:bin \t\t 3:bias\t 4:N[Op_i=1] \t 5:p[Op_i=1] \t 6:<Op> \t 7:LogL[Op_i] \t 8:Op_index " << endl << "## " << endl; 
+
+  for (auto& Op : Basis)
+  {
+    p1 = ((double) Op.k1) / Nd;
+    LogLi = (p1!=0 && p1!=1)? p1*log(p1)+(1-p1)*log(1-p1) : 0;
+    LogL += LogLi;
+
+    file_OpBasis << fixed;
+    file_OpBasis << i << "\t" << int_to_bstring(Op.bin, n) << "\t" << setprecision(5) << Op.bias << " \t" << Op.k1  << "\t";
+    file_OpBasis << setprecision(6) << p1 << " \t" << 1-2*p1 << " \t" << LogLi << " \t Indices = "; 
+    //file_OpBasis << i << "\t" << int_to_bstring(Op.bin, n) << "\t" << Op.bias << "\t" << Op.k1  << "\t" << p1 << "\t" << LogLi << "\t Indices = "; 
+    int_to_digits_file(Op.bin, n, file_OpBasis);
+    i++;
+  }
+  file_OpBasis << endl;
+  file_OpBasis << "##  LogL / N = " << LogL << endl;  //<< setprecision (6) 
+  file_OpBasis << "## -LogL / N / log(2) = " << -LogL/log(2.) << " bits per datapoints "<< endl;  //<< setprecision (6) 
+  file_OpBasis << endl;
+
+  file_OpBasis << "## Convention for reading this basis:" << endl;
+  file_OpBasis << "## \t   bits are organized in the same order as in the original dataset," << endl;
+  file_OpBasis << "## \t   i.e. rightmost bit of an operator = rightmost bit in the data: labeled s_1 in the Inverse Basis file." << endl;
+  file_OpBasis << "## \t        leftmost  bit of an operator = leftmost  bit in the data: labeled s_n in the Inverse Basis file." << endl;
+  file_OpBasis << endl;
+
+  file_OpBasis.close();
+  cout << endl;
+}
+
+// ****** INVERT BASIS VERSIONS:
+void PrintTerm_Basis_inverse(vector<Operator128> Basis, unsigned int r)
+{
+  cout << "-->> Print Operators of Inverse Basis: \t Number of basis operators = " << Basis.size() << endl << endl; 
+  cout << "## 1:i \t 2:bin \t\t 3:Op_index " << endl << "## " << endl; 
+  
+  int i = 1;
+  for (auto& Op : Basis)
+  {
+    cout << fixed;
+    cout << "s_" << setw(3) << setfill(' ') << left << i << "\t" << int_to_bstring(Op.bin, r);
+    cout << " \t Indices = "; 
+    int_to_digits(Op.bin, r);
+    i++;
+  }
+  cout << endl;
+
+  cout << "Convention for reading this basis in comparison with the original basis of the data:" << endl;
+  cout << "## \t   -- s_1 = Rightmost bit in the original data" << endl;
+  cout << "## \t   -- s_n = Leftmost bit in the original data" << endl;
+  cout << "##" << endl;
+  cout << "## Besides, in the basis above:" << endl;
+  cout << "## \t   -- Rightmost bit = first basis operator, labeled sig_1 above;" << endl;
+  cout << "## \t   -- Leftmost bit  = last  basis operator, labeled sig_n above." << endl;
+  cout << endl;
+}
+
+void PrintFile_Basis_inverse(vector<Operator128> Basis, unsigned int n, string filename)
+{
+  string OpSet_filename = OUTPUT_directory + filename + ".dat";
+
+  cout << "-->> Print Operators of Inverse Basis in the file: \'" <<  OpSet_filename << "\'" << endl;
+  fstream file_OpBasis(OpSet_filename, ios::out);
+  
+  int i = 1;
+
+  file_OpBasis << "## Basis: Total number of operators = " << Basis.size() << endl << "## " << endl; 
+  file_OpBasis << "## 1:count \t 2:bin \t 3:Op_index " << endl << "## " << endl; 
+
+  for (auto& Op : Basis)
+  {
+    file_OpBasis << fixed;
+    file_OpBasis << "s_" << setw(3) << setfill(' ') << left << i << " \t" << int_to_bstring(Op.bin, n) << " \t Indices = "; 
+    //file_OpBasis << i << "\t" << int_to_bstring(Op.bin, n) << "\t" << Op.bias << "\t" << Op.k1  << "\t" << p1 << "\t" << LogLi << "\t Indices = "; 
+    int_to_digits_file(Op.bin, n, file_OpBasis);
+    i++;
+  }
+
+  file_OpBasis << " " << endl;
+  file_OpBasis << "## Convention for reading this basis in comparison with the original basis of the data:" << endl;
+  file_OpBasis << "## \t   -- s_1 = Rightmost bit in the original data" << endl;
+  file_OpBasis << "## \t   -- s_n = Leftmost bit in the original data" << endl;
+  file_OpBasis << "##" << endl;
+  file_OpBasis << "## Besides, in the basis above:" << endl;
+  file_OpBasis << "## \t   -- Rightmost bit = first basis operator in the Best Basis file;" << endl;
+  file_OpBasis << "## \t   -- Leftmost bit  = last  basis operator in the Best Basis file." << endl;
+
+  file_OpBasis.close();
+}
+
 
 /******************************************************************************/
 /*********************   Histo Order of basis Operators  **********************/
