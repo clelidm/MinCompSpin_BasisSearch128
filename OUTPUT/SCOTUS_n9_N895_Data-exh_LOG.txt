@@ -1,4 +1,5 @@
-./BestBasis.out SCOTUS_n9_N895_Data.dat 9
+time ./BestBasis.out SCOTUS_n9_N895_Data.dat  9	
+	
 --->> Create the "OUTPUT" Folder: (if needed) 
 
 *******************************************************************************************
@@ -13,7 +14,7 @@
 	 Number of different states, Nset.size() = 128
 
 
-Elapsed time (in s): 0.001051
+Elapsed time (in s): 0.000218
 
 
 *******************************************************************************************
@@ -40,17 +41,17 @@ Smallest bias = 0.0497207, 	 for the operator = 000000001		9
 
 Taking the 'small bias' as a bound is LESS restrictive than the 3*sigma bound = 0.0501395
 
-Elapsed time (in s): 5.7e-05
+Elapsed time (in s): 4.6e-05
 
 Estimated times (in s) for larger values of 'k':
-	 k = 2: 	0.000228 s 	3.8e-06 min
-	 k = 3: 	0.000532 s 	8.86667e-06 min
-	 k = 4: 	0.000798 s 	1.33e-05 min
-	 k = 5: 	0.000798 s 	1.33e-05 min
+	 k = 2: 	0.000184 s 	3.06667e-06 min
+	 k = 3: 	0.000429333 s 	7.15556e-06 min
+	 k = 4: 	0.000644 s 	1.07333e-05 min
+	 k = 5: 	0.000644 s 	1.07333e-05 min
 
 -->> Compute ALL the (2^n-1) Operators
      Rank the operators with bias larger than lower bound (fixed by the least informative first order operator):
-	 Elapsed time (in s): 0.000878
+	 Elapsed time (in s): 0.000857
 
 -->> Search for the Best Basis:		Total number of Operators to analyse = 365
 
@@ -61,30 +62,35 @@ Estimated times (in s) for larger values of 'k':
 	 --> this is equal to the number 'n' of variables: i.e., this is a Basis for the n-dimensional system
 	 --> Smallest Bias among the basis components = 0.22514
 
-Total elapsed time (in s): 0.001233	 for Exhaustive Search
+Total elapsed time (in s): 0.001765	 for Exhaustive Search
 
 
 *******************************************************************************************
 ***********************  PRINT TERMINAL/FILE FINAL OPERATOR SET:  *************************
 *******************************************************************************************
--->> Print Basis Operators: 	 Total number of operators = 9
+-->> Print Basis Operators: 	 Number of basis operators = 9
 
 ## 1:i 	 2:bin 		 3:bias	 4:N[Op_i=1] 	 5:p[Op_i=1] 	 6:<Op> 	 7:LogL[Op_i] 	 8:Op_index 
 ## 
-1	000100100	0.43073 	62	0.069274 	0.861453 	-0.251756 	 Indices = 	7	4	
-2	000001010	0.40168 	88	0.098324 	0.803352 	-0.321385 	 Indices = 	8	6	
-3	000000011	0.37709 	110	0.122905 	0.754190 	-0.372673 	 Indices = 	9	8	
-4	100010000	0.37598 	111	0.124022 	0.751955 	-0.374863 	 Indices = 	5	1	
-5	100000100	0.36927 	117	0.130726 	0.738547 	-0.387765 	 Indices = 	7	1	
-6	101000000	0.35251 	132	0.147486 	0.705028 	-0.418323 	 Indices = 	3	1	
-7	010000010	0.33687 	146	0.163128 	0.673743 	-0.444821 	 Indices = 	8	2	
-8	001000001	0.28436 	193	0.215642 	0.568715 	-0.521337 	 Indices = 	9	3	
-9	000000100	0.22514 	649	0.725140 	-0.450279 	-0.588033 	 Indices = 	7	
+sig_1  	000100100	0.43073 	62	0.069274 	0.861453 	-0.251756 	 Indices = 	7	4	
+sig_2  	000001010	0.40168 	88	0.098324 	0.803352 	-0.321385 	 Indices = 	8	6	
+sig_3  	000000011	0.37709 	110	0.122905 	0.754190 	-0.372673 	 Indices = 	9	8	
+sig_4  	100010000	0.37598 	111	0.124022 	0.751955 	-0.374863 	 Indices = 	5	1	
+sig_5  	100000100	0.36927 	117	0.130726 	0.738547 	-0.387765 	 Indices = 	7	1	
+sig_6  	101000000	0.35251 	132	0.147486 	0.705028 	-0.418323 	 Indices = 	3	1	
+sig_7  	010000010	0.33687 	146	0.163128 	0.673743 	-0.444821 	 Indices = 	8	2	
+sig_8  	001000001	0.28436 	193	0.215642 	0.568715 	-0.521337 	 Indices = 	9	3	
+sig_9  	000000100	0.22514 	649	0.725140 	-0.450279 	-0.588033 	 Indices = 	7	
 
 ##  LogL / N = -3.680958
 ## -LogL / N / log(2) = 5.310500 bits per datapoints 
 
--->> Print Basis Operators in the file: 'OUTPUT/SCOTUS_n9_N895_Data-exh_Final_Basis.dat'
+Convention for reading this basis:
+## 	   bits are organised in the same order as in the original dataset,
+## 	   i.e. rightmost bit of an operator = rightmost bit in the data: labeled s_1 in the inverse basis below.
+## 	        leftmost  bit of an operator = leftmost  bit in the data: labeled s_n in the inverse basis below.
+
+-->> Print Basis Operators in the file: 'OUTPUT/SCOTUS_n9_N895_Data-exh_BestBasis.dat'
 
 Number of basis operators of a given order k:
 	 k = 1 :	1 operators
@@ -109,7 +115,7 @@ Operators are ordered from Right to Left: i.e.
  	 - the first basis operator corresponds to the rightmost bit (lowest bit)
  	 - the n-th basis operator corresponds to the leftmost bit (highest bit) 
 
-Elapsed time (in s): 0.004040	 for converting data
+Elapsed time (in s): 0.003468	 for converting data
 
 
 *******************************************************************************************
@@ -119,25 +125,34 @@ Rank = n = 9	: this is a basis and can be inverted.
 
 **** Inverse Basis Transformation: ****
 
--->> Print Basis Operators: 	 Total number of operators = 9
+-->> Print Operators of Inverse Basis: 	 Number of basis operators = 9
 
 ## 1:i 	 2:bin 		 3:Op_index 
 ## 
-1	000010001 	 Indices = 	9	5	
-2	001011111 	 Indices = 	9	8	7	6	5	3	
-3	000011001 	 Indices = 	9	6	5	
-4	100000001 	 Indices = 	9	1	
-5	000110001 	 Indices = 	9	5	4	
-6	011011011 	 Indices = 	9	8	6	5	3	2	
-7	000000001 	 Indices = 	9	
-8	001011011 	 Indices = 	9	8	6	5	3	
-9	000011011 	 Indices = 	9	8	6	5	
+s_1  	110110000 	 Indices = 	5	4	2	1	
+s_2  	110110100 	 Indices = 	7	5	4	2	1	
+s_3  	100000000 	 Indices = 	1	
+s_4  	110110110 	 Indices = 	8	7	5	4	2	1	
+s_5  	100011000 	 Indices = 	6	5	1	
+s_6  	100000001 	 Indices = 	9	1	
+s_7  	100110000 	 Indices = 	5	4	1	
+s_8  	111110100 	 Indices = 	7	5	4	3	2	1	
+s_9  	100010000 	 Indices = 	5	1	
 
--->> Print Basis Operators in the file: 'OUTPUT/SCOTUS_n9_N895_Data-exh_Final_Basis_inverse.dat'
+Convention for reading this basis in comparison with the original basis of the data:
+## 	   -- s_1 = Rightmost bit in the original data
+## 	   -- s_n = Leftmost bit in the original data
+##
+## Besides, in the basis above:
+## 	   -- Rightmost bit = first basis operator, labeled sig_1 above;
+## 	   -- Leftmost bit  = last  basis operator, labeled sig_n above.
 
+-->> Print Operators of Inverse Basis in the file: 'OUTPUT/SCOTUS_n9_N895_Data-exh_BestBasis_inverse.dat'
 
 *******************************************************************************************
 *********************************   TOTAL ELAPSED TIME:  **********************************
 *******************************************************************************************
 
-Elapsed time (in s): 0.007697
+Elapsed time (in s): 0.006974
+
+        0.01 real         0.00 user         0.00 sys

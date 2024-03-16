@@ -1,4 +1,5 @@
-time ./BestBasis.out Shapes_n9_Dataset_N1e5.dat 9		
+time ./BestBasis.out Shapes_n9_Dataset_N1e5.dat  9
+		
 --->> Create the "OUTPUT" Folder: (if needed) 
 
 *******************************************************************************************
@@ -13,7 +14,7 @@ time ./BestBasis.out Shapes_n9_Dataset_N1e5.dat 9
 	 Number of different states, Nset.size() = 3
 
 
-Elapsed time (in s): 0.011924
+Elapsed time (in s): 0.0107
 
 
 *******************************************************************************************
@@ -40,17 +41,17 @@ Smallest bias = 0.20072, 	 for the operator = 010000000		2
 
 Taking the 'small bias' as a bound is MORE restrictive than the 3*sigma bound = 0.00474342
 
-Elapsed time (in s): 3.8e-05
+Elapsed time (in s): 3.5e-05
 
 Estimated times (in s) for larger values of 'k':
-	 k = 2: 	0.000152 s 	2.53333e-06 min
-	 k = 3: 	0.000354667 s 	5.91111e-06 min
-	 k = 4: 	0.000532 s 	8.86667e-06 min
-	 k = 5: 	0.000532 s 	8.86667e-06 min
+	 k = 2: 	0.00014 s 	2.33333e-06 min
+	 k = 3: 	0.000326667 s 	5.44444e-06 min
+	 k = 4: 	0.00049 s 	8.16667e-06 min
+	 k = 5: 	0.00049 s 	8.16667e-06 min
 
 -->> Compute ALL the (2^n-1) Operators
      Rank the operators with bias larger than lower bound (fixed by the least informative first order operator):
-	 Elapsed time (in s): 0.00034
+	 Elapsed time (in s): 0.00039
 
 -->> Search for the Best Basis:		Total number of Operators to analyse = 261
 
@@ -61,28 +62,33 @@ Estimated times (in s) for larger values of 'k':
 	 --> this is equal to the number 'n' of variables: i.e., this is a Basis for the n-dimensional system
 	 --> Smallest Bias among the basis components = 0.20072
 
-Total elapsed time (in s): 0.000575	 for Exhaustive Search
+Total elapsed time (in s): 0.000689	 for Exhaustive Search
 
 
 *******************************************************************************************
 ***********************  PRINT TERMINAL/FILE FINAL OPERATOR SET:  *************************
 *******************************************************************************************
--->> Print Basis Operators: 	 Total number of operators = 9
+-->> Print Basis Operators: 	 Number of basis operators = 9
 
 ## 1:i 	 2:bin 		 3:bias	 4:N[Op_i=1] 	 5:p[Op_i=1] 	 6:<Op> 	 7:LogL[Op_i] 	 8:Op_index 
 ## 
-1	000000011	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	9	8	
-2	000000101	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	9	7	
-3	000001001	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	9	6	
-4	000110000	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	5	4	
-5	001000001	0.50000 	100000	1.000000 	-1.000000 	0.000000 	 Indices = 	9	3	
-6	010000001	0.50000 	100000	1.000000 	-1.000000 	0.000000 	 Indices = 	9	2	
-7	100010000	0.50000 	100000	1.000000 	-1.000000 	0.000000 	 Indices = 	5	1	
-8	100000000	0.30124 	19876	0.198760 	0.602480 	-0.498679 	 Indices = 	1	
-9	000000001	0.20072 	29928	0.299280 	0.401440 	-0.610253 	 Indices = 	9	
+sig_1  	000000011	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	9	8	
+sig_2  	000000101	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	9	7	
+sig_3  	000001001	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	9	6	
+sig_4  	000110000	0.50000 	0	0.000000 	1.000000 	0.000000 	 Indices = 	5	4	
+sig_5  	001000001	0.50000 	100000	1.000000 	-1.000000 	0.000000 	 Indices = 	9	3	
+sig_6  	010000001	0.50000 	100000	1.000000 	-1.000000 	0.000000 	 Indices = 	9	2	
+sig_7  	100010000	0.50000 	100000	1.000000 	-1.000000 	0.000000 	 Indices = 	5	1	
+sig_8  	100000000	0.30124 	19876	0.198760 	0.602480 	-0.498679 	 Indices = 	1	
+sig_9  	000000001	0.20072 	29928	0.299280 	0.401440 	-0.610253 	 Indices = 	9	
 
 ##  LogL / N = -1.108932
 ## -LogL / N / log(2) = 1.599850 bits per datapoints 
+
+Convention for reading this basis:
+## 	   bits are organised in the same order as in the original dataset,
+## 	   i.e. rightmost bit of an operator = rightmost bit in the data: labeled s_1 in the inverse basis below.
+## 	        leftmost  bit of an operator = leftmost  bit in the data: labeled s_n in the inverse basis below.
 
 -->> Print Basis Operators in the file: 'OUTPUT/Shapes_n9_Dataset_N1e5-exh_BestBasis.dat'
 
@@ -109,7 +115,7 @@ Operators are ordered from Right to Left: i.e.
  	 - the first basis operator corresponds to the rightmost bit (lowest bit)
  	 - the n-th basis operator corresponds to the leftmost bit (highest bit) 
 
-Elapsed time (in s): 0.360764	 for converting data
+Elapsed time (in s): 0.357294	 for converting data
 
 
 *******************************************************************************************
@@ -119,27 +125,34 @@ Rank = n = 9	: this is a basis and can be inverted.
 
 **** Inverse Basis Transformation: ****
 
--->> Print Basis Operators: 	 Total number of operators = 9
+-->> Print Operators of Inverse Basis: 	 Number of basis operators = 9
 
 ## 1:i 	 2:bin 		 3:Op_index 
 ## 
-1	000000010 	 Indices = 	8	
-2	000001001 	 Indices = 	9	6	
-3	000010001 	 Indices = 	9	5	
-4	000100110 	 Indices = 	8	7	4	
-5	000000110 	 Indices = 	8	7	
-6	001000001 	 Indices = 	9	3	
-7	010000001 	 Indices = 	9	2	
-8	100000001 	 Indices = 	9	1	
-9	000000001 	 Indices = 	9	
+s_1  	100000000 	 Indices = 	1	
+s_2  	100000001 	 Indices = 	9	1	
+s_3  	100000010 	 Indices = 	8	1	
+s_4  	100000100 	 Indices = 	7	1	
+s_5  	011000000 	 Indices = 	3	2	
+s_6  	011001000 	 Indices = 	6	3	2	
+s_7  	100010000 	 Indices = 	5	1	
+s_8  	100100000 	 Indices = 	4	1	
+s_9  	010000000 	 Indices = 	2	
 
--->> Print Basis Operators in the file: 'OUTPUT/Shapes_n9_Dataset_N1e5-exh_BestBasis_inverse.dat'
+Convention for reading this basis in comparison with the original basis of the data:
+## 	   -- s_1 = Rightmost bit in the original data
+## 	   -- s_n = Leftmost bit in the original data
+##
+## Besides, in the basis above:
+## 	   -- Rightmost bit = first basis operator, labeled sig_1 above;
+## 	   -- Leftmost bit  = last  basis operator, labeled sig_n above.
 
+-->> Print Operators of Inverse Basis in the file: 'OUTPUT/Shapes_n9_Dataset_N1e5-exh_BestBasis_inverse.dat'
 
 *******************************************************************************************
 *********************************   TOTAL ELAPSED TIME:  **********************************
 *******************************************************************************************
 
-Elapsed time (in s): 0.374167
+Elapsed time (in s): 0.369943
 
-        0.38 real         0.24 user         0.13 sys
+        0.37 real         0.24 user         0.13 sys
