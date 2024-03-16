@@ -32,7 +32,9 @@ There are three main functions that you can use to **search for the best basis**
     ```
     This is the recommended approach when the number of variables exceeds $n\simeq 15$ - $20$. A priori, this heuristic approach is able to explore possible basis interactions of arbitrary order.
 
-All the functions that can be called from `int main()` are declared at the beginning of the `includes/main.cpp` file. The most useful functions are described just above. You can use these functions without modifying the code in `main.cpp` with direct calls from your terminal using the commands described in the following sections.
+**General user:** You can analyse your dataset by running a few commands directly from your terminal. See explanations in the following sections.
+
+**Advanced Use:** If you prefer working directly with the C++ code, all the functions that can be called from `int main()` are declared at the beginning of the `includes/main.cpp` file. The most useful functions are described just above. You can use these functions without modifying the code in `main.cpp` with direct calls from your terminal using the commands described in the following sections.
 
 ## Requirements
 
