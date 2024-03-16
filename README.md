@@ -115,9 +115,11 @@ Run the following commands in your terminal, from the root folder (which contain
 
  - **Additional outputs:** The two searches in fixed and varying representations have additional outputs that will be automatically placed in a separate folder (within the `OUTPUT` folder). These files record the successive sets of operators and bases found during each procedure:
     - in fixed or varying representation: the prefix `Ri_` indicates in which iteration `i` of the representation the operators are printed;
-    - at each iteration i of the representation: the extension `_kX_` indicates up to which order `X` is the current set of operators (and best basis) computed.
+    - at each iteration i of the representation: the extension `_kX_` indicates up to which order `X` the current set of operators and the best basis are computed.
 
-   For the process in varying representation, the file `All_Bases_inR0.dat` contains all the successive bases found written in the original representation (i.e. in the original basis variables); the file `All_Bases_inRi.dat` contains  all the successive bases found written in the current basis representation `Ri`: this file should always end with the identity basis (which means that the algorithm has properly converged).
+   For the process in varying representation:
+    - the file `All_Bases_inR0.dat` contains all the successive bases found written in the original representation (i.e. in the original basis variables);
+    - the file `All_Bases_inRi.dat` contains  all the successive bases found written in the current basis representation `Ri`: this file should always end with the identity basis (which means that the algorithm has properly converged).
  
  - **Interpreting the printed Basis:**  How to read the output Basis?
    
