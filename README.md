@@ -97,7 +97,7 @@ Run the following commands in your terminal, from the root folder (which contain
 
 ## Output files and format of the returned Basis:
 
- - **Terminal Output:** We provided, in the `OUTPUT` folder, the LOGS returned when running the`./BestBasis.out` code on the example datasets.
+ - **Terminal Output:** We provided, in the `OUTPUT` folder, the LOGS returned when running the`./BestBasis.out` code on the example datasets (see 'Examples' section below).
 
  - **List of outputs:**
    - **Best Basis found:** will be printed in the terminal, as well as in the file with the name ending in `_BestBasis.dat`;
