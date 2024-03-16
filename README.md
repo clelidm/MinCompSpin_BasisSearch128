@@ -123,7 +123,7 @@ Run the following commands in your terminal, from the root folder (which contain
  
  - **Interpreting the printed Basis:**  How to read the output Basis?
    
-   The best basis found is printed as a list of binary strings, each one encoding a basis variable (i.e., a spin operator): spins with a bit equal to '1' are included in the operators, spins with a '0' don't. Variables are organized in the same order as in the original datafile, i.e. the i-th spin from the right in the operator corresponds to the i-th spin from the right in the original datafile.
+   The best basis found is printed as a list of binary strings, each one encoding a variable of the new basis, i.e., a spin operator: spins with a bit equal to '1' are included in the operator, spins with a '0' don't. Variables are organized in the same order as in the original datafile, i.e. the i-th spin from the right in the operator corresponds to the i-th spin from the right in the original datafile.
 
      >      For example, for the "Shape" dataset with 9 binary variables,
      >           
@@ -150,7 +150,7 @@ Run the following commands in your terminal, from the root folder (which contain
      >                            100000000  corresponds to the basis operator: sig_8 = s1
      >                            000000001  corresponds to the basis operator: sig_9 = s9
      > 
-     >      This are the basis operator displayed in Fig. 5 of Ref.[1].
+     >      This are the basis operator displayed in Fig. S1 of the Supplementary Information of Ref.[1].
      >      Note that the basis elements are not organized in the same order.
      >
      
@@ -160,28 +160,28 @@ Run the following commands in your terminal, from the root folder (which contain
 
      >      For example, for the "Shape" dataset with 9 binary variables,
      > 
-     >      The inverse basis transformation is given by:    1	000000010 	 Indices = 	8	
-     >                                                       2	000001001 	 Indices = 	9	6	
-     >                                                       3	000010001 	 Indices = 	9	5	
-     >                                                       4	000100110 	 Indices = 	8	7	4	
-     >                                                       5	000000110 	 Indices = 	8	7	
-     >                                                       6	001000001 	 Indices = 	9	3	
-     >                                                       7	010000001 	 Indices = 	9	2	
-     >                                                       8	100000001 	 Indices = 	9	1	
-     >                                                       9	000000001 	 Indices = 	9
+     >      The inverse basis transformation is given by:    1	100000000 	 Indices = 	1	
+     >                                                       2	100000001 	 Indices = 	9	1	
+     >                                                       3	100000010 	 Indices = 	8	1	
+     >                                                       4	100000100 	 Indices = 	7	1	
+     >                                                       5	011000000 	 Indices = 	3	2	
+     >                                                       6	011001000 	 Indices = 	6	3	2
+     >                                                       7	100010000 	 Indices = 	5	1	
+     >                                                       8	100100000 	 Indices = 	4	1	
+     >                                                       9	010000000 	 Indices = 	2
      > 
      >      Here again, the indices are counted from the left (sig_1) to the right (sig_9),
      >      one can read the contribution of each spin `sig_i` to each basis element `si`:
      > 
-     >                            000000010  corresponds to the basis operator: s1 = sig_8
-     >                            000001001  corresponds to the basis operator: s2 = sig_6 sig_9
-     >                            000010001  corresponds to the basis operator: s3 = sig_5 sig_9
-     >                            000100110  corresponds to the basis operator: s4 = sig_4 sig_7 sig_8
-     >                            000000110  corresponds to the basis operator: s5 = sig_7 sig_8
-     >                            001000001  corresponds to the basis operator: s6 = sig_3 sig_9
-     >                            010000001  corresponds to the basis operator: s7 = sig_2 sig_9
-     >                            100000001  corresponds to the basis operator: s8 = sig_1 sig_9
-     >                            000000001  corresponds to the basis operator: s9 = sig_9
+     >                            100000000  corresponds to the basis operator: s1 = sig_1
+     >                            100000001  corresponds to the basis operator: s2 = sig_9 sig_1
+     >                            100000010  corresponds to the basis operator: s3 = sig_5 sig_9
+     >                            100000100  corresponds to the basis operator: s4 = sig_4 sig_7 sig_8
+     >                            011000000  corresponds to the basis operator: s5 = sig_7 sig_8
+     >                            011001000  corresponds to the basis operator: s6 = sig_3 sig_9
+     >                            100010000  corresponds to the basis operator: s7 = sig_2 sig_9
+     >                            100100000  corresponds to the basis operator: s8 = sig_1 sig_9
+     >                            010000000  corresponds to the basis operator: s9 = sig_9
      > 
      >      Replacing the expressions of the `sig_i` (from the basis definition in the previous section)
      >      into the expressions of `si` (here) will give back the identity.
