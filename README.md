@@ -188,13 +188,13 @@ Run the following commands in your terminal, from the root folder (which contain
 ## Examples
 
 In the `INPUT` folder, we provided the following examples:
-  - **Example 1: Shape data.** The binary dataset `Shapes_n9_Dataset_N1e5.dat` is one of the datasets used as an example in Ref.[1]. This is an artificial dataset generated from only three states and described in Ref.[1] (see Figure 5).
+  - **Example 1: Shape data.** The binary dataset `Shapes_n9_Dataset_N1e5.dat` is one of the datasets used as an example in Ref.[1]. This is an artificial dataset generated from only three states and discussed in the Supplementary Information of Ref.[1] (see Figure S1).
   - **Example 2: Big 5 data.** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [2] used as an example in Ref. [1]. The dataset has `50` variables and `N = 1 013 558` datapoints. See Ref.[1] for results and comments on the Best Basis obtained for this dataset.
     Important: this dataset is given in a zip file, which must be decompressed first before being used.
 
     On a laptop, the analysis in varying representations takes about `15min` with `kmax=3` , and about `3h` with `kmax=4`. 
 
-  - **Example 3: MNIST data.** The binary dataset `MNIST11.sorted`: this is the binarized version of the MNIST dataset [3] used as an example in Ref.[1] (see Fig.~7). The dataset has `n=121` variables and `N=60 000` datapoints.
+  - **Example 3: MNIST data.** The binary dataset `MNIST11.sorted`: this is the binarized version of the MNIST dataset [3] used as an example in Ref.[1]. The dataset has `n=121` variables and `N=60 000` datapoints.
     
     On a laptop, the analysis in varying representations takes about `3h` with `kmax=3` , and about `30h` with `kmax=4`.
     
