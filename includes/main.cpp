@@ -40,11 +40,12 @@ vector<pair<__int128_t, unsigned int>> read_datafile128_vect(string datafilename
 bool Is_Basis(vector<Operator128> Basis, unsigned int n);
 vector<Operator128> Invert_Basis(vector<Operator128> Basis, unsigned int n);
 
-void PrintTerm_OpBasis(vector<Operator128> OpVect_Basis, unsigned int n, unsigned int N);
-void PrintFile_OpBasis(vector<Operator128> OpVect_Basis, unsigned int n, unsigned int N, string filename);
+void PrintTerm_FinalBasis(vector<Operator128> Basis, unsigned int n, unsigned int N);
+void PrintFile_FinalBasis(vector<Operator128> Basis, unsigned int n, unsigned int N, string filename);
 
-void PrintTerm_OpBasis_Short(vector<Operator128> Basis, unsigned int n, unsigned int N);
-void PrintFile_OpBasis_Short(vector<Operator128> Basis, unsigned int n, unsigned int N, string filename);
+void PrintTerm_Basis_inverse(vector<Operator128> Basis, unsigned int r);
+void PrintFile_Basis_inverse(vector<Operator128> Basis, unsigned int n, string filename);
+
 
 map<unsigned int, unsigned int> Histo_BasisOpOrder(vector<Operator128> Basis);
 
@@ -76,56 +77,6 @@ string filename_remove_extension(string filename);
 /******************************************************************************/
 /************************** MAIN **********************************************/
 /******************************************************************************/
-
-/*
-__int128_t one128 = 1;
-
-vector<Operator128> Basis_choice()
-{
-    list<string> Basis_li_str;
-
-//    unsigned int r = 3;
-//    Basis_li_str.push_back("100");
-//    Basis_li_str.push_back("110");
-//    Basis_li_str.push_back("001");
-
-    unsigned int r = 9;
-    Basis_li_str.push_back("000100100");
-    Basis_li_str.push_back("000001010");
-    Basis_li_str.push_back("000000011");  
-    Basis_li_str.push_back("100010000");
-    Basis_li_str.push_back("100000100");
-    Basis_li_str.push_back("101000000");
-    Basis_li_str.push_back("010000010");
-    Basis_li_str.push_back("001000001");
-    //Basis_li_str.push_back("000000100");
-
-    vector<Operator128> Basis;
-    Operator128 Op;
-    Op.r = r;
-    Op.k1 = 0;
-
-    __int128_t Op_bin = 1, state = 0;  char c = '1';
-
-
-    for (auto& Op_str : Basis_li_str) 
-    {
-        Op_bin = one128 << (r - 1);
-        state = 0;
-        for (auto &elem: Op_str)     //convert string line2 into a binary integer
-        {
-            if (elem == c) { state += Op_bin; }
-            Op_bin = Op_bin >> 1;
-        }
-
-        Op.bin = state;
-        Basis.push_back(Op);
-    }
-
-    return Basis;
-}*/
-
-
 
 int main(int argc, char *argv[])
 {
@@ -263,8 +214,8 @@ int main(int argc, char *argv[])
     cout << endl << "***********************  PRINT TERMINAL/FILE FINAL OPERATOR SET:  *************************";
     cout << endl << "*******************************************************************************************" << endl;
 
-    PrintTerm_OpBasis(BestBasis, n, N);  
-    PrintFile_OpBasis(BestBasis, n, N, prefix_datafilename + "_BestBasis");  
+    PrintTerm_FinalBasis(BestBasis, n, N);  
+    PrintFile_FinalBasis(BestBasis, n, N, prefix_datafilename + "_BestBasis");  
     //Is_Basis(BestBasis_k2, n);   // this function can check if a set of Operators is in independent set
 
     Histo_BasisOpOrder(BestBasis);
@@ -280,11 +231,6 @@ int main(int argc, char *argv[])
     cout << endl << "*************************  PRINT INVERSE BASIS TRANSFORMATION:  ***************************";
     cout << endl << "*******************************************************************************************" << endl;
 
-//    unsigned int r = 9;
-//    vector<Operator128> Basis = Basis_choice();
-//    PrintTerm_OpBasis(Basis, r, 1);
-//    Is_Basis(Basis, r);  
-
     vector<Operator128> Basis_invert = Invert_Basis(BestBasis, n); 
 
     if (Basis_invert.size() == 0)  // No inverse given
@@ -294,8 +240,8 @@ int main(int argc, char *argv[])
     else
     {
         cout << "**** Inverse Basis Transformation: ****" << endl << endl;
-        PrintTerm_OpBasis_Short(Basis_invert, n, 1);
-        PrintFile_OpBasis_Short(Basis_invert, n, N, prefix_datafilename + "_BestBasis_inverse"); 
+        PrintTerm_Basis_inverse(Basis_invert, n);
+        PrintFile_Basis_inverse(Basis_invert, n, prefix_datafilename + "_BestBasis_inverse");
     }
 
     cout << endl << "*******************************************************************************************";
