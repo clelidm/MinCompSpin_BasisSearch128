@@ -183,11 +183,12 @@ Run the following commands in your terminal, from the root folder (which contain
      >                            100000001  corresponds to the basis operator: s8 = sig_1 sig_9
      >                            000000001  corresponds to the basis operator: s9 = sig_9
      > 
-     >      Replacing the expressions of the `sig_i` (from the basis definition in the previous section)
-     >      into the expressions of `si` (here) will give back the identity.
+     >      Note that here one can easily check that the inverse tranformation is correct 
+     >      by replacing the expressions of the `sig_i` into the expressions of the `s_j`
+     >      and get back the identity (i.e., that `s_j = s_j` for all `j`).
      >
-     
- Note that here one can easily check that the inverse tranformation is correct by replacing the expressions of the $\sig_i$ into the expressions of ths $s_j$ and get back for each value of $j$ that $\s_j = s_j$.
+
+   **! Convention !:** Note that the convention adopted here (labeling variables from left to right) is different from the one adopted in the MCM code [exhaustive search](https://github.com/clelidm/MinCompSpin_ExhaustiveSearch) and [greedy search](https://github.com/clelidm/MinCompSpin_Greedy) (where variables are labeled from right to left).
    
  - **Results for the examples:** See Ref.[1] for results and discussions on the best basis obtained for these datasets.
 
