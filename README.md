@@ -4,6 +4,8 @@
 
 This program searches for the **Best Basis representation for a chosen binary dataset**, while taking into account all possible **high-order patterns of the data**. It was developed for the paper [*Statistical Inference of Minimally Complex Models*](https://arxiv.org/abs/2008.00520) [1]. More details on the general algorithm can be found in the paper.
 
+The best basis search can be used as a first step in the search for the best Minimally Complex Models (MCM). You can find codes to search for the best MCMs here: [exhaustive search](https://github.com/clelidm/MinCompSpin_ExhaustiveSearch) and [greedy search](https://github.com/clelidm/MinCompSpin_Greedy). 
+
 The program can be used for datasets with up to $n=128$ random variables.
 
 [1]  C. de Mulatier, P. P. Mazza, M. Marsili, *Statistical Inference of Minimally Complex Models*, [arXiv:2008.00520](https://arxiv.org/abs/2008.00520)
@@ -188,7 +190,7 @@ Run the following commands in your terminal, from the root folder (which contain
      >      and get back the identity (i.e., that `s_j = s_j` for all `j`).
      >
 
-   **! Convention !:** Note that the convention adopted here (labeling variables from left to right) is different from the one adopted in the MCM code [exhaustive search](https://github.com/clelidm/MinCompSpin_ExhaustiveSearch) and [greedy search](https://github.com/clelidm/MinCompSpin_Greedy) (where variables are labeled from right to left).
+   **! Convention !:** Note that the convention adopted here (labeling variables from left to right) is different from the one adopted in the MCM codes [exhaustive search](https://github.com/clelidm/MinCompSpin_ExhaustiveSearch) and [greedy search](https://github.com/clelidm/MinCompSpin_Greedy) (where variables are labeled from right to left).
    
  - **Results for the examples:** See Ref.[1] for results and discussions on the best basis obtained for these datasets.
 
