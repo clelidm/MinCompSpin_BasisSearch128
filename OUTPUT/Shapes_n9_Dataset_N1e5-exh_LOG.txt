@@ -1,5 +1,5 @@
-time ./BestBasis.out Shapes_n9_Dataset_N1e5.dat  9
-		
+time ./BestBasis.out Shapes_n9_Dataset_N1e5.dat  9		
+
 --->> Create the "OUTPUT" Folder: (if needed) 
 
 *******************************************************************************************
@@ -14,7 +14,7 @@ time ./BestBasis.out Shapes_n9_Dataset_N1e5.dat  9
 	 Number of different states, Nset.size() = 3
 
 
-Elapsed time (in s): 0.0107
+Elapsed time (in s): 0.011843
 
 
 *******************************************************************************************
@@ -41,17 +41,17 @@ Smallest bias = 0.20072, 	 for the operator = 010000000		2
 
 Taking the 'small bias' as a bound is MORE restrictive than the 3*sigma bound = 0.00474342
 
-Elapsed time (in s): 3.5e-05
+Elapsed time (in s): 4.5e-05
 
 Estimated times (in s) for larger values of 'k':
-	 k = 2: 	0.00014 s 	2.33333e-06 min
-	 k = 3: 	0.000326667 s 	5.44444e-06 min
-	 k = 4: 	0.00049 s 	8.16667e-06 min
-	 k = 5: 	0.00049 s 	8.16667e-06 min
+	 k = 2: 	0.00018 s 	3e-06 min
+	 k = 3: 	0.00042 s 	7e-06 min
+	 k = 4: 	0.00063 s 	1.05e-05 min
+	 k = 5: 	0.00063 s 	1.05e-05 min
 
 -->> Compute ALL the (2^n-1) Operators
      Rank the operators with bias larger than lower bound (fixed by the least informative first order operator):
-	 Elapsed time (in s): 0.00039
+	 Elapsed time (in s): 0.000365
 
 -->> Search for the Best Basis:		Total number of Operators to analyse = 261
 
@@ -62,7 +62,7 @@ Estimated times (in s) for larger values of 'k':
 	 --> this is equal to the number 'n' of variables: i.e., this is a Basis for the n-dimensional system
 	 --> Smallest Bias among the basis components = 0.20072
 
-Total elapsed time (in s): 0.000689	 for Exhaustive Search
+Total elapsed time (in s): 0.000663	 for Exhaustive Search
 
 
 *******************************************************************************************
@@ -87,8 +87,8 @@ sig_9  	000000001	0.20072 	29928	0.299280 	0.401440 	-0.610253 	 Indices = 	9
 
 Convention for reading this basis:
 ## 	   bits are organised in the same order as in the original dataset,
-## 	   i.e. rightmost bit of an operator = rightmost bit in the data: labeled s_1 in the inverse basis below.
-## 	        leftmost  bit of an operator = leftmost  bit in the data: labeled s_n in the inverse basis below.
+## 	   i.e. leftmost  bit of an operator = leftmost  bit in the data: labeled s_1 in the inverse basis below.
+## 	        rightmost bit of an operator = rightmost bit in the data: labeled s_n in the inverse basis below.
 
 -->> Print Basis Operators in the file: 'OUTPUT/Shapes_n9_Dataset_N1e5-exh_BestBasis.dat'
 
@@ -115,7 +115,7 @@ Operators are ordered from Right to Left: i.e.
  	 - the first basis operator corresponds to the rightmost bit (lowest bit)
  	 - the n-th basis operator corresponds to the leftmost bit (highest bit) 
 
-Elapsed time (in s): 0.357294	 for converting data
+Elapsed time (in s): 0.368537	 for converting data
 
 
 *******************************************************************************************
@@ -129,23 +129,23 @@ Rank = n = 9	: this is a basis and can be inverted.
 
 ## 1:i 	 2:bin 		 3:Op_index 
 ## 
-s_1  	100000000 	 Indices = 	1	
-s_2  	100000001 	 Indices = 	9	1	
-s_3  	100000010 	 Indices = 	8	1	
-s_4  	100000100 	 Indices = 	7	1	
-s_5  	011000000 	 Indices = 	3	2	
-s_6  	011001000 	 Indices = 	6	3	2	
-s_7  	100010000 	 Indices = 	5	1	
-s_8  	100100000 	 Indices = 	4	1	
-s_9  	010000000 	 Indices = 	2	
+s_1  	000000010 	 Indices = 	8	
+s_2  	000001001 	 Indices = 	6	9	
+s_3  	000010001 	 Indices = 	5	9	
+s_4  	000100110 	 Indices = 	4	7	8	
+s_5  	000000110 	 Indices = 	7	8	
+s_6  	001000001 	 Indices = 	3	9	
+s_7  	010000001 	 Indices = 	2	9	
+s_8  	100000001 	 Indices = 	1	9	
+s_9  	000000001 	 Indices = 	9	
 
 Convention for reading this basis in comparison with the original basis of the data:
-## 	   -- s_1 = Rightmost bit in the original data
-## 	   -- s_n = Leftmost bit in the original data
+## 	   -- s_1 = Leftmost  bit in the original data
+## 	   -- s_n = Rightmost bit in the original data
 ##
 ## Besides, in the basis above:
-## 	   -- Rightmost bit = first basis operator, labeled sig_1 above;
-## 	   -- Leftmost bit  = last  basis operator, labeled sig_n above.
+## 	   -- Leftmost bit  = first basis operator, labeled sig_1 above;
+## 	   -- Rightmost bit = last  basis operator, labeled sig_n above.
 
 -->> Print Operators of Inverse Basis in the file: 'OUTPUT/Shapes_n9_Dataset_N1e5-exh_BestBasis_inverse.dat'
 
@@ -153,6 +153,6 @@ Convention for reading this basis in comparison with the original basis of the d
 *********************************   TOTAL ELAPSED TIME:  **********************************
 *******************************************************************************************
 
-Elapsed time (in s): 0.369943
+Elapsed time (in s): 0.382434
 
-        0.37 real         0.24 user         0.13 sys
+        0.38 real         0.24 user         0.13 sys
