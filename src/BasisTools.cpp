@@ -16,8 +16,13 @@ using namespace std;
 const __int128_t one128 = 1;
 
 string int_to_bstring(__int128_t bool_nb, unsigned int n);
+string int_to_bstring_reverse(__int128_t bool_nb, unsigned int r);
+
 void int_to_digits(__int128_t bool_nb, unsigned int n);
+void int_to_digits_reverse(__int128_t bool_nb, unsigned int r);
+
 void int_to_digits_file(__int128_t bool_nb, unsigned int r, fstream &file);
+void int_to_digits_file_reverse(__int128_t bool_nb, unsigned int r, fstream &file);
 
 unsigned int bitset_count(__int128_t bool_nb);
 
@@ -329,8 +334,14 @@ void PrintTerm_FinalBasis(vector<Operator128> Basis, unsigned int n, unsigned in
 
   cout << "Convention for reading this basis:" << endl;
   cout << "## \t   bits are organised in the same order as in the original dataset," << endl;
-  cout << "## \t   i.e. rightmost bit of an operator = rightmost bit in the data: labeled s_1 in the inverse basis below." << endl;
-  cout << "## \t        leftmost  bit of an operator = leftmost  bit in the data: labeled s_n in the inverse basis below." << endl;
+
+// ** old convention:  
+  cout << "## \t   i.e. leftmost  bit of an operator = leftmost  bit in the data: labeled s_1 in the inverse basis below." << endl;
+  cout << "## \t        rightmost bit of an operator = rightmost bit in the data: labeled s_n in the inverse basis below." << endl;
+
+// ** new convention:  see MCM Greedy algo,
+//  cout << "## \t   i.e. rightmost bit of an operator = rightmost bit in the data: labeled s_1 in the inverse basis below." << endl;
+//  cout << "## \t        leftmost  bit of an operator = leftmost  bit in the data: labeled s_n in the inverse basis below." << endl;
   cout << endl;
 }
 
@@ -355,7 +366,7 @@ void PrintFile_FinalBasis(vector<Operator128> Basis, unsigned int n, unsigned in
     LogL += LogLi;
 
     file_OpBasis << fixed;
-    file_OpBasis << i << "\t" << int_to_bstring(Op.bin, n) << "\t" << setprecision(5) << Op.bias << " \t" << Op.k1  << "\t";
+    file_OpBasis << "sig_" << setw(3) << setfill(' ') << left << i << "\t" << int_to_bstring(Op.bin, n) << "\t" << setprecision(5) << Op.bias << " \t" << Op.k1  << "\t";
     file_OpBasis << setprecision(6) << p1 << " \t" << 1-2*p1 << " \t" << LogLi << " \t Indices = "; 
     //file_OpBasis << i << "\t" << int_to_bstring(Op.bin, n) << "\t" << Op.bias << "\t" << Op.k1  << "\t" << p1 << "\t" << LogLi << "\t Indices = "; 
     int_to_digits_file(Op.bin, n, file_OpBasis);
@@ -366,10 +377,16 @@ void PrintFile_FinalBasis(vector<Operator128> Basis, unsigned int n, unsigned in
   file_OpBasis << "## -LogL / N / log(2) = " << -LogL/log(2.) << " bits per datapoints "<< endl;  //<< setprecision (6) 
   file_OpBasis << endl;
 
+// ** old convention: 
   file_OpBasis << "## Convention for reading this basis:" << endl;
   file_OpBasis << "## \t   bits are organized in the same order as in the original dataset," << endl;
-  file_OpBasis << "## \t   i.e. rightmost bit of an operator = rightmost bit in the data: labeled s_1 in the Inverse Basis file." << endl;
-  file_OpBasis << "## \t        leftmost  bit of an operator = leftmost  bit in the data: labeled s_n in the Inverse Basis file." << endl;
+
+  file_OpBasis << "## \t   i.e. leftmost  bit of an operator = leftmost  bit in the data: labeled s_1 in the Inverse Basis file." << endl;
+  file_OpBasis << "## \t        rightmost bit of an operator = rightmost bit in the data: labeled s_n in the Inverse Basis file." << endl;
+
+// ** new convention:  see MCM Greedy algo,  
+//  file_OpBasis << "## \t   i.e. rightmost bit of an operator = rightmost bit in the data: labeled s_1 in the Inverse Basis file." << endl;
+//  file_OpBasis << "## \t        leftmost  bit of an operator = leftmost  bit in the data: labeled s_n in the Inverse Basis file." << endl;
   file_OpBasis << endl;
 
   file_OpBasis.close();
@@ -382,7 +399,8 @@ void PrintTerm_Basis_inverse(vector<Operator128> Basis, unsigned int r)
   cout << "-->> Print Operators of Inverse Basis: \t Number of basis operators = " << Basis.size() << endl << endl; 
   cout << "## 1:i \t 2:bin \t\t 3:Op_index " << endl << "## " << endl; 
   
-  int i = 1;
+// ** new convention:  see MCM Greedy algo, 
+/*  int i = 1;
   for (auto& Op : Basis)
   {
     cout << fixed;
@@ -392,8 +410,22 @@ void PrintTerm_Basis_inverse(vector<Operator128> Basis, unsigned int r)
     i++;
   }
   cout << endl;
+*/
 
-  cout << "Convention for reading this basis in comparison with the original basis of the data:" << endl;
+// ** old convention:   
+  int i = 1;
+  for (auto it = Basis.rbegin(); it != Basis.rend(); it++) 
+  { 
+    cout << fixed;
+    cout << "s_" << setw(3) << setfill(' ') << left << i << "\t" << int_to_bstring_reverse((*it).bin, r);
+    cout << " \t Indices = "; 
+    int_to_digits_reverse((*it).bin, r);
+    i++;
+  }
+  cout << endl;
+
+// ** new convention:  see MCM Greedy algo
+/*  cout << "Convention for reading this basis in comparison with the original basis of the data:" << endl;
   cout << "## \t   -- s_1 = Rightmost bit in the original data" << endl;
   cout << "## \t   -- s_n = Leftmost bit in the original data" << endl;
   cout << "##" << endl;
@@ -401,6 +433,17 @@ void PrintTerm_Basis_inverse(vector<Operator128> Basis, unsigned int r)
   cout << "## \t   -- Rightmost bit = first basis operator, labeled sig_1 above;" << endl;
   cout << "## \t   -- Leftmost bit  = last  basis operator, labeled sig_n above." << endl;
   cout << endl;
+*/
+
+// ** old convention:  
+  cout << "Convention for reading this basis in comparison with the original basis of the data:" << endl;
+  cout << "## \t   -- s_1 = Leftmost  bit in the original data" << endl;
+  cout << "## \t   -- s_n = Rightmost bit in the original data" << endl;
+  cout << "##" << endl;
+  cout << "## Besides, in the basis above:" << endl;
+  cout << "## \t   -- Leftmost bit  = first basis operator, labeled sig_1 above;" << endl;
+  cout << "## \t   -- Rightmost bit = last  basis operator, labeled sig_n above." << endl;
+  cout << endl; 
 }
 
 void PrintFile_Basis_inverse(vector<Operator128> Basis, unsigned int n, string filename)
@@ -409,13 +452,14 @@ void PrintFile_Basis_inverse(vector<Operator128> Basis, unsigned int n, string f
 
   cout << "-->> Print Operators of Inverse Basis in the file: \'" <<  OpSet_filename << "\'" << endl;
   fstream file_OpBasis(OpSet_filename, ios::out);
-  
-  int i = 1;
 
   file_OpBasis << "## Basis: Total number of operators = " << Basis.size() << endl << "## " << endl; 
   file_OpBasis << "## 1:count \t 2:bin \t 3:Op_index " << endl << "## " << endl; 
 
-  for (auto& Op : Basis)
+  int i = 1;
+
+// ** new convention:  see MCM Greedy algo
+/*  for (auto& Op : Basis)
   {
     file_OpBasis << fixed;
     file_OpBasis << "s_" << setw(3) << setfill(' ') << left << i << " \t" << int_to_bstring(Op.bin, n) << " \t Indices = "; 
@@ -423,15 +467,37 @@ void PrintFile_Basis_inverse(vector<Operator128> Basis, unsigned int n, string f
     int_to_digits_file(Op.bin, n, file_OpBasis);
     i++;
   }
+  file_OpBasis << endl;
+*/  
 
+// ** old convention:  
+  for (auto it = Basis.rbegin(); it != Basis.rend(); it++) 
+  { 
+    file_OpBasis << fixed;
+    file_OpBasis << "s_" << setw(3) << setfill(' ') << left << i << "\t" << int_to_bstring_reverse((*it).bin, n) << " \t Indices = ";
+    int_to_digits_file_reverse((*it).bin, n, file_OpBasis);
+    i++;
+  }
   file_OpBasis << " " << endl;
-  file_OpBasis << "## Convention for reading this basis in comparison with the original basis of the data:" << endl;
+
+// ** new convention:  see MCM Greedy algo
+/*  file_OpBasis << "## Convention for reading this basis in comparison with the original basis of the data:" << endl;
   file_OpBasis << "## \t   -- s_1 = Rightmost bit in the original data" << endl;
   file_OpBasis << "## \t   -- s_n = Leftmost bit in the original data" << endl;
   file_OpBasis << "##" << endl;
   file_OpBasis << "## Besides, in the basis above:" << endl;
   file_OpBasis << "## \t   -- Rightmost bit = first basis operator in the Best Basis file;" << endl;
   file_OpBasis << "## \t   -- Leftmost bit  = last  basis operator in the Best Basis file." << endl;
+*/
+
+// ** old convention:  
+  file_OpBasis << "## Convention for reading this basis in comparison with the original basis of the data:" << endl;
+  file_OpBasis << "## \t   -- s_1 = Leftmost  bit in the original data" << endl;
+  file_OpBasis << "## \t   -- s_n = Rightmost bit in the original data" << endl;
+  file_OpBasis << "##" << endl;
+  file_OpBasis << "## Besides, in the basis above:" << endl;
+  file_OpBasis << "## \t   -- Leftmost bit  = first basis operator in the Best Basis file: labeled sig_1;" << endl;
+  file_OpBasis << "## \t   -- Rightmost bit = last  basis operator in the Best Basis file: labeled sig_n." << endl;
 
   file_OpBasis.close();
 }

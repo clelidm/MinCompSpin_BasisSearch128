@@ -41,6 +41,21 @@ std::string int_to_bstring(__int128_t bool_nb, unsigned int r)
     return s;
 }
 
+std::string int_to_bstring_reverse(__int128_t bool_nb, unsigned int r) // print-out in reverse order
+{
+    std::string s;
+    do
+    {
+        s.push_back( ((bool_nb & one32)?'1':'0') );
+    } while(bool_nb >>= 1);
+
+    reverse(s.begin(), s.end());
+    s = (std::string(r - s.length(), '0')).append(s);
+
+    reverse(s.begin(), s.end());
+    return s;
+}
+
 // Using bitset: Very bad performance (~ double the time)
 /*std::string int_to_bstring_Bitset(__int128_t bool_nb)     // Very bad performance (~ double the time)
 {
@@ -89,7 +104,6 @@ void int_to_digits(__int128_t bool_nb, unsigned int r)
     std::cout << std::endl;
 }
 
-
 void int_to_digits_file(__int128_t bool_nb, unsigned int r, std::fstream &file)
 {
     unsigned int digit = r;
@@ -100,6 +114,35 @@ void int_to_digits_file(__int128_t bool_nb, unsigned int r, std::fstream &file)
         if(bool_nb & un128) {   file << digit << "\t"; }
         bool_nb >>= 1;
         digit--;
+    }
+    file << std::endl;
+}
+
+// Reverse version, for old convention:
+void int_to_digits_reverse(__int128_t bool_nb, unsigned int r)
+{
+    unsigned int digit = 1;
+
+    std::cout << "\t"; // << std::endl;
+    while(bool_nb)
+    {
+        if(bool_nb & un128) {   std::cout << digit << "\t"; }
+        bool_nb >>= 1;
+        digit++;
+    }
+    std::cout << std::endl;
+}
+
+void int_to_digits_file_reverse(__int128_t bool_nb, unsigned int r, std::fstream &file)
+{
+    unsigned int digit = 1;
+
+    file << "\t"; // << std::endl;
+    while(bool_nb)
+    {
+        if(bool_nb & un128) {   file << digit << "\t"; }
+        bool_nb >>= 1;
+        digit++;
     }
     file << std::endl;
 }
