@@ -165,7 +165,7 @@ Run the following commands in your terminal, from the root folder (which contain
      >      The inverse basis transformation is given by:    s_1	000000010 	 Indices = 	8	
      >                                                       s_2	000001001 	 Indices = 	6	9	
      >                                                       s_3	000010001 	 Indices = 	5	9	
-     >                                                       s_4	000100110 	 Indices = 	4 7	8	
+     >                                                       s_4	000100110 	 Indices = 	4	7	8	
      >                                                       s_5	000000110 	 Indices = 	7	8	
      >                                                       s_6	001000001 	 Indices = 	3	9
      >                                                       s_7	010000001 	 Indices = 	2	9	
