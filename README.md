@@ -127,15 +127,15 @@ Run the following commands in your terminal, from the root folder (which contain
 
      >      For example, for the "Shape" dataset with 9 binary variables,
      >           
-     >      The exhaustive search finds the following basis:    1	000000011	 Indices = 	9	8	
-     >                                                          2	000000101	 Indices = 	9	7
-     >                                                          3	000001001	 Indices = 	9	6	
-     >                                                          4	000110000	 Indices = 	5	4	
-     >                                                          5	001000001	 Indices = 	9	3	
-     >                                                          6	010000001	 Indices = 	9	2	
-     >                                                          7	100010000	 Indices = 	5	1	
-     >                                                          8	100000000	 Indices = 	1	
-     >                                                          9	000000001	 Indices = 	9
+     >      The exhaustive search finds the following basis:    sig_1	000000011	 Indices = 	9	8	
+     >                                                          sig_2	000000101	 Indices = 	9	7
+     >                                                          sig_3	000001001	 Indices = 	9	6	
+     >                                                          sig_4	000110000	 Indices = 	5	4	
+     >                                                          sig_5	001000001	 Indices = 	9	3	
+     >                                                          sig_6	010000001	 Indices = 	9	2	
+     >                                                          sig_7	100010000	 Indices = 	5	1	
+     >                                                          sig_8	100000000	 Indices = 	1	
+     >                                                          sig_9	000000001	 Indices = 	9
      >
      >      Here, the indices are counted from the left (s1) to the right (s9),
      >      one can read the contribution of each spin `s_i` to each basis element `sig_i`:
@@ -160,32 +160,34 @@ Run the following commands in your terminal, from the root folder (which contain
 
      >      For example, for the "Shape" dataset with 9 binary variables,
      > 
-     >      The inverse basis transformation is given by:    1	100000000 	 Indices = 	1	
-     >                                                       2	100000001 	 Indices = 	9	1	
-     >                                                       3	100000010 	 Indices = 	8	1	
-     >                                                       4	100000100 	 Indices = 	7	1	
-     >                                                       5	011000000 	 Indices = 	3	2	
-     >                                                       6	011001000 	 Indices = 	6	3	2
-     >                                                       7	100010000 	 Indices = 	5	1	
-     >                                                       8	100100000 	 Indices = 	4	1	
-     >                                                       9	010000000 	 Indices = 	2
+     >      The inverse basis transformation is given by:    s_1	000000010 	 Indices = 	8	
+     >                                                       s_2	000001001 	 Indices = 	6	9	
+     >                                                       s_3	000010001 	 Indices = 	5	9	
+     >                                                       s_4	000100110 	 Indices = 	4 7	8	
+     >                                                       s_5	000000110 	 Indices = 	7	8	
+     >                                                       s_6	001000001 	 Indices = 	3	9
+     >                                                       s_7	010000001 	 Indices = 	2	9	
+     >                                                       s_8	100000001 	 Indices = 	1	9	
+     >                                                       s_9	000000001 	 Indices = 	9
      > 
      >      Here again, the indices are counted from the left (sig_1) to the right (sig_9),
      >      one can read the contribution of each spin `sig_i` to each basis element `si`:
      > 
-     >                            100000000  corresponds to the basis operator: s1 = sig_1
-     >                            100000001  corresponds to the basis operator: s2 = sig_9 sig_1
-     >                            100000010  corresponds to the basis operator: s3 = sig_5 sig_9
-     >                            100000100  corresponds to the basis operator: s4 = sig_4 sig_7 sig_8
-     >                            011000000  corresponds to the basis operator: s5 = sig_7 sig_8
-     >                            011001000  corresponds to the basis operator: s6 = sig_3 sig_9
-     >                            100010000  corresponds to the basis operator: s7 = sig_2 sig_9
-     >                            100100000  corresponds to the basis operator: s8 = sig_1 sig_9
-     >                            010000000  corresponds to the basis operator: s9 = sig_9
+     >                            000000010  corresponds to the basis operator: s1 = sig_8
+     >                            000001001  corresponds to the basis operator: s2 = sig_6 sig_9
+     >                            000010001  corresponds to the basis operator: s3 = sig_5 sig_9
+     >                            000100110  corresponds to the basis operator: s4 = sig_4 sig_7 sig_8
+     >                            000000110  corresponds to the basis operator: s5 = sig_7 sig_8
+     >                            001000001  corresponds to the basis operator: s6 = sig_3 sig_9
+     >                            010000001  corresponds to the basis operator: s7 = sig_2 sig_9
+     >                            100000001  corresponds to the basis operator: s8 = sig_1 sig_9
+     >                            000000001  corresponds to the basis operator: s9 = sig_9
      > 
      >      Replacing the expressions of the `sig_i` (from the basis definition in the previous section)
      >      into the expressions of `si` (here) will give back the identity.
-     > 
+     >
+     
+ Note that here one can easily check that the inverse tranformation is correct by replacing the expressions of the $\sig_i$ into the expressions of ths $s_j$ and get back for each value of $j$ that $\s_j = s_j$.
    
  - **Results for the examples:** See Ref.[1] for results and discussions on the best basis obtained for these datasets.
 
