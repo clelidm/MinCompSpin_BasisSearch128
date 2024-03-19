@@ -11,13 +11,17 @@
 datafilename := Shapes_n9_Dataset_N1e5.dat # dataset: file must be in the 'INPUT' folder
 n := 9		# number of binary variables in the datafile 
 
-#### EXAMPLE 2: Big 5: 
+#### EXAMPLE 2: SCOTUS:
+datafilename := SCOTUS_n9_N895_Data.dat # dataset: file must be in the 'INPUT' folder
+n := 9		# number of binary variables in the datafile 
+
+#### EXAMPLE 3: Big 5: 
 ####    on a laptop, k=3 takes about 15min, and k=4 takes about 3h
 #datafilename := Big5PT.sorted   # dataset: file must be in the 'INPUT' folder
 #n := 50
 k := 3	
 
-#### EXAMPLE 3: MNIST data:  
+#### EXAMPLE 4: MNIST data:  
 ####    on a laptop, k=2 takes about 15min; k=3 takes about 3h; k=4 takes about 30h
 #datafilename := MNIST11.sorted   # dataset: file must be in the 'INPUT' folder
 #n := 121
