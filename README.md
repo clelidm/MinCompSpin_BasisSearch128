@@ -198,13 +198,13 @@ Run the following commands in your terminal, from the root folder (which contain
 
 In the `INPUT` folder, we provided the following examples:
   - **Example 1: Shape data.** The binary dataset `Shapes_n9_Dataset_N1e5.dat` is one of the datasets used as an example in Ref.[1]. This is an artificial dataset with `n=9` variables generated from only three states and discussed in the Supplementary Information of Ref.[1] (see Figure S3). 
-  - **Example 2: SCOTUS data** the binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[2] and used as an example in Ref.[1].
-  - **Example 3: Big 5 data.** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [3] used as an example in Ref. [1]. The dataset has `n=50` variables and `N = 1 013 558` datapoints. See Ref.[1] for results and comments on the Best Basis obtained for this dataset.
+  - **Example 2: SCOTUS data** the binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[2] and used as an example in Ref.[1]. The dataset was processed from the original data published by Ref.[3] and accessed in 3 April 2012.
+  - **Example 3: Big 5 data.** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [4] used as an example in Ref. [1]. The dataset has `n=50` variables and `N = 1 013 558` datapoints. See Ref.[1] for results and comments on the Best Basis obtained for this dataset.
     Important: this dataset is given in a zip file, which must be decompressed first before being used.
 
     On a laptop, the analysis in varying representations takes about `15min` with `kmax=3` , and about `3h` with `kmax=4`. 
 
-  - **Example 4: MNIST data.** The binary dataset `MNIST11.sorted`: this is the binarized version of the MNIST dataset [4] used as an example in Ref.[1]. The dataset has `n=121` variables and `N=60 000` datapoints.
+  - **Example 4: MNIST data.** The binary dataset `MNIST11.sorted`: this is the binarized version of the MNIST dataset [5] used as an example in Ref.[1]. The dataset has `n=121` variables and `N=60 000` datapoints.
     
     On a laptop, the analysis in varying representations takes about `3h` with `kmax=3` , and about `30h` with `kmax=4`.
     
@@ -214,9 +214,11 @@ Each of these datasets can be analyzed by running the program with the `makefile
 
 [2] E.D. Lee, C.P. Broedersz, W. Bialek, Statistical Mechanics of the US Supreme Court. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
 
-[3] Raw data from [Open-Source Psychometrics Project](https://openpsychometrics.org/_rawdata/) in the line indicated as "Answers to the IPIP Big Five Factor Markers"; [here](https://openpsychometrics.org/_rawdata/IPIP-FFM-data-8Nov2018.zip) is a direct link to the same zip file.
+[3] H.J. Spaeth, L. Epstein, T.W. Ruger, K. Whittington, J.A. Segal, A.D. Martin:SupremeCourtdatabase. Version 2011 Release 3 (2011). http://scdb.wustl.edu/index.php. Accessed 3 April 2012.
 
-[4] LeCun, L Bottou, Y Bengio, P Haffner, *Gradient-based learning applied to document recognition*. Proc. IEEE 86, 2278–2324 (1998).
+[4] Raw data from [Open-Source Psychometrics Project](https://openpsychometrics.org/_rawdata/) in the line indicated as "Answers to the IPIP Big Five Factor Markers"; [here](https://openpsychometrics.org/_rawdata/IPIP-FFM-data-8Nov2018.zip) is a direct link to the same zip file.
+
+[5] LeCun, L Bottou, Y Bengio, P Haffner, *Gradient-based learning applied to document recognition*. Proc. IEEE 86, 2278–2324 (1998).
 
 
 ## License
