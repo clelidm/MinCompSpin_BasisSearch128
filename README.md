@@ -198,7 +198,12 @@ Run the following commands in your terminal, from the root folder (which contain
 
 In the `INPUT` folder, we provided the following examples:
   - **Example 1: Shape data.** The binary dataset `Shapes_n9_Dataset_N1e5.dat` is one of the datasets used as an example in Ref.[1]. This is an artificial dataset with `n=9` variables generated from only three states and discussed in the Supplementary Information of Ref.[1] (see Figure S3). 
-  - **Example 2: SCOTUS data** the binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[2] and used as an example in Ref.[1]. The dataset was processed by the authors of Ref.[2] from the original data published by Ref.[3] (accessed in 3 April 2012).
+  - **Example 2: SCOTUS data** the binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[2] and used as an example in Ref.[1]. The dataset was processed by the authors of Ref.[2] from the original data published by Ref.[3] (accessed in 3 April 2012). The mapping between the variables and the justices is the following (labeled from Right to Left):
+
+   | $S_9$  | $S_8$  | $S_7$  | $S_6$  | $S_5$  | $S_4$  | $S_3$  | $S_2$  | $S_1$  |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | WR  | JS  | SO  | AS  | AK  | DS  | CT  | RG  | SB  |
+
   - **Example 3: Big 5 data.** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [4] used as an example in Ref. [1]. The dataset has `n=50` variables and `N = 1 013 558` datapoints. See Ref.[1] for results and comments on the Best Basis obtained for this dataset.
     Important: this dataset is given in a zip file, which must be decompressed first before being used.
 
