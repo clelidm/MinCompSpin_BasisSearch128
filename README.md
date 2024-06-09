@@ -10,6 +10,9 @@ The program can be used for datasets with up to $n=128$ random variables.
 
 [1]  C. de Mulatier, P. P. Mazza, M. Marsili, *Statistical Inference of Minimally Complex Models*, [arXiv:2008.00520](https://arxiv.org/abs/2008.00520)
 
+**To cite this repository:**
+C. de Mulatier (2024). Search for the best spin basis of a binary dataset (v1.0). Zenodo. https://doi.org/10.5281/zenodo.11539774.
+
 ## General information
 
 **Best Basis:** The Best basis of a binary data with `n` variables is the one for which the independent model formed by `n` field operators has the largest log-likelihood (and therefore the largest log-evidence, as all independent models with the same number of operators are equivalent -- see Ref[1]).
