@@ -15,7 +15,7 @@ C. de Mulatier (2024). Search for the best independent spin models for binary da
 
 ## General information
 
-**Best Basis:** The Best basis of a binary data with `n` variables is the one for which the independent model formed by `n` field operators has the largest log-likelihood (and therefore the largest log-evidence, as all independent models with the same number of operators are equivalent -- see Ref[1]).
+**Best Basis:** The Best basis of a binary dataset with `n` variables is the one for which the independent model formed by `n` field operators has the largest log-likelihood (and therefore the largest log-evidence, as all independent models with the same number of operators are equivalent -- see Ref[1]).
 
 There are three main functions that you can use to **search for the best basis** from the `main.cpp`:
 
@@ -37,7 +37,7 @@ There are three main functions that you can use to **search for the best basis**
     ```
     This is the recommended approach when the number of variables exceeds $n\simeq 15$ - $20$. A priori, this heuristic approach is able to explore possible basis interactions of arbitrary order.
 
-**General user:** You can analyse your dataset by running a few commands directly from your terminal. See explanations in the following sections.
+**General user:** You can analyze your dataset by running a few commands directly from your terminal. See explanations in the following sections.
 
 **Advanced Use:** If you prefer working directly with the C++ code, all the functions that can be called from `int main()` are declared at the beginning of the `includes/main.cpp` file. The most useful functions are described just above. You can use these functions without modifying the code in `main.cpp` with direct calls from your terminal using the commands described in the following sections.
 
@@ -81,7 +81,7 @@ Run the following commands in your terminal, from the root folder (which contain
    Open the makefile and replace the values of the following variables at the very top of the file (an example is provided):
     * `datafile`: name of your datafile; this file must be placed in the folder `INPUT`
     * `n`: number of variables in your file; largest possible value is `n = 128`.
-    * [if needed] `kmax`: the highest order of operators to consider (if needed); we advise to take it equal to 3 or 4.
+    * [if needed] `kmax`: the highest order of operators to consider (if needed); we advise taking it equal to 3 or 4.
    
    You can then execute the code by running in your terminal one of the following commands (from the root folder):
 
@@ -120,7 +120,7 @@ Run the following commands in your terminal, from the root folder (which contain
 
  - **Additional outputs:** The two searches in fixed and varying representations have additional outputs that will be automatically placed in a separate folder (within the `OUTPUT` folder). These files record the successive sets of operators and bases found during each procedure:
     - in fixed or varying representation: the prefix `Ri_` indicates in which iteration `i` of the representation the operators are printed;
-    - at each iteration i of the representation: the extension `_kX_` indicates up to which order `X` the current set of operators and the best basis are computed.
+    - at each iteration `i` of the representation: the extension `_kX_` indicates up to which order `X` the current set of operators and the best basis are computed.
 
    For the process in varying representation:
     - the file `All_Bases_inR0.dat` contains all the successive bases found written in the original representation (i.e. in the original basis variables);
@@ -155,7 +155,7 @@ Run the following commands in your terminal, from the root folder (which contain
      >                            100000000  corresponds to the basis operator: sig_8 = s1
      >                            000000001  corresponds to the basis operator: sig_9 = s9
      > 
-     >      This are the basis operator displayed in Fig. S1 of the Supplementary Information of Ref.[1].
+     >      These are the basis operators displayed in Fig. S1 of the Supplementary Information of Ref.[1].
      >      Note that the basis elements are not organized in the same order.
      >
      
@@ -188,7 +188,7 @@ Run the following commands in your terminal, from the root folder (which contain
      >                            100000001  corresponds to the basis operator: s8 = sig_1 sig_9
      >                            000000001  corresponds to the basis operator: s9 = sig_9
      > 
-     >      Note that here one can easily check that the inverse tranformation is correct 
+     >      Note that here one can easily check that the inverse transformation is correct 
      >      by replacing the expressions of the `sig_i` into the expressions of the `s_j`
      >      and get back the identity (i.e., that `s_j = s_j` for all `j`).
      >
@@ -201,15 +201,15 @@ Run the following commands in your terminal, from the root folder (which contain
 
 In the `INPUT` folder, we provided the following examples:
   - **Example 1: Shape data.** The binary dataset `Shapes_n9_Dataset_N1e5.dat` is one of the datasets used as an example in Ref.[1]. This is an artificial dataset with `n=9` variables generated from only three states and discussed in the Supplementary Information of Ref.[1] (see Figure S3). 
-  - **Example 2: SCOTUS data** the binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[2] and used as an example in Ref.[1]. The dataset was processed by the authors of Ref.[2] from the original data published by Ref.[3] (accessed in 3 April 2012). The mapping between the variables and the justices is the following (labeled from Right to Left):
+  - **Example 2: SCOTUS data** The binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[2] and used as an example in Ref.[1]. The dataset was processed by the authors of Ref.[2] from the original data published by Ref.[3] (accessed in 3 April 2012). The mapping between the variables and the justices is the following (labeled from Right to Left):
     | $S_9$  | $S_8$  | $S_7$  | $S_6$  | $S_5$  | $S_4$  | $S_3$  | $S_2$  | $S_1$  |
     | --- | --- | --- | --- | --- | --- | --- | --- | --- |
     | WR  | JS  | SO  | AS  | AK  | DS  | CT  | RG  | SB  |
 
   - **Example 3: Big 5 data.** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [4] used as an example in Ref. [1]. The dataset has `n=50` variables and `N = 1 013 558` datapoints. See Ref.[1] for results and comments on the Best Basis obtained for this dataset.
-    Important: this dataset is given in a zip file, which must be decompressed first before being used.
+    Important: This dataset is given in a zip file, which must be decompressed first before being used.
 
-    On a laptop, the analysis in varying representations takes about `15min` with `kmax=3` , and about `3h` with `kmax=4`. 
+    On a laptop, the analysis in varying representations takes about `15min` with `kmax=3`, and about `3h` with `kmax=4`. 
 
   - **Example 4: MNIST data.** The binary dataset `MNIST11.sorted`: this is the binarized version of the MNIST dataset [5] used as an example in Ref.[1]. The dataset has `n=121` variables and `N=60 000` datapoints.
     
@@ -230,4 +230,4 @@ Each of these datasets can be analyzed by running the program with the `makefile
 
 ## License
 
-This code is an open source project under the GNU GPLv3.
+This code is an open-source project under the GNU GPLv3.
